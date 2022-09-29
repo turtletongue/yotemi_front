@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  node:
+    container_name: meetlane_front
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    env_file:
+      - .env
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+      - /app/node_modules
