@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.3",
     "next": "12.3.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-feather": "^2.0.10"
   },
   "devDependencies": {
+    "@types/feather-icons": "^4.7.0",
     "@types/node": "^18.7.23",
     "@types/react": "^18.0.21",
     "autoprefixer": "^10.4.12",
