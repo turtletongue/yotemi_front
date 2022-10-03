@@ -2,10 +2,9 @@ import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 import Logo from '../logo';
-import NavbarLink from '../navbar-link';
-import GradientLine from '../graident-line';
-import MobileNavbarControll from '../mobile-navbar-controll';
-
+import NavbarLink from './navbar-link.component';
+import GradientLine from './gradient-line.component';
+import MobileNavbarControll from './mobile-navbar-controll.component';
 import navbarItems, { isNavbarComponent } from './navbar-items.constant';
 
 const Navbar = () => {

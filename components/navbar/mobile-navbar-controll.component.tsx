@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { emptyOr, addClassUtility } from '@utils';
+import { emptyOr } from '@utils';
 
 interface MobileNavbarControllProps {
   isNavbarOpened: boolean;
