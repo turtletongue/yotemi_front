@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 import { Navbar } from "@components";
-import { mitr, mochiyPopOne, secularOne } from "../utils/fonts";
+import { fonts } from "@utils";
 
 import "../styles/globals.css";
 
@@ -13,7 +13,7 @@ const RootLayout = ({ children }: LayoutProps) => {
   return (
     <html lang="en">
       <body
-        className={`flex flex-col w-full min-h-screen ${mitr.variable} ${mochiyPopOne.variable} ${secularOne.variable}`}
+        className={`flex flex-col w-full min-h-screen ${fonts.mitr.variable} ${fonts.mochiyPopOne.variable} ${fonts.secularOne.variable}`}
       >
         <Navbar />
         <main className="flex flex-col grow">{children}</main>
