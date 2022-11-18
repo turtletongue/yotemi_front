@@ -1,60 +1,57 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
-export interface NavbarLink {
+import Notifications from "./notifications";
+import CurrentUser from "./current-user";
+
+export interface INavbarLink {
   id: number;
   label: {
     en: string;
     ru: string;
   };
   link: string;
-  display: 'always' | 'authenticated' | 'not-authenticated';
+  displayCase: "always" | "authenticated" | "not-authenticated";
 }
 
-export interface NavbarComponent {
+export interface INavbarComponent {
   id: number;
-  display: 'always' | 'authenticated' | 'not-authenticated';
+  displayCase: "always" | "authenticated" | "not-authenticated";
   component?: ReactNode;
 }
 
-const navbarItems: (NavbarLink | NavbarComponent)[] = [
+const navbarItems: (INavbarLink | INavbarComponent)[] = [
   {
     id: 1,
-    label: { en: 'Lectures', ru: 'Лекции' },
-    link: '/lectures',
-    display: 'always',
+    label: { en: "Lectures", ru: "Лекции" },
+    link: "/lectures",
+    displayCase: "always",
   },
   {
     id: 2,
-    label: { en: 'Profile', ru: 'Профиль' },
-    link: '/profile',
-    display: 'authenticated',
+    label: { en: "Sign In", ru: "Войти" },
+    link: "/sign-in",
+    displayCase: "not-authenticated",
   },
   {
     id: 3,
-    label: { en: 'Sign In', ru: 'Войти' },
-    link: '/sign-in',
-    display: 'not-authenticated',
+    label: { en: "Sign Up", ru: "Регистрация" },
+    link: "/sign-up",
+    displayCase: "not-authenticated",
   },
   {
     id: 4,
-    label: { en: 'Sign Up', ru: 'Регистрация' },
-    link: '/sign-up',
-    display: 'not-authenticated',
-  },
-  {
-    id: 5,
-    component: <div />,
-    display: 'authenticated',
-  },
-  {
-    id: 6,
-    component: <div />,
-    display: 'authenticated',
+    component: (
+      <div className="flex mt-auto justify-between items-center px-3 sm:px-0">
+        <Notifications />
+        <CurrentUser />
+      </div>
+    ),
+    displayCase: "authenticated",
   },
 ];
 
 export const isNavbarComponent = (
-  navbarItem: NavbarLink | NavbarComponent
-): navbarItem is NavbarComponent => 'component' in navbarItem;
+  navbarItem: INavbarLink | INavbarComponent
+): navbarItem is INavbarComponent => "component" in navbarItem;
 
 export default navbarItems;

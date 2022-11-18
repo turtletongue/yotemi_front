@@ -1,41 +1,33 @@
-import { Fragment, useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
+"use client";
 
-import Logo from '../logo';
-import NavbarLink from './navbar-link.component';
-import GradientLine from './gradient-line.component';
-import MobileNavbarControll from './mobile-navbar-controll.component';
-import navbarItems, { isNavbarComponent } from './navbar-items.constant';
+import { Fragment, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+
+import Logo from "../logo";
+import NavbarLink from "./navbar-link";
+import GradientLine from "./gradient-line";
+import MobileNavbarControll from "./mobile-navbar-controll";
+import navbarItems, {
+  INavbarComponent,
+  INavbarLink,
+  isNavbarComponent,
+} from "./navbar-items.constant";
 
 const Navbar = () => {
-  const authenticationState = 'not-authenticated';
-  const locale = 'en';
+  const authenticationState = "authenticated";
+  const locale = "en";
 
   const [isMobileNavbarOpened, setIsMobileNavbarOpened] = useState(false);
 
-  const displayedItems = navbarItems.filter((navbarItem) => {
-    return (
-      navbarItem.display === 'always' ||
-      navbarItem.display === authenticationState
-    );
-  });
+  const displayedItems = navbarItems.filter(byDisplayCase(authenticationState));
+  const displayedComponents = displayedItems.map(toComponent(locale));
 
-  const displayedComponents = displayedItems.map((navbarItem) => {
-    const component = isNavbarComponent(navbarItem) ? (
-      navbarItem.component
-    ) : (
-      <NavbarLink link={navbarItem.link}>{navbarItem.label[locale]}</NavbarLink>
-    );
-
-    return <Fragment key={navbarItem.id}>{component}</Fragment>;
-  });
-
-  const leftComponents = displayedComponents.slice(0, -2);
-  const rightComponents = displayedComponents.slice(-2);
+  const leftComponents = displayedComponents.slice(0, -1);
+  const rightComponents = displayedComponents.slice(-1);
 
   return (
     <>
-      <nav className="bg-yankees-blue w-full h-14 flex items-center px-5 relative z-20">
+      <nav className="bg-yankees-blue w-full h-14 flex items-center px-5 relative z-30">
         <Logo />
         <div className="hidden sm:flex items-center w-full justify-between ml-10">
           <ul className="flex items-center">{leftComponents}</ul>
@@ -80,7 +72,7 @@ const Navbar = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left shadow-xl transition-all">
-                  <ul className="w-full flex flex-col">
+                  <ul className="w-full h-full flex flex-col">
                     {displayedComponents}
                   </ul>
                 </Dialog.Panel>
@@ -91,6 +83,29 @@ const Navbar = () => {
       </Transition>
     </>
   );
+};
+
+const byDisplayCase = (
+  authenticationState: "authenticated" | "not-authenticated"
+) => {
+  return (navbarItem: INavbarLink | INavbarComponent) => {
+    return (
+      navbarItem.displayCase === "always" ||
+      navbarItem.displayCase === authenticationState
+    );
+  };
+};
+
+const toComponent = (locale: "ru" | "en") => {
+  return function MappedComponent(navbarItem: INavbarLink | INavbarComponent) {
+    const component = isNavbarComponent(navbarItem) ? (
+      navbarItem.component
+    ) : (
+      <NavbarLink link={navbarItem.link}>{navbarItem.label[locale]}</NavbarLink>
+    );
+
+    return <Fragment key={navbarItem.id}>{component}</Fragment>;
+  };
 };
 
 export default Navbar;

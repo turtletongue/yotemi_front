@@ -9,3 +9,28 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 0.2rem;
+    height: 1rem;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(200, 200, 200, 0.37);
+    border-radius: 100vh;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(200, 200, 200, 0.7);
+  }
+}
+
+[data-nextjs-scroll-focus-boundary] {
+  display: contents;
+}
