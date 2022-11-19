@@ -8,9 +8,26 @@ module.exports = {
         "cetacean-blue": "#0F1132",
         "space-cadet": "#1C1E4E",
       },
+      screens: {
+        xs: "375px",
+      },
       fontFamily: {
         mitr: [
           "var(--font-mitr)",
+          "Cantarell",
+          "Roboto",
+          "Ubuntu",
+          "sans-serif",
+        ],
+        mochiy: [
+          "var(--font-mochiy-pop-one)",
+          "Cantarell",
+          "Roboto",
+          "Ubuntu",
+          "sans-serif",
+        ],
+        secular: [
+          "var(--font-secular-one)",
           "Cantarell",
           "Roboto",
           "Ubuntu",
@@ -22,9 +39,12 @@ module.exports = {
           "repeating-linear-gradient(90deg, #6BE4FF 4.31%, #E57AF7 33.14%, #7291FF 59.52%, #6BE4FF 98.13%)",
         "simple-blue-gradient":
           "linear-gradient(277.99deg, #94B3FD -23.59%, #42C2FF 108.21%)",
+        "title-blue-gradient":
+          "linear-gradient(94.11deg, #42C2FF 1.4%, #85F4FF 105.7%)",
       },
       animation: {
         "gradient-x": "gradient-x 10s ease-in-out infinite",
+        "spin-slow": "spin 125s linear infinite",
         "top-bar-to-cross":
           "top-bar-to-cross 0.4s ease-in-out 0s 1 normal forwards",
         "middle-bar-to-cross":
