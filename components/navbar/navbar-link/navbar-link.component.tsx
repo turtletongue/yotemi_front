@@ -1,17 +1,19 @@
+import { MouseEventHandler } from "react";
 import Link from "next/link";
 import { ArrowRight } from "react-feather";
 
 interface NavbarLinkProps {
   link?: string;
+  onClick?: MouseEventHandler;
   children: string;
 }
 
-const NavbarLink = ({ link = "#", children }: NavbarLinkProps) => {
+const NavbarLink = ({ link = "#", onClick, children }: NavbarLinkProps) => {
   return (
-    <li>
+    <li onClick={onClick}>
       <Link
         href={link}
-        className="font-roboto font-medium sm:font-normal sm:text-white my-3 sm:my-0 text-lg px-3 flex sm:block w-full sm:w-auto justify-between cursor-pointer"
+        className="font-roboto-mono font-bold sm:font-normal sm:text-white my-3 sm:my-0 px-3 flex sm:block w-full sm:w-auto items-center justify-between cursor-pointer"
       >
         {children}
         <ArrowRight className="sm:hidden" />

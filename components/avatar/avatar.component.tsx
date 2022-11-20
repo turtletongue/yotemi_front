@@ -7,7 +7,7 @@ interface IAvatarProps {
   height?: number;
 }
 
-const Avatar = ({ imageUrl, alt, width = 27, height = 27 }: IAvatarProps) => {
+const Avatar = ({ imageUrl, alt, width = 29, height = 29 }: IAvatarProps) => {
   return (
     <Image
       width={width}

@@ -1,12 +1,20 @@
+import { MouseEventHandler } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { Bell } from "react-feather";
-
-import Notification from "./notification";
-import INewFollowerNotification from "./new-follower-notification.interface";
-import INewLectureNotification from "./new-lecture-notification.interface";
 import Link from "next/link";
 
-const Notifications = () => {
+import Notification from "./notification";
+import { bellIconText, buttonText, titleText } from "./text.i18n";
+import INewFollowerNotification from "./new-follower-notification.interface";
+import INewLectureNotification from "./new-lecture-notification.interface";
+
+import type { LanguageParams } from "@app/i18n.params";
+
+interface NotificationsProps extends LanguageParams {
+  onClick?: MouseEventHandler;
+}
+
+const Notifications = ({ lang, onClick }: NotificationsProps) => {
   const notifications: (INewFollowerNotification | INewLectureNotification)[] =
     [
       {
@@ -58,12 +66,20 @@ const Notifications = () => {
 
   return (
     <>
-      <Link href="/notifications" className="sm:hidden">
+      <Link
+        href={`/${lang}/notifications`}
+        className="sm:hidden"
+        aria-label={bellIconText[lang]}
+        onClick={onClick}
+      >
         <Bell className="sm:text-white cursor-pointer" />
       </Link>
       <Popover className="relative hidden sm:block">
         <Popover.Button className="flex items-center mr-5">
-          <Bell className="sm:text-white cursor-pointer" />
+          <Bell
+            className="sm:text-white cursor-pointer"
+            aria-label={bellIconText[lang]}
+          />
         </Popover.Button>
         <Transition
           enter="transition duration-100 ease-out"
@@ -76,12 +92,12 @@ const Notifications = () => {
           <Popover.Panel className="absolute overflow-x-hidden rounded-lg bg-white text-left shadow-xl top-2 -left-80 border border-gray-100">
             <div className="w-96 px-5 py-4">
               <div className="flex w-full justify-between items-center">
-                <span className="font-roboto font-medium">
-                  Notifications ({notifications.length})
+                <span className="font-medium">
+                  {titleText[lang]} ({notifications.length})
                 </span>
-                <button className="font-roboto font-medium text-sm cursor-pointer">
+                <button className="text-sm cursor-pointer">
                   <span className="text-transparent font-bold bg-simple-blue-gradient bg-clip-text">
-                    View all
+                    {buttonText[lang]}
                   </span>
                 </button>
               </div>

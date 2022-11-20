@@ -1,26 +1,34 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, MouseEventHandler, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 import Logo from "../logo";
 import NavbarLink from "./navbar-link";
 import GradientLine from "./gradient-line";
 import MobileNavbarControll from "./mobile-navbar-controll";
-import navbarItems, {
+import getNavbarItems, {
   INavbarComponent,
   INavbarLink,
   isNavbarComponent,
 } from "./navbar-items.constant";
 
-const Navbar = () => {
+import type { LanguageParams } from "@app/i18n.params";
+
+interface NavbarProps extends LanguageParams {}
+
+const Navbar = ({ lang }: NavbarProps) => {
   const authenticationState = "authenticated";
-  const locale = "en";
 
   const [isMobileNavbarOpened, setIsMobileNavbarOpened] = useState(false);
+  const closeMobileNavbar = () => setIsMobileNavbarOpened(false);
 
-  const displayedItems = navbarItems.filter(byDisplayCase(authenticationState));
-  const displayedComponents = displayedItems.map(toComponent(locale));
+  const displayedItems = getNavbarItems(lang, closeMobileNavbar).filter(
+    byDisplayCase(authenticationState)
+  );
+  const displayedComponents = displayedItems.map(
+    toComponent(closeMobileNavbar)
+  );
 
   const leftComponents = displayedComponents.slice(0, -1);
   const rightComponents = displayedComponents.slice(-1);
@@ -28,7 +36,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="bg-yankees-blue w-full h-14 flex items-center px-5 relative z-30">
-        <Logo />
+        <Logo lang={lang} onClick={closeMobileNavbar} />
         <div className="hidden sm:flex items-center w-full justify-between ml-10">
           <ul className="flex items-center">{leftComponents}</ul>
           <ul className="flex items-center">{rightComponents}</ul>
@@ -46,7 +54,7 @@ const Navbar = () => {
       <Transition show={isMobileNavbarOpened} appear as={Fragment}>
         <Dialog
           open={isMobileNavbarOpened}
-          onClose={() => {}}
+          onClose={closeMobileNavbar}
           className="relative z-10"
         >
           <Transition.Child
@@ -96,12 +104,14 @@ const byDisplayCase = (
   };
 };
 
-const toComponent = (locale: "ru" | "en") => {
+const toComponent = (clickHandler: MouseEventHandler) => {
   return function MappedComponent(navbarItem: INavbarLink | INavbarComponent) {
     const component = isNavbarComponent(navbarItem) ? (
       navbarItem.component
     ) : (
-      <NavbarLink link={navbarItem.link}>{navbarItem.label[locale]}</NavbarLink>
+      <NavbarLink link={navbarItem.link} onClick={clickHandler}>
+        {navbarItem.label}
+      </NavbarLink>
     );
 
     return <Fragment key={navbarItem.id}>{component}</Fragment>;

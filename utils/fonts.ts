@@ -1,17 +1,17 @@
-import { Mitr, Mochiy_Pop_One, Secular_One } from "@next/font/google";
+import { Inter, Mitr, Roboto_Mono } from "@next/font/google";
 
 export const mitr = Mitr({
-  weight: "400",
+  weight: ["400"],
   variable: "--font-mitr",
   subsets: ["latin"],
 });
-export const mochiyPopOne = Mochiy_Pop_One({
-  weight: "400",
-  variable: "--font-mochiy-pop-one",
-  subsets: ["latin"],
+export const inter = Inter({
+  weight: ["700"],
+  variable: "--font-inter",
+  subsets: ["cyrillic", "latin"],
 });
-export const secularOne = Secular_One({
-  weight: "400",
-  variable: "--font-secular-one",
-  subsets: ["latin"],
+export const robotoMono = Roboto_Mono({
+  weight: ["400"],
+  variable: "--font-roboto-mono",
+  subsets: ["cyrillic", "latin"],
 });

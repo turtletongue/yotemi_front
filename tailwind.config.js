@@ -12,25 +12,12 @@ module.exports = {
         xs: "375px",
       },
       fontFamily: {
-        mitr: [
-          "var(--font-mitr)",
-          "Cantarell",
-          "Roboto",
-          "Ubuntu",
-          "sans-serif",
-        ],
-        mochiy: [
-          "var(--font-mochiy-pop-one)",
-          "Cantarell",
-          "Roboto",
-          "Ubuntu",
-          "sans-serif",
-        ],
-        secular: [
-          "var(--font-secular-one)",
-          "Cantarell",
-          "Roboto",
-          "Ubuntu",
+        mitr: ["var(--font-mitr)", "Arial", "Helvetica", "sans-serif"],
+        inter: ["var(--font-inter)", "Arial", "Helvetica", "sans-serif"],
+        "roboto-mono": [
+          "var(--font-roboto-mono)",
+          "Geneva",
+          "Verdana",
           "sans-serif",
         ],
       },
