@@ -20,19 +20,15 @@ const Home = ({ params: { lang } }: HomeProps) => {
         <SecondFigure className="absolute top-72 left-16 motion-safe:animate-spin-slow" />
         <ThirdFigure className="absolute top-72 right-28 hidden lg:block motion-safe:animate-spin-slow" />
         <div className="flex flex-col items-center select-none">
-          <h1 className="flex flex-col items-center font-inter text-4xl sm:text-6xl">
+          <h1 className="flex flex-col items-center font-inter font-black text-5xl sm:text-6xl">
             {headingText.normal[lang]}{" "}
-            <span className="mt-2">
+            <span>
               <span className="bg-title-blue-gradient bg-clip-text text-transparent">
                 {headingText.colored[lang]}
               </span>
-              ?
             </span>
           </h1>
-          <Button
-            className="w-40 h-12 sm:w-48 sm:h-14 mt-7 transition-transform hover:scale-105 font-bold"
-            textSize="xl"
-          >
+          <Button className="w-40 h-12 sm:w-48 sm:h-14 mt-7 font-bold">
             {buttonText[lang]}
           </Button>
         </div>

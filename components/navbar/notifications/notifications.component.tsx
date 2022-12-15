@@ -72,7 +72,7 @@ const Notifications = ({ lang, onClick }: NotificationsProps) => {
         aria-label={bellIconText[lang]}
         onClick={onClick}
       >
-        <Bell className="sm:text-white cursor-pointer" />
+        <Bell className="text-white cursor-pointer" />
       </Link>
       <Popover className="relative hidden sm:block">
         <Popover.Button className="flex items-center mr-5">

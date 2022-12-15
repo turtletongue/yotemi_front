@@ -6,7 +6,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import Logo from "../logo";
 import NavbarLink from "./navbar-link";
 import GradientLine from "./gradient-line";
-import MobileNavbarControll from "./mobile-navbar-controll";
+import MobileNavbarControl from "./mobile-navbar-controll";
 import getNavbarItems, {
   INavbarComponent,
   INavbarLink,
@@ -42,7 +42,7 @@ const Navbar = ({ lang }: NavbarProps) => {
           <ul className="flex items-center">{rightComponents}</ul>
         </div>
         <div className="sm:hidden flex w-full justify-end">
-          <MobileNavbarControll
+          <MobileNavbarControl
             isNavbarOpened={isMobileNavbarOpened}
             toggleNavbar={() =>
               setIsMobileNavbarOpened((isOpened) => !isOpened)
@@ -79,7 +79,7 @@ const Navbar = ({ lang }: NavbarProps) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-card p-6 text-left shadow-md transition-all">
                   <ul className="w-full h-full flex flex-col">
                     {displayedComponents}
                   </ul>

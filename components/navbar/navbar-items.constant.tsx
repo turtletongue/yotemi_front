@@ -22,8 +22,8 @@ const getNavbarItems = (
 ): (INavbarLink | INavbarComponent)[] => [
   {
     id: 1,
-    label: { en: "Lectures", ru: "Лекции" }[lang],
-    link: `/${lang}/lectures`,
+    label: { en: "Members", ru: "Участники" }[lang],
+    link: `/${lang}/members`,
     displayCase: "always",
   },
   {

@@ -7,7 +7,7 @@ interface MobileNavbarControllProps {
   toggleNavbar: () => unknown;
 }
 
-const MobileNavbarControll = ({
+const MobileNavbarControl = ({
   isNavbarOpened,
   toggleNavbar,
 }: MobileNavbarControllProps) => {
@@ -50,4 +50,4 @@ const MobileNavbarControll = ({
 
 const baseBarClasses = "bg-white h-0.5 w-full relative";
 
-export default MobileNavbarControll;
+export default MobileNavbarControl;

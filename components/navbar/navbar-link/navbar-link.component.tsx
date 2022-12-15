@@ -13,7 +13,7 @@ const NavbarLink = ({ link = "#", onClick, children }: NavbarLinkProps) => {
     <li onClick={onClick}>
       <Link
         href={link}
-        className="font-roboto-mono font-bold sm:font-normal sm:text-white my-3 sm:my-0 px-3 flex sm:block w-full sm:w-auto items-center justify-between cursor-pointer"
+        className="font-roboto font-bold text-lg sm:text-base sm:font-normal text-white my-3 sm:my-0 px-3 flex sm:block w-full sm:w-auto items-center justify-between cursor-pointer"
       >
         {children}
         <ArrowRight className="sm:hidden" />

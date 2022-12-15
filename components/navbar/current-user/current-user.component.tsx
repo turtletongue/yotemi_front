@@ -22,7 +22,9 @@ const CurrentUser = ({ lang, onClick }: CurrentUserProps) => {
       className="flex items-center cursor-pointer"
       onClick={onClick}
     >
-      <span className="font-roboto-mono sm:text-white mr-2">{user.name}</span>
+      <span className="font-roboto text-white font-medium mr-2">
+        {user.name}
+      </span>
       <Avatar imageUrl={user.avatarUrl} alt={avatarAltText[lang]} />
     </Link>
   );

@@ -24,7 +24,7 @@ const RootLayout = ({ children, params: { lang } }: LayoutProps) => {
   return (
     <html lang={lang}>
       <body
-        className={`flex flex-col w-full min-h-screen ${fonts.mitr.variable} ${fonts.inter.variable} ${fonts.robotoMono.variable}`}
+        className={`flex flex-col w-full min-h-screen ${fonts.inter.variable}`}
       >
         <Navbar lang={lang} />
         <main className="flex flex-col grow">{children}</main>

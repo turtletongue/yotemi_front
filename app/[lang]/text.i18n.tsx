@@ -5,18 +5,18 @@ export const titleText = {
 
 export const headingText = {
   normal: {
-    en: "Do you need",
-    ru: "Нуждаетесь в",
+    en: "Attention for",
+    ru: "Время найдётся",
   },
   colored: {
-    en: "a lecture",
-    ru: "лекции",
+    en: "everyone",
+    ru: "для каждого",
   },
 };
 
 export const buttonText = {
   en: "Get It",
-  ru: "Найти",
+  ru: "Перейти",
 };
 
 export const mockText = {

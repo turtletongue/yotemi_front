@@ -14,7 +14,7 @@ const Avatar = ({ imageUrl, alt, width = 29, height = 29 }: IAvatarProps) => {
       height={height}
       src={imageUrl}
       alt={alt}
-      className="rounded-full bg-white border border-gray-300"
+      className="rounded-full bg-white"
     />
   );
 };

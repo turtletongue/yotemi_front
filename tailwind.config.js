@@ -7,6 +7,7 @@ module.exports = {
         "yankees-blue": "#14174A",
         "cetacean-blue": "#0F1132",
         "space-cadet": "#1C1E4E",
+        card: "#16183C",
       },
       screens: {
         xs: "375px",
@@ -14,12 +15,6 @@ module.exports = {
       fontFamily: {
         mitr: ["var(--font-mitr)", "Arial", "Helvetica", "sans-serif"],
         inter: ["var(--font-inter)", "Arial", "Helvetica", "sans-serif"],
-        "roboto-mono": [
-          "var(--font-roboto-mono)",
-          "Geneva",
-          "Verdana",
-          "sans-serif",
-        ],
       },
       backgroundImage: {
         "linear-blue-gradient":

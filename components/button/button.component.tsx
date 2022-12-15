@@ -1,6 +1,6 @@
 interface ButtonProps {
   className?: string;
-  textSize?: "xs" | "sm" | "md" | "xl" | "2xl" | "3xl";
+  textSize?: "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
   font?: string;
   disableDefaultFlex?: boolean;
   disableDefaultSize?: boolean;
@@ -9,7 +9,6 @@ interface ButtonProps {
 
 const Button = ({
   className = "",
-  textSize = "md",
   disableDefaultFlex = false,
   children,
 }: ButtonProps) => {
@@ -26,7 +25,7 @@ const Button = ({
         className={`rounded-full bg-space-cadet w-full h-full ${flexClasses}`}
       >
         <span
-          className={`bg-simple-blue-gradient bg-clip-text text-transparent text-${textSize}`}
+          className={`bg-simple-blue-gradient bg-clip-text text-transparent text-xl`}
         >
           {children}
         </span>
