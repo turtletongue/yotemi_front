@@ -1,28 +1,31 @@
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
+import { dir } from "i18next";
 
 import { Navbar } from "@components";
-import { supportedLanguages } from "@app/i18n.params";
+import { Language, languages } from "@app/i18n";
 import { fonts } from "@utils";
 
-import type { I18nParams } from "@types";
 import "../../styles/globals.css";
 
 export const generateStaticParams = () => {
-  return supportedLanguages.map((lang) => ({ lang }));
+  return languages.map((lang) => ({ lang }));
 };
 
-interface LayoutProps extends I18nParams {
+interface LayoutProps {
+  params: {
+    lang: Language;
+  };
   children: ReactNode;
 }
 
-const RootLayout = ({ children, params: { lang } }: LayoutProps) => {
-  if (!supportedLanguages.includes(lang)) {
+const RootLayout = async ({ children, params: { lang } }: LayoutProps) => {
+  if (!languages.includes(lang)) {
     notFound();
   }
 
   return (
-    <html lang={lang}>
+    <html lang={lang} dir={dir(lang)}>
       <body
         className={`flex flex-col w-full min-h-screen ${fonts.inter.variable}`}
       >

@@ -1,20 +1,24 @@
+"use client";
+
 import { MouseEventHandler } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { Bell } from "react-feather";
 import Link from "next/link";
 
 import Notification from "./notification";
-import { bellIconText, buttonText, titleText } from "./text.i18n";
-import INewFollowerNotification from "./new-follower-notification.interface";
+import { Language } from "@app/i18n";
+import { useTranslation } from "@app/i18n/client";
+
 import INewLectureNotification from "./new-lecture-notification.interface";
+import INewFollowerNotification from "./new-follower-notification.interface";
 
-import type { LanguageParams } from "@app/i18n.params";
-
-interface NotificationsProps extends LanguageParams {
+interface NotificationsProps {
+  lang: Language;
+  id?: string;
   onClick?: MouseEventHandler;
 }
 
-const Notifications = ({ lang, onClick }: NotificationsProps) => {
+const Notifications = ({ lang, id, onClick }: NotificationsProps) => {
   const notifications: (INewFollowerNotification | INewLectureNotification)[] =
     [
       {
@@ -64,12 +68,14 @@ const Notifications = ({ lang, onClick }: NotificationsProps) => {
       },
     ];
 
+  const { translation } = useTranslation(lang, "notifications");
+
   return (
-    <>
+    <div id={id}>
       <Link
         href={`/${lang}/notifications`}
         className="sm:hidden"
-        aria-label={bellIconText[lang]}
+        aria-label={translation("bell-icon")!}
         onClick={onClick}
       >
         <Bell className="text-white cursor-pointer" />
@@ -78,7 +84,7 @@ const Notifications = ({ lang, onClick }: NotificationsProps) => {
         <Popover.Button className="flex items-center mr-5">
           <Bell
             className="sm:text-white cursor-pointer"
-            aria-label={bellIconText[lang]}
+            aria-label={translation("bell-icon")!}
           />
         </Popover.Button>
         <Transition
@@ -93,11 +99,11 @@ const Notifications = ({ lang, onClick }: NotificationsProps) => {
             <div className="w-96 px-5 py-4">
               <div className="flex w-full justify-between items-center">
                 <span className="font-medium">
-                  {titleText[lang]} ({notifications.length})
+                  {translation("title")} ({notifications.length})
                 </span>
                 <button className="text-sm cursor-pointer">
                   <span className="text-transparent font-bold bg-simple-blue-gradient bg-clip-text">
-                    {buttonText[lang]}
+                    {translation("button")}
                   </span>
                 </button>
               </div>
@@ -114,7 +120,7 @@ const Notifications = ({ lang, onClick }: NotificationsProps) => {
           </Popover.Panel>
         </Transition>
       </Popover>
-    </>
+    </div>
   );
 };
 

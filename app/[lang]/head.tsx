@@ -1,12 +1,16 @@
 import { Head } from "@components";
-import { titleText } from "./text.i18n";
+import { Language, useTranslation } from "@app/i18n";
 
-import { I18nParams } from "@types";
+interface RootHeadProps {
+  params: {
+    lang: Language;
+  };
+}
 
-interface RootHeadProps extends I18nParams {}
+const RootHead = async ({ params: { lang } }: RootHeadProps) => {
+  const { translation } = await useTranslation(lang, "homepage");
 
-const RootHead = ({ params: { lang } }: RootHeadProps) => {
-  return <Head title={titleText[lang]} />;
+  return <Head title={translation("title")!} />;
 };
 
 export default RootHead;

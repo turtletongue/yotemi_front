@@ -29,8 +29,36 @@ body {
   .scrollbar::-webkit-scrollbar-thumb:hover {
     background: rgba(200, 200, 200, 0.7);
   }
-}
 
-[data-nextjs-scroll-focus-boundary] {
-  display: contents;
+  .navbar-items {
+    grid-template-columns: max-content 1fr repeat(4, max-content);
+    grid-template-areas: "members-link . sign-in-link sign-up-link notifications-link current-user-link";
+  }
+
+  .mobile-navbar-items {
+    grid-template-areas:
+      "members-link members-link"
+      ". ."
+      "notifications-link current-user-link";
+  }
+
+  #members-link {
+    grid-area: members-link;
+  }
+
+  #sign-in-link {
+    grid-area: sign-in-link;
+  }
+
+  #sign-up-link {
+    grid-area: sign-up-link;
+  }
+
+  #notifications-link {
+    grid-area: notifications-link;
+  }
+
+  #current-user-link {
+    grid-area: current-user-link;
+  }
 }

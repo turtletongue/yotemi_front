@@ -1,16 +1,21 @@
+"use client";
+
 import { useState } from "react";
 
 import { emptyOr } from "@utils";
+import { Language, useTranslation } from "@app/i18n/client";
 
-interface MobileNavbarControllProps {
+interface MobileMenuControlProps {
+  lang: Language;
   isNavbarOpened: boolean;
   toggleNavbar: () => unknown;
 }
 
-const MobileNavbarControl = ({
+const MobileMenuControl = ({
+  lang,
   isNavbarOpened,
   toggleNavbar,
-}: MobileNavbarControllProps) => {
+}: MobileMenuControlProps) => {
   const [isUsed, setIsUsed] = useState(false);
 
   const onClick = () => {
@@ -21,9 +26,12 @@ const MobileNavbarControl = ({
     }
   };
 
+  const { translation } = useTranslation(lang, "navbar");
+
   return (
     <button
-      className="cursor-pointer w-8 h-5 flex flex-col justify-between"
+      className="cursor-pointer w-8 h-5 flex flex-col justify-between sm:hidden ml-auto"
+      aria-label={translation("mobile-menu-control")!}
       onClick={onClick}
     >
       <div
@@ -50,4 +58,4 @@ const MobileNavbarControl = ({
 
 const baseBarClasses = "bg-white h-0.5 w-full relative";
 
-export default MobileNavbarControl;
+export default MobileMenuControl;

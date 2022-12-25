@@ -1,31 +1,36 @@
+"use client";
+
 import { MouseEventHandler } from "react";
 import Link from "next/link";
 
 import { Avatar } from "@components";
-import { avatarAltText } from "./text.i18n";
+import { Language, useTranslation } from "@app/i18n/client";
 
-import type { LanguageParams } from "@app/i18n.params";
-
-interface CurrentUserProps extends LanguageParams {
+interface CurrentUserProps {
+  lang: Language;
+  id?: string;
   onClick?: MouseEventHandler;
 }
 
-const CurrentUser = ({ lang, onClick }: CurrentUserProps) => {
+const CurrentUser = ({ lang, id, onClick }: CurrentUserProps) => {
   const user = {
     name: "Alice",
     avatarUrl: "https://avatars.dicebear.com/api/croodles-neutral/alice.svg",
   };
+
+  const { translation } = useTranslation(lang, "current-user");
 
   return (
     <Link
       href={`/${lang}/profile`}
       className="flex items-center cursor-pointer"
       onClick={onClick}
+      id={id}
     >
       <span className="font-roboto text-white font-medium mr-2">
         {user.name}
       </span>
-      <Avatar imageUrl={user.avatarUrl} alt={avatarAltText[lang]} />
+      <Avatar imageUrl={user.avatarUrl} alt={translation("avatar")} />
     </Link>
   );
 };

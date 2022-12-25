@@ -1,10 +1,14 @@
+"use client";
+
 import { MouseEventHandler } from "react";
 import Link from "next/link";
 
-import { LanguageParams } from "@app/i18n.params";
 import LogoIcon from "../../public/logo.svg";
 
-interface LogoProps extends LanguageParams {
+import { Language } from "@app/i18n";
+
+interface LogoProps {
+  lang: Language;
   onClick?: MouseEventHandler;
 }
 
