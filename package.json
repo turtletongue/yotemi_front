@@ -10,19 +10,25 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
+    "@hookform/resolvers": "^2.9.11",
     "@reduxjs/toolkit": "^1.9.2",
     "@svgr/webpack": "^6.5.1",
     "@tonconnect/sdk": "^2.0.7",
     "accept-language": "^3.0.18",
+    "classnames": "^2.3.2",
+    "flowbite": "^1.6.3",
+    "flowbite-react": "^0.4.1",
     "i18next": "^22.4.6",
     "i18next-resources-to-backend": "^1.1.1",
     "next": "^13.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
+    "react-hook-form": "^7.43.4",
     "react-i18next": "^12.1.1",
     "react-redux": "^8.0.5",
-    "sharp": "^0.31.3"
+    "sharp": "^0.31.3",
+    "yup": "^1.0.2"
   },
   "devDependencies": {
     "@types/feather-icons": "^4.7.0",

@@ -30,7 +30,10 @@ const Home = async ({ params: { lang } }: HomeProps) => {
               {translation("heading.colored")}
             </span>
           </h1>
-          <Button className="w-40 h-12 sm:w-48 sm:h-14 sm:mt-3 font-bold">
+          <Button
+            className="w-40 h-12 sm:w-48 sm:h-14 sm:mt-3 font-bold"
+            animated
+          >
             {translation("button")}
           </Button>
         </article>
@@ -48,6 +51,17 @@ const Home = async ({ params: { lang } }: HomeProps) => {
       </div>
     </section>
   );
+};
+
+export const generateMetadata = async ({
+  params: { lang },
+}: Pick<HomeProps, "params">) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { translation } = await useTranslation(lang, "homepage");
+
+  return {
+    title: translation("title"),
+  };
 };
 
 export default Home;

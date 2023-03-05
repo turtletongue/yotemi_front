@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import { dir } from "i18next";
 
 import { Navbar } from "@components";
-import { Language, languages, useTranslation } from "@app/i18n";
+import { Language, languages } from "@app/i18n";
 import { fonts } from "@utils";
 
+import "flowbite";
 import "../../styles/globals.css";
 
 export const generateStaticParams = () => {
@@ -36,14 +37,9 @@ const RootLayout = async ({ children, params: { lang } }: LayoutProps) => {
   );
 };
 
-export const generateMetadata = async ({
-  params: { lang },
-}: Pick<LayoutProps, "params">) => {
+export const generateMetadata = async () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { translation } = await useTranslation(lang, "homepage");
-
   return {
-    title: translation("title"),
     icons: "/favicon.ico",
   };
 };
