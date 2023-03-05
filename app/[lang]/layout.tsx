@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { dir } from "i18next";
 
 import { Navbar } from "@components";
-import { Language, languages } from "@app/i18n";
+import { Language, languages, useTranslation } from "@app/i18n";
 import { fonts } from "@utils";
 
 import "../../styles/globals.css";
@@ -27,13 +27,23 @@ const RootLayout = async ({ children, params: { lang } }: LayoutProps) => {
   return (
     <html lang={lang} dir={dir(lang)}>
       <body
-        className={`flex flex-col w-full min-h-screen ${fonts.inter.variable}`}
+        className={`flex flex-col w-full min-h-screen ${fonts.mulish.variable}`}
       >
         <Navbar lang={lang} />
         <main className="flex flex-col grow">{children}</main>
       </body>
     </html>
   );
+};
+
+export const generateMetadata = async ({
+  params: { lang },
+}: Pick<LayoutProps, "params">) => {
+  const { translation } = await useTranslation(lang, "homepage");
+
+  return {
+    title: translation("title"),
+  };
 };
 
 export default RootLayout;

@@ -16,7 +16,7 @@ const Notification = ({
   return (
     <div
       className={`flex w-full justify-center items-center py-5 ${
-        isDisabled ? "opacity-20" : "cursor-pointer hover:bg-gray-50"
+        isDisabled ? "opacity-20" : "cursor-pointer hover:bg-yankees-blue"
       }`}
     >
       <Image
@@ -24,7 +24,7 @@ const Notification = ({
         height={50}
         src={imageUrl}
         alt={text}
-        className="bg-white"
+        className="bg-white rounded-full"
       />
       <div className="mx-4" />
       <p className="text-sm w-56">{text}</p>

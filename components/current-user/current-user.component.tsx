@@ -27,7 +27,7 @@ const CurrentUser = ({ lang, id, onClick }: CurrentUserProps) => {
       onClick={onClick}
       id={id}
     >
-      <span className="font-roboto text-white font-medium mr-2">
+      <span className="font-mulish text-white font-medium mr-2">
         {user.name}
       </span>
       <Avatar imageUrl={user.avatarUrl} alt={translation("avatar")} />

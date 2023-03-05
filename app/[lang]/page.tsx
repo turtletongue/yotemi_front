@@ -20,19 +20,17 @@ const Home = async ({ params: { lang } }: HomeProps) => {
   return (
     <section className="grow bg-cetacean-blue flex items-center w-screen px-4">
       <div className="w-full md:w-1/2 h-full flex justify-center items-center text-white relative">
-        <FirstFigure className="absolute -top-40 left-48 motion-safe:animate-spin-slow" />
+        <FirstFigure className="absolute -top-48 left-48 motion-safe:animate-spin-slow" />
         <SecondFigure className="absolute top-72 left-16 motion-safe:animate-spin-slow" />
         <ThirdFigure className="absolute top-72 right-28 hidden lg:block motion-safe:animate-spin-slow" />
         <article className="flex flex-col items-center select-none">
-          <h1 className="flex flex-col text-center items-center font-inter font-black text-5xl sm:text-6xl">
+          <h1 className="flex flex-col text-center items-center font-mulish font-black text-5xl sm:text-6xl">
             {translation("heading.normal")}{" "}
-            <span>
-              <span className="bg-title-blue-gradient bg-clip-text text-transparent">
-                {translation("heading.colored")}
-              </span>
+            <span className="bg-title-blue-gradient bg-clip-text text-transparent h-20">
+              {translation("heading.colored")}
             </span>
           </h1>
-          <Button className="w-40 h-12 sm:w-48 sm:h-14 mt-7 font-bold">
+          <Button className="w-40 h-12 sm:w-48 sm:h-14 sm:mt-3 font-bold">
             {translation("button")}
           </Button>
         </article>

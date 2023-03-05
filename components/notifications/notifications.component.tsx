@@ -95,20 +95,20 @@ const Notifications = ({ lang, id, onClick }: NotificationsProps) => {
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <Popover.Panel className="absolute overflow-x-hidden rounded-lg bg-white text-left shadow-xl top-2 -left-80 border border-gray-100">
+          <Popover.Panel className="absolute overflow-x-hidden rounded-lg bg-space-cadet text-white text-left shadow-xl top-2 -left-80 font-mulish">
             <div className="w-96 px-5 py-4">
               <div className="flex w-full justify-between items-center">
                 <span className="font-medium">
                   {translation("title")} ({notifications.length})
                 </span>
                 <button className="text-sm cursor-pointer">
-                  <span className="text-transparent font-bold bg-simple-blue-gradient bg-clip-text">
+                  <span className="text-transparent font-black bg-simple-blue-gradient bg-clip-text">
                     {translation("button")}
                   </span>
                 </button>
               </div>
             </div>
-            <hr />
+            <hr className="border-gray-400" />
             <div className="overflow-y-auto scrollbar w-full max-h-64">
               {notifications.map((notification) => (
                 <Notification

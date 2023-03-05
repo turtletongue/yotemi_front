@@ -1,7 +1,7 @@
-import { Inter } from "next/font/google";
+import { Mulish } from "next/font/google";
 
-export const inter = Inter({
-  weight: ["700", "900"],
-  variable: "--font-inter",
+export const mulish = Mulish({
+  weight: ["300", "500", "700", "900"],
+  variable: "--font-mulish",
   subsets: ["cyrillic", "latin"],
 });

@@ -6,12 +6,12 @@ interface ButtonProps {
 const Button = ({ className = "", children }: ButtonProps) => {
   return (
     <button
-      className={`rounded-full bg-simple-blue-gradient p-1 ${className}`}
+      className={`group rounded-full bg-blue-pink-pink-gradient bg-300% bg-full hover:animate-gradient-ellipse p-1 ${className}`}
       aria-label={children}
     >
       <div className="rounded-full bg-space-cadet w-full h-full flex items-center justify-center">
         <span
-          className={`bg-simple-blue-gradient bg-clip-text text-transparent text-xl`}
+          className={`bg-blue-pink-pink-gradient bg-300% bg-full group-hover:animate-gradient-ellipse bg-clip-text text-transparent text-sm tracking-widest uppercase`}
         >
           {children}
         </span>

@@ -7,24 +7,33 @@ module.exports = {
         "yankees-blue": "#14174A",
         "cetacean-blue": "#0F1132",
         "space-cadet": "#1C1E4E",
+        "mulled-wine": "#474E68",
         card: "#16183C",
       },
       screens: {
         xs: "375px",
       },
       fontFamily: {
-        mitr: ["var(--font-mitr)", "Arial", "Helvetica", "sans-serif"],
-        inter: ["var(--font-inter)", "Arial", "Helvetica", "sans-serif"],
+        mulish: ["var(--font-mulish)", "Arial", "sans-serif"],
+      },
+      backgroundSize: {
+        "300%": "300% 100%",
+      },
+      backgroundPosition: {
+        full: "150% 50%",
       },
       backgroundImage: {
         "linear-blue-gradient":
           "repeating-linear-gradient(90deg, #6BE4FF 4.31%, #E57AF7 33.14%, #7291FF 59.52%, #6BE4FF 98.13%)",
-        "simple-blue-gradient":
-          "linear-gradient(277.99deg, #94B3FD -23.59%, #42C2FF 108.21%)",
+        "blue-blue-pink-gradient":
+          "linear-gradient(101.45deg, #42C2FF 13.44%, #94B3FD 40.27%, #A3A9FD 79.76%, #FB6BFE 97.47%)",
+        "blue-pink-pink-gradient":
+          "linear-gradient(107.17deg, #94B3FD -14.18%, #A3A9FD 24.51%, #A6A7FD 24.52%, #FB6BFE 60.45%, #94B3FD 96.08%)",
         "title-blue-gradient":
           "linear-gradient(94.11deg, #42C2FF 1.4%, #85F4FF 105.7%)",
       },
       animation: {
+        "gradient-ellipse": "gradient-ellipse 1.5s ease-in-out forwards",
         "gradient-x": "gradient-x 10s ease-in-out infinite",
         "spin-slow": "spin 125s linear infinite",
         "top-bar-to-cross":
@@ -41,6 +50,16 @@ module.exports = {
           "bottom-bar-from-cross 0.4s ease-in-out 0s 1 normal forwards",
       },
       keyframes: {
+        "gradient-ellipse": {
+          from: {
+            "background-size": "300% 100%",
+            "background-position": "150% 50%",
+          },
+          to: {
+            "background-size": "300% 100%",
+            "background-position": "0% 50%",
+          },
+        },
         "gradient-x": {
           from: {
             "background-size": "400% 100%",
