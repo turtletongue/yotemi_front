@@ -27,9 +27,7 @@ const CurrentUser = ({ lang, id, onClick }: CurrentUserProps) => {
       onClick={onClick}
       id={id}
     >
-      <span className="font-mulish text-white font-medium mr-2">
-        {user.name}
-      </span>
+      <span className="text-white font-medium mr-2">{user.name}</span>
       <Avatar imageUrl={user.avatarUrl} alt={translation("avatar")} />
     </Link>
   );

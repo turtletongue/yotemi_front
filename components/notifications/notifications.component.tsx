@@ -95,7 +95,7 @@ const Notifications = ({ lang, id, onClick }: NotificationsProps) => {
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <Popover.Panel className="absolute overflow-x-hidden rounded-lg bg-space-cadet text-white text-left shadow-xl top-2 -left-80 font-mulish">
+          <Popover.Panel className="absolute overflow-x-hidden rounded-lg bg-space-cadet text-white text-left shadow-xl top-2 -left-80">
             <div className="w-96 px-5 py-4">
               <div className="flex w-full justify-between items-center">
                 <span className="font-medium">

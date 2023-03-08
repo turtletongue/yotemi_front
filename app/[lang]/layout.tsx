@@ -5,6 +5,7 @@ import { dir } from "i18next";
 import { Navbar } from "@components";
 import { Language, languages } from "@app/i18n";
 import { fonts } from "@utils";
+import TonProvider from "./ton-provider";
 
 import "flowbite";
 import "../../styles/globals.css";
@@ -27,12 +28,14 @@ const RootLayout = async ({ children, params: { lang } }: LayoutProps) => {
 
   return (
     <html lang={lang} dir={dir(lang)}>
-      <body
-        className={`flex flex-col w-full min-h-screen ${fonts.mulish.variable}`}
-      >
-        <Navbar lang={lang} />
-        <main className="flex flex-col grow">{children}</main>
-      </body>
+      <TonProvider lang={lang}>
+        <body
+          className={`flex flex-col w-full min-h-screen ${fonts.mulish.variable} font-mulish`}
+        >
+          <Navbar lang={lang} />
+          <main className="flex flex-col grow">{children}</main>
+        </body>
+      </TonProvider>
     </html>
   );
 };

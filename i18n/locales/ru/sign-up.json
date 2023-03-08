@@ -1,6 +1,11 @@
 {
   "title": "Регистрация | Yotemi",
   "firstName": "Имя",
+  "firstNameError": "Введите ваше имя",
   "lastName": "Фамилия",
-  "submit": "Далее"
+  "lastNameError": "Введите вашу фамилию",
+  "agree": "Я принимаю",
+  "rules": "правила площадки",
+  "submit": "Далее",
+  "walletConnectionError": "Failed to connect to your TON wallet"
 }

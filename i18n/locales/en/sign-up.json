@@ -1,6 +1,11 @@
 {
   "title": "Sign Up | Yotemi",
-  "firstName": "First Name",
-  "lastName": "Last Name",
-  "submit": "Sign Up"
+  "firstName": "First name",
+  "firstNameError": "First name is required",
+  "lastName": "Last name",
+  "lastNameError": "Last name is required",
+  "agree": "I accept",
+  "rules": "the rules of the platform",
+  "submit": "Sign Up",
+  "walletConnectionError": ""
 }
