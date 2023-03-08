@@ -56,9 +56,11 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
       }
     }
 
-    const address = tonConnectUI.account?.address as string;
+    const address = tonConnectUI.account?.address;
 
-    console.log(address);
+    if (!address) {
+      return;
+    }
   };
 
   return (
