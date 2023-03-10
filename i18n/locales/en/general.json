@@ -1,0 +1,18 @@
+{
+  "fetchError": {
+    "title": "Failed to connect to the server.",
+    "description": "Please, check your Internet connection or try later."
+  },
+  "timeoutError": {
+    "title": "Server responds too long.",
+    "description": "Please, check your Internet connection or try later."
+  },
+  "parsingError": {
+    "title": "Failed to parse data.",
+    "description": "Please, contact technical support or try later."
+  },
+  "somethingWrongError": {
+    "title": "Something went wrong",
+    "description": "Try later."
+  }
+}

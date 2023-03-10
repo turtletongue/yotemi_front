@@ -3,9 +3,12 @@ import { notFound } from "next/navigation";
 import { dir } from "i18next";
 
 import { Navbar } from "@components";
-import { Language, languages, useTranslation } from "@app/i18n";
+import { Language, languages } from "@app/i18n";
 import { fonts } from "@utils";
+import TonProvider from "./ton-provider";
+import ReduxProvider from "./redux-provider";
 
+import "flowbite";
 import "../../styles/globals.css";
 
 export const generateStaticParams = () => {
@@ -27,23 +30,22 @@ const RootLayout = async ({ children, params: { lang } }: LayoutProps) => {
   return (
     <html lang={lang} dir={dir(lang)}>
       <body
-        className={`flex flex-col w-full min-h-screen ${fonts.mulish.variable}`}
+        className={`flex flex-col w-full min-h-screen ${fonts.mulish.variable} font-mulish`}
       >
-        <Navbar lang={lang} />
-        <main className="flex flex-col grow">{children}</main>
+        <TonProvider lang={lang}>
+          <ReduxProvider>
+            <Navbar lang={lang} />
+            <main className="flex flex-col grow">{children}</main>
+          </ReduxProvider>
+        </TonProvider>
       </body>
     </html>
   );
 };
 
-export const generateMetadata = async ({
-  params: { lang },
-}: Pick<LayoutProps, "params">) => {
+export const generateMetadata = async () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { translation } = await useTranslation(lang, "homepage");
-
   return {
-    title: translation("title"),
     icons: "/favicon.ico",
   };
 };

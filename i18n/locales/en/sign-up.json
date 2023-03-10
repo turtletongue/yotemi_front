@@ -1,0 +1,18 @@
+{
+  "title": "Sign Up | Yotemi",
+  "firstName": "First name",
+  "firstNameError": "First name is required",
+  "lastName": "Last name",
+  "lastNameError": "Last name is required",
+  "agree": "I accept",
+  "rules": "the rules of the platform",
+  "submit": "Sign Up",
+  "walletConnectionError": {
+    "title": "Connection error",
+    "description": "Failed to connect to your TON wallet."
+  },
+  "addressIsTakenError": {
+    "title": "Wallet address is taken",
+    "description": "Seems like user with your TON address is already exist. Connect another wallet or sign in."
+  }
+}

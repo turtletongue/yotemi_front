@@ -17,7 +17,9 @@ export function middleware(req: NextRequest) {
     : acceptLanguage.get(req.headers.get("Accept-Language")) ??
       FALLBACK_LANGUAGE;
 
-  if (req.nextUrl.pathname === "/favicon.ico") {
+  if (
+    ["/tonconnect-manifest.json", "/favicon.ico"].includes(req.nextUrl.pathname)
+  ) {
     return NextResponse.next();
   }
 

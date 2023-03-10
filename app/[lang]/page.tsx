@@ -2,11 +2,11 @@ import Image from "next/image";
 
 import { Button } from "@components";
 import { Language, useTranslation } from "@app/i18n";
-import FirstFigure from "../../public/homepage-figure-first.svg";
-import SecondFigure from "../../public/homepage-figure-second.svg";
-import ThirdFigure from "../../public/homepage-figure-third.svg";
-import FourthFigure from "../../public/homepage-figure-fourth.svg";
-import MacMock from "../../public/mac-mock.png";
+import FirstFigure from "@app/public/homepage-figure-first.svg";
+import SecondFigure from "@app/public/homepage-figure-second.svg";
+import ThirdFigure from "@app/public/homepage-figure-third.svg";
+import FourthFigure from "@app/public/homepage-figure-fourth.svg";
+import MacMock from "@app/public/mac-mock.png";
 
 interface HomeProps {
   params: {
@@ -24,13 +24,16 @@ const Home = async ({ params: { lang } }: HomeProps) => {
         <SecondFigure className="absolute top-72 left-16 motion-safe:animate-spin-slow" />
         <ThirdFigure className="absolute top-72 right-28 hidden lg:block motion-safe:animate-spin-slow" />
         <article className="flex flex-col items-center select-none">
-          <h1 className="flex flex-col text-center items-center font-mulish font-black text-5xl sm:text-6xl">
+          <h1 className="flex flex-col text-center items-center font-black text-5xl sm:text-6xl">
             {translation("heading.normal")}{" "}
             <span className="bg-title-blue-gradient bg-clip-text text-transparent h-20">
               {translation("heading.colored")}
             </span>
           </h1>
-          <Button className="w-40 h-12 sm:w-48 sm:h-14 sm:mt-3 font-bold">
+          <Button
+            className="w-40 h-12 sm:w-48 sm:h-14 sm:mt-3 font-bold"
+            animated
+          >
             {translation("button")}
           </Button>
         </article>
@@ -48,6 +51,17 @@ const Home = async ({ params: { lang } }: HomeProps) => {
       </div>
     </section>
   );
+};
+
+export const generateMetadata = async ({
+  params: { lang },
+}: Pick<HomeProps, "params">) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { translation } = await useTranslation(lang, "homepage");
+
+  return {
+    title: translation("title"),
+  };
 };
 
 export default Home;
