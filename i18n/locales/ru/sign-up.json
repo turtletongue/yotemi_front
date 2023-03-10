@@ -7,5 +7,12 @@
   "agree": "Я принимаю",
   "rules": "правила площадки",
   "submit": "Далее",
-  "walletConnectionError": "Failed to connect to your TON wallet"
+  "walletConnectionError": {
+    "title": "Ошибка подключения",
+    "description": "Не удалось подключиться к вашему TON кошельку."
+  },
+  "addressIsTakenError": {
+    "title": "Адрес кошелька занят",
+    "description": "Похоже, что пользователь с вашим TON адресом уже существует. Подключите другой кошелёк или войдите в аккаунт."
+  }
 }

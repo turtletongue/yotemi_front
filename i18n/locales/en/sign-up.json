@@ -7,5 +7,12 @@
   "agree": "I accept",
   "rules": "the rules of the platform",
   "submit": "Sign Up",
-  "walletConnectionError": ""
+  "walletConnectionError": {
+    "title": "Connection error",
+    "description": "Failed to connect to your TON wallet."
+  },
+  "addressIsTakenError": {
+    "title": "Wallet address is taken",
+    "description": "Seems like user with your TON address is already exist. Connect another wallet or sign in."
+  }
 }

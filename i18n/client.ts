@@ -7,12 +7,22 @@ import resourcesToBackend from "i18next-resources-to-backend";
 
 import { getOptions } from "./settings";
 
+const generalResourcesMap: Record<string, any> = {};
+
 i18next
   .use(initReactI18next)
   .use(
-    resourcesToBackend(
-      (lang: string, ns: string) => import(`./locales/${lang}/${ns}.json`)
-    )
+    resourcesToBackend(async (lang: string, ns: string) => {
+      if (!generalResourcesMap[lang]) {
+        generalResourcesMap[lang] = await import(
+          `./locales/${lang}/general.json`
+        );
+      }
+
+      const resource = await import(`./locales/${lang}/${ns}.json`);
+
+      return { ...generalResourcesMap[lang], ...resource };
+    })
   )
   .init(getOptions())
   .then();
