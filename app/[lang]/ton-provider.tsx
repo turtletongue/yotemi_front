@@ -27,8 +27,6 @@ const TonProvider = ({ lang, children }: TonProps) => {
   const getConnectParameters = async () => {
     const username = (window as any).targetUsername;
 
-    console.log(username);
-
     if (!username) {
       return {};
     }

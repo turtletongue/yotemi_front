@@ -2,24 +2,25 @@
 
 import { MouseEventHandler } from "react";
 import Link from "next/link";
+import { Avatar } from "flowbite-react";
 
-import { Avatar } from "@components";
-import { Language, useTranslation } from "@app/i18n/client";
+import { Language } from "@app/i18n/client";
 
 interface CurrentUserProps {
   lang: Language;
+  firstName: string;
+  avatarUrl?: string;
   id?: string;
   onClick?: MouseEventHandler;
 }
 
-const CurrentUser = ({ lang, id, onClick }: CurrentUserProps) => {
-  const user = {
-    name: "Alice",
-    avatarUrl: "https://avatars.dicebear.com/api/croodles-neutral/alice.svg",
-  };
-
-  const { translation } = useTranslation(lang, "current-user");
-
+const CurrentUser = ({
+  lang,
+  firstName,
+  avatarUrl,
+  id,
+  onClick,
+}: CurrentUserProps) => {
   return (
     <Link
       href={`/${lang}/profile`}
@@ -27,8 +28,8 @@ const CurrentUser = ({ lang, id, onClick }: CurrentUserProps) => {
       onClick={onClick}
       id={id}
     >
-      <span className="text-white font-medium mr-2">{user.name}</span>
-      <Avatar imageUrl={user.avatarUrl} alt={translation("avatar")} />
+      <span className="text-white font-medium mr-2">{firstName}</span>
+      <Avatar img={avatarUrl} size="sm" rounded />
     </Link>
   );
 };
