@@ -7,7 +7,7 @@
   "lastName": "Last name",
   "lastNameError": "Last name is required",
   "agree": "I accept",
-  "rules": "the rules of the platform",
+  "rules": "terms and conditions",
   "submit": "Sign Up",
   "walletConnectionError": {
     "title": "Connection error",

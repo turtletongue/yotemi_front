@@ -146,7 +146,9 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
           <Label htmlFor="agree">
             <span className="font-normal text-gray-400">
               {translation("agree")}{" "}
-              <TextLink href="/">{translation("rules")}</TextLink>
+              <TextLink href="/terms-and-conditions" target="_blank">
+                {translation("rules")}
+              </TextLink>
             </span>
           </Label>
         </div>

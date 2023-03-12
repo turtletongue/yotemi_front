@@ -1,0 +1,26 @@
+{
+  "title": "Privacy Policy | Yotemi",
+  "content": {
+    "title": "Privacy Policy",
+    "introduction": "Hereby, in accordance with Federal Law No. 152-FZ \"On Personal Data\" dated July 27, 2006, freely, by my will and in my interest, I express my unconditional consent to the processing of my personal data, upon registration, to the website https://yotemi.com. Personal data - any information relating to a natural person identified or determined on the basis of such information. This Consent has been issued by me for the processing of the following personal data:",
+    "data": [
+      "1. your name, surname, schedule of free time for consultations and CV;",
+      "2. the address of the crypto wallet in the TON blockchain."
+    ],
+    "mainPurpose": "Impersonal data of Users collected using Internet statistics services are used to collect information about the actions of Users on the site, improve the quality of the site and its content. Consent was given to the Operator to perform the following actions with my personal data using automation tools and / or without using such tools: collection, systematization, accumulation, storage, clarification (updating, changing), use, depersonalization, as well as the implementation of any other actions provided for the current legislation of the Russian Federation, both non-automated and automated methods. This consent is given to the Operator for the processing of my personal data for the following purposes:",
+    "purposes": [
+      "1. providing services to me;",
+      "2. sending me notifications regarding the services provided;",
+      "3. preparing and sending responses to my inquiries."
+    ],
+    "durationOfAgreement": "This consent is valid until it is withdrawn by sending a corresponding notice to the email address platonsterh@gmail.com. If I withdraw my consent to the processing of personal data, the Operator has the right to continue processing personal data without my consent if there are grounds specified in clauses 2-11 of part 1 of article 6, part 2 of article 10 and part 2 of article 11 of Federal Law No. 152-FZ \"On personal data” dated June 26, 2006",
+    "processingPurposes": {
+      "title": "Purposes of personal data processing",
+      "text": "The purpose of processing the User's personal data is to provide the User with access to the services, information and / or materials contained on the website."
+    },
+    "dataRemoving": {
+      "title": "Removing data and contact information",
+      "text": "If the User wishes to delete his account along with his personal data, he must send a request to the email address platonsterh@gmail.com. The request must be made in accordance with the requirements established by the Law on Personal Data."
+    }
+  }
+}

@@ -7,7 +7,7 @@
   "lastName": "Фамилия",
   "lastNameError": "Введите вашу фамилию",
   "agree": "Я принимаю",
-  "rules": "правила площадки",
+  "rules": "условия платформы",
   "submit": "Далее",
   "walletConnectionError": {
     "title": "Ошибка подключения",

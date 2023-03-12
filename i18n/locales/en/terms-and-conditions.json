@@ -1,0 +1,155 @@
+{
+  "title": "Terms and Conditions | Yotemi",
+  "content": {
+    "title": "Terms and Conditions",
+    "lastUpdate": "Last update date 12.03.2023.",
+    "introduction": "This user agreement (hereinafter referred to as the “Agreement”) is a public offer addressed to an unlimited number of persons, with a proposal to conclude an agreement on the conditions set forth below.",
+    "parts": [
+      {
+        "title": "1. TERMS USED IN THIS AGREEMENT",
+        "elements": [
+          "1.1. Site — an information resource located in the public information and telecommunications network \"Internet\" at a unique network address in the form of a second-level domain name yotemi.com, including both those that exist at the time of accepting the terms of this agreement, and those that are put into effect in the future throughout the entire lifetime of the subdomains (subdomains) of the lower levels of the specified second-level domain, including the WWW subdomain, additional domain names, as well as all computer programs and databases associated with the specified resource that ensure its operation, as well as other (technical) domains.",
+          "1.2. The administration is the administrator of the second-level domain name yotemi.com.",
+          "1.3. User — any natural person using the Site Functionality. The User has the right to go through the registration procedure to create a Personal Account and receive additional opportunities provided for by the Agreement.",
+          "1.4. Registration is the process of providing the User with individually identifying information in the form of registration data and processing this information by the services of the Site, as a result of which a unique User account is created on the Site.",
+          "1.5. Materials — information about the cost, time and topics of online consultations, wishes for an online consultation.",
+          "1.6. Account — a unique set of registration data (Login and Crypto Wallet Address in The Open Network blockchain) of the User, which is a means of authenticating the User on the Site, necessary for the User to be able to use the Site Functionality in full.",
+          "1.7. Login — a unique name of the Account, determined by the User.",
+          "1.8. Crypto Wallet — a digital wallet designed for safe and convenient storage and management of the TON cryptocurrency, which can be used by Users to conduct various financial transactions in the TON blockchain.",
+          "1.9. Functionality of the Site — a set of software features embedded in the Site.",
+          "1.10. Moderation — review by the Administration, placed (or planned to be placed - Pre-moderation) on the Site by the User of information for its compliance with the provisions of the Agreement. Moderation is not the responsibility of the Administrator.",
+          "1.11. Online Consultation — a session held in the form of a video call between two Users, paid for with TON cryptocurrency.",
+          "1.12. Smart Contract — a publicly available program code, the execution of which allows to pay or complete an Online consultation."
+        ]
+      },
+      {
+        "title": "2. MAIN PROVISIONS",
+        "elements": [
+          "2.1. The Administration grants the User the right to use the Site Functionality in the manner and on the terms set forth in this Agreement.",
+          "2.2. The User undertakes to carefully read the contents of this Agreement and follow it.",
+          "2.3. The Agreement can be changed by the Administration both with the notification of the User and without any special notification of the User at any time unilaterally.",
+          "2.4. The current version of the Agreement is located on the Site at https://yotemi.com/terms-and-conditions.",
+          "2.5. In the event of a change in the main domain name of the Site (including subdomains), the specified address may also be changed accordingly.",
+          "2.6. The new version of the Agreement comes into force and is applied immediately after its placement by the Administration at the address specified in clause 2.4 of this Agreement, unless otherwise provided in the text of the new version of the Agreement.",
+          "2.7. The User is considered to have fully and unconditionally accepted the terms of the Agreement in the event of any of the following actions, which are the acceptance of the offer:",
+          "2.7.1. Using the Website Functionality by any means, including the methods provided for by this Agreement and the current legislation of the Russian Federation;",
+          "2.7.2. Passing the Registration procedure on the Site.",
+          "2.8. Acceptance of the terms of the Agreement is possible only in full, without any reservations or exceptions.",
+          "2.9. A user who does not agree with the terms of the Agreement is not entitled to use the Site.",
+          "2.10. In the event that changes have been made to the Agreement, with the adoption of which the User does not agree, the User is not entitled to continue using the Site, and is obliged to stop any further use of the Site.",
+          "2.11. The law of the Russian Federation shall apply to this Agreement and the relations between the parties arising from the use of the Site.",
+          "2.12. If the main domain name of the Site is changed to something else, the terms of the Agreement and the scope of the powers of the Parties do not change."
+        ]
+      },
+      {
+        "title": "3. USER REGISTRATION",
+        "elements": [
+          "3.1. To use the Site Functionality in full, the User must register.",
+          "3.2. For the purposes of Registration, the User is obliged to Provide complete, sufficient and reliable information about himself on the issues specified in the registration form. All fields of the registration form are mandatory.",
+          "3.3. The user is prohibited from:",
+          "3.3.1. providing false registration data;",
+          "3.3.2. completing the Registration procedure on behalf of another person, unless this person is authorized to perform the specified actions on his behalf;",
+          "3.3.3. go through the Registration procedure again if there is an active Account.",
+          "3.4. The Administration has the right to refuse to create an Account without giving reasons and / or delete the User Account in cases of non-compliance with the terms of the Agreement.",
+          "3.5. The User is solely responsible for the safety of his Login and Crypto Wallet and is not entitled to transfer them to third parties.",
+          "3.6. If the User detects the activity of third parties using the Login and the User's Crypto Wallet or suspects that the connection between the Login and the User's Crypto Wallet has been compromised, he is obliged to immediately inform the Administration about this by sending a message to the email address platonsterh@gmail.com.",
+          "3.7. Actions performed using the Login and the Crypto Wallet of the User are assumed to be committed by the User until the opposite is proven, except for cases when the User has notified the Administration in advance about the compromise of the Login and the Crypto Wallet.",
+          "3.8. In case of receiving a notification from the User, provided for in clause 3.6 of the Agreement, the Administration blocks the User Account within 72 hours from the moment of such notification. To unlock the Account, the Administration has the right to request additional data in order to identify the User."
+        ]
+      },
+      {
+        "title": "4. RIGHTS AND OBLIGATIONS OF THE USER",
+        "elements": [
+          "4.1. An unregistered User has the right to:",
+          "4.1.1. view information posted by other Users for public access, Materials posted by the Administration and registered Users.",
+          "4.2. A registered User, in addition to the rights granted to an unregistered User, has the right to:",
+          "4.2.1. post Materials on the Site;",
+          "4.2.3. leave feedback about other Users;",
+          "4.2.4. use other features of the Site on the basis of this Agreement.",
+          "4.3. The user is prohibited from:",
+          "4.3.1. interfering with the operation of the Site in order to disrupt its normal functioning;",
+          "4.3.2. using the Site and Materials outside the powers granted by this Agreement or outside the scope of the Functionality for which it is intended;",
+          "4.3.3. collecting and processing personal data of other Users using the Site;",
+          "4.3.4. post on the Site information and Materials that:",
+          "4.3.4.1. discredit the honor, dignity or business reputation of other Users or third parties;",
+          "4.3.4.2. contain calls for violence, promote discrimination against people on racial, ethnic, gender, religious, social or other grounds;",
+          "4.3.4.3. violate the intellectual rights of Users or third parties;",
+          "4.3.4.4. in any other way violate the legislation of the Russian Federation or the norms of international law.",
+          "4.4. The user is obliged:",
+          "4.4.1. comply with the provisions of the current legislation of the Russian Federation, the terms of this Agreement;",
+          "4.4.2. maintain the relevance of the information specified during Registration;",
+          "4.4.3. immediately inform the Administration about the implementation by the Users of activities prohibited by this Agreement.",
+          "4.4.4. before making a payment, check the program code of the smart contract and do not make a payment if user do not agree with the terms of the smart contract.",
+          "4.5. The Administration has the right, at its discretion, without warning the User:",
+          "4.5.1. delete reviews and User Materials, in particular due to their placement in violation of the terms of this Agreement, the legislation of the Russian Federation."
+        ]
+      },
+      {
+        "title": "5. INTELLECTUAL RIGHTS",
+        "elements": [
+          "5.1. The databases and program code of the Site, the Site Materials posted by the Administration (both visible to the User and not visible without performing special actions, both legal and not), are the results of the intellectual activity of the Administration or other copyright holders who have entered into an agreement with the Administration, giving The Administration has the right to place the specified objects of intellectual property on the Site or in its composition, and are protected in accordance with the current legislation of the Russian Federation.",
+          "5.2. The Administration grants the User only the right to functionally use the Site within its Functionality, to the extent that, under the legislation of the Russian Federation, it does not require the possession of exclusive rights to the Site or elements of the Site.",
+          "5.3. Использование Сайта, в том числе входящих в его состав программ для ЭВМ, баз данных и Материалов, размещенных Администрацией, любыми способами, в том числе путем воспроизведения, декомпиляции, модификации, распространения, публичного показа, доведения до всеобщего сведения, строго запрещены. Администрация не предоставляет Пользователю исключительных прав.",
+          "5.4. The User is not entitled to post in any way on the Site Materials that are or include the results of intellectual activity or means of individualization of third parties, unless he has been granted the corresponding right or the exclusive right to the corresponding result of intellectual activity has expired. When publishing any Materials on the Site, the User guarantees that these actions are performed lawfully:",
+          "5.4.1. in accordance with the provisions on free use without the consent of the author or other copyright holder and the payment of remuneration;",
+          "5.4.2. or the User was granted the specified right by the actual copyright holder of the results of intellectual activity used.",
+          "5.5. By posting Materials on the Site, the User independently reproduces, publicly displays and/or makes them available to the public using the Site Functionality.",
+          "5.6. When publishing on the Site Materials or any other results of intellectual activity, the copyright of which is the User, he grants the Administration a simple non-exclusive license to use these results in the following ways:",
+          "5.6.1. reproduction (copy);",
+          "5.6.2. making available to the public;",
+          "5.6.3. use in any other way for the purposes of the Site.",
+          "5.7. The rights specified in clause 6.6 are granted free of charge for the entire duration of the exclusive right to the result of intellectual activity without any territorial or other spatial restrictions with the right to issue sublicenses.",
+          "5.8. The User has the right to carry out free personal non-commercial use of any Materials available to him posted by other Users, subject to the personal non-property rights of the authors of such Materials, to the extent that, under Russian law, does not require the possession of exclusive rights to the Materials."
+        ]
+      },
+      {
+        "title": "6. LIMITATION OF LIABILITY",
+        "elements": [
+          "6.1. The Administration does not guarantee and cannot guarantee that the operation of the Site will be carried out continuously, without delays, failures, and that all information provided will be displayed reliably.",
+          "6.2. The user uses the functionality of the Site at his own risk. All functionality is provided as is without any express or implied warranties. The safety of user information is not guaranteed.",
+          "6.3. The Administration under no circumstances can be held responsible for the content and negative consequences of using (including viewing, saving web pages) third-party resources, links to which are present on the Site.",
+          "6.4. The Administration is not liable to the User for any indirect, incidental, unintentional damage, including lost profits, lost data, damage to honor, dignity or business reputation caused in connection with the use of the Site, the contents of the Site or other materials to which the User or other individuals accessed through the Site.",
+          "6.5. The Administration is not responsible for the actions of Users or payment systems that may lead to the loss or incorrect crediting of funds when replenishing the Balance or withdrawing funds.",
+          "6.6. The Administration takes all measures to comply with the rights to the results of intellectual activity of third parties, however, since the Site allows the presence of user-generated content, the pre-moderation of which is impossible and is not carried out, the prompt removal of Materials that violate intellectual or other rights may be difficult.",
+          "6.7. At the request of the right holders of the results of intellectual activity or means of individualization, unlawfully posted or otherwise used on the Site, as well as on its own initiative, if there is information about the violation of intellectual rights, the Administration immediately deletes the Materials posted by the Users containing the specified objects of intellectual rights.",
+          "6.8. To gain access to some functions of the Site, the User must register an Account by following the instructions posted on the Site. Registration of a User Account means that the User has full legal capacity to accept this Agreement, i.e. reached the age of 18.",
+          "6.9. The user undertakes to provide reliable data and undertakes to ensure the accuracy, completeness and relevance of the data provided. In case of violation of this obligation, the Site shall not be liable for improperly rendered services due to the provision of false data. The site proceeds from the fact that the data provided by the User are reliable.",
+          "6.10. The User knows and agrees that the Resource deals with materials and data created by third parties and placed on the Internet on their computers and (or) servers. The content and safety of these materials cannot be controlled by the Resource Administration, so the latter is not responsible.",
+          "6.11. It is NOT the responsibility of the Resource to control the legality or illegality of the transmitted information, to determine the ownership or legality of the transfer, reception or use of this information.",
+          "6.12. The Resource does not, under any circumstances, refund funds for the paid online consultation, including the Resource commission in the form of 4% of the cost of the online consultation."
+        ]
+      },
+      {
+        "title": "7. PERSONAL DATA",
+        "elements": [
+          "7.1. The User expresses his consent to the processing by the Administration (and persons authorized by the Administration) of his personal data posted on the Site at https://yotemi.com/privacy-policy, provided by the User during registration, as well as personal data posted independently by the User in any part Site, including subdomains.",
+          "7.2. The processing of the User's personal data is carried out in accordance with the current legislation of the Russian Federation.",
+          "7.3. The Administration takes all possible measures to protect the User's personal data from unauthorized access by third parties."
+        ]
+      },
+      {
+        "title": "8. CHANGES TO THIS AGREEMENT",
+        "elements": [
+          "The administration reserves the right, at our discretion, to make changes, additions or remove parts of this Agreement at any time (for example, to reflect updates to the Yotemi Service or to reflect changes in legislation). If the Administration makes changes to this Agreement, we will notify you of such changes by posting a notice on the web page or indicating the new date of the last update above. This Agreement and the Guidelines should be reviewed periodically for such changes. Your continued use of the Yotemi Service following the posting of changes constitutes your acceptance of such changes. With respect to any material changes to this Agreement, the amended terms will automatically take effect thirty days after they are initially posted on the Yotemi Service, unless You provide Us with notice of termination within that period."
+        ]
+      },
+      {
+        "title": "9. FINAL PROVISIONS",
+        "elements": [
+          "9.1. Disputes between the parties are subject to resolution in the complaint procedure.",
+          "9.2. The term for responding to a claim is 10 working days from the date of its receipt by the party.",
+          "9.3. Inaction on the part of the Resource in case of violation by the User or a group of Users of the USER AGREEMENT does not mean that the Resource assists the User or a group of Users in such actions.",
+          "9.4. Inaction on the part of the Resource in case of violation by the User or a group of Users of the USER AGREEMENT does not deprive the Resource of the right to take appropriate actions to protect its interests later."
+        ]
+      },
+      {
+        "title": "10. CONSENT TO USER AGREEMENT",
+        "elements": [
+          "IF YOU DO NOT AGREE TO ALL OF THE ABOVE TERMS AND CONDITIONS, YOU HAVE NO RIGHT TO VISIT THE RESOURCE AS A WHOLE OR ANY PART OF IT, EXCEPT THE TERMS AND CONDITIONS PAGE, TO OBTAIN AND/OR USE THE CONTENT OF THIS RESOURCE IN ANY OTHER WAY IN ANY OTHER WAY PARTS! IF YOU DO NOT AGREE WITH THE USER AGREEMENT, YOU MUST LEAVE THE RESOURCE IMMEDIATELY."
+        ]
+      }
+    ],
+    "seeAlso": "see also",
+    "privacyPolicy": "privacy policy"
+  }
+}
