@@ -3,6 +3,7 @@ import { Id } from "@app/declarations";
 
 export default interface User {
   id: Id;
+  username: string;
   accountAddress: string;
   authId: Id;
   firstName: string;

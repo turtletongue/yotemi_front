@@ -3,18 +3,21 @@
 import { MouseEventHandler } from "react";
 
 import { Language, useTranslation } from "@app/i18n/client";
+import { useAppSelector } from "@redux/store-config/hooks";
+import { selectIsAuthenticated } from "@redux/features/auth";
 import NavbarLink from "../navbar-link";
 import Notifications from "../notifications";
 import CurrentUser from "../current-user";
 
 interface NavbarItemsProps {
   lang: Language;
-  isAuthenticated: boolean;
   onClick?: MouseEventHandler;
 }
 
-const NavbarItems = ({ lang, isAuthenticated, onClick }: NavbarItemsProps) => {
+const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
   const { translation } = useTranslation(lang, "navbar");
+
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
 
   return (
     <>

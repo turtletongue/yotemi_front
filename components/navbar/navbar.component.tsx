@@ -23,7 +23,7 @@ const Navbar = ({ lang }: NavbarProps) => {
       <nav className="bg-yankees-blue w-full h-14 flex items-center px-5 relative z-30">
         <Logo lang={lang} onClick={closeMobileNavbar} />
         <ul className="navbar-items hidden sm:grid content-center w-full ml-10">
-          <NavbarItems lang={lang} isAuthenticated={false} />
+          <NavbarItems lang={lang} />
         </ul>
         <MobileMenuControl
           lang={lang}
@@ -33,7 +33,7 @@ const Navbar = ({ lang }: NavbarProps) => {
       </nav>
       <GradientLine />
       <MobileNavbar isOpened={isMobileNavbarOpened}>
-        <NavbarItems lang={lang} isAuthenticated={false} />
+        <NavbarItems lang={lang} />
       </MobileNavbar>
     </header>
   );

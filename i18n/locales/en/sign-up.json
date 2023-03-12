@@ -1,5 +1,7 @@
 {
   "title": "Sign Up | Yotemi",
+  "username": "Username",
+  "usernameError": "Username must be at least 3 characters long",
   "firstName": "First name",
   "firstNameError": "First name is required",
   "lastName": "Last name",
@@ -14,5 +16,9 @@
   "addressIsTakenError": {
     "title": "Wallet address is taken",
     "description": "Seems like user with your TON address is already exist. Connect another wallet or sign in."
+  },
+  "usernameIsTakenError": {
+    "title": "Username is taken",
+    "description": "Seems like user with this username is already exist. Maybe you want to sign in?"
   }
 }

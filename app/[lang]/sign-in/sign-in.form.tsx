@@ -1,0 +1,152 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useTonConnectUI } from "@tonconnect/ui-react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { Label, TextInput } from "flowbite-react";
+import * as yup from "yup";
+
+import { Button, ErrorDialog, ErrorNotification } from "@components";
+import { Language, useTranslation } from "@app/i18n/client";
+import { changeTargetUsername, useLoginMutation } from "@redux/features/auth";
+import { useAppDispatch } from "@redux/store-config/hooks";
+import { errorNameToError, extractErrorNotification } from "@utils";
+import signInErrors from "./sign-in.errors";
+
+interface SignInFormProps {
+  lang: Language;
+}
+
+interface SignInSchema {
+  username: string;
+}
+
+const signInSchema = yup.object().shape({
+  username: yup.string().required(),
+});
+
+const SignInForm = ({ lang }: SignInFormProps) => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { translation } = useTranslation(lang, "sign-in");
+
+  /* TON connection */
+
+  const [tonConnectUI] = useTonConnectUI();
+
+  /* Form initialization */
+
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    watch,
+  } = useForm<SignInSchema>({
+    mode: "onChange",
+    resolver: yupResolver(signInSchema),
+  });
+
+  const usernameProps = register("username");
+
+  const [dialogError, setDialogError] = useState<ErrorNotification | null>(
+    null
+  );
+
+  useEffect(() => {
+    const subscription = watch(({ username }) => {
+      dispatch(changeTargetUsername(username ?? null));
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
+  /* Submit handler */
+
+  const [login, { error, isLoading, isSuccess }] = useLoginMutation();
+
+  const signIn = async () => {
+    try {
+      if (tonConnectUI.wallet) {
+        await tonConnectUI.disconnect();
+        await tonConnectUI.connectWallet();
+      } else {
+        await tonConnectUI.connectWallet();
+      }
+
+      const wallet = tonConnectUI.wallet;
+
+      if (!wallet) {
+        return;
+      }
+
+      const tonProof = wallet.connectItems?.tonProof;
+
+      if (!tonProof || !("proof" in tonProof)) {
+        return setDialogError(
+          errorNameToError("userNotFoundError", translation)
+        );
+      }
+
+      login({
+        accountAddress: wallet.account.address,
+        signature: tonProof.proof,
+      });
+    } catch {
+      return setDialogError(
+        errorNameToError("walletConnectionError", translation)
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.push("/");
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (error) {
+      setDialogError(
+        extractErrorNotification(error, signInErrors, translation)
+      );
+
+      tonConnectUI.disconnect();
+    }
+  }, [tonConnectUI, error]);
+
+  return (
+    <>
+      <form
+        className="sm:mx-36 w-64 bg-white flex flex-col items-center"
+        onSubmit={handleSubmit(signIn)}
+      >
+        <div className="w-full mb-4">
+          <Label htmlFor="username">
+            <span className="font-bold">{translation("username")}</span>
+          </Label>
+          <TextInput
+            color={errors.username ? "failure" : "gray"}
+            helperText={errors.username ? translation("usernameError") : ""}
+            {...usernameProps}
+          />
+        </div>
+        <Button
+          className="w-full h-12 mt-2"
+          animated
+          disabled={!isValid || isLoading}
+        >
+          {translation("submit")}
+        </Button>
+      </form>
+      <ErrorDialog
+        error={dialogError}
+        onClose={() => setDialogError(null)}
+        lang={lang}
+      />
+    </>
+  );
+};
+
+export default SignInForm;

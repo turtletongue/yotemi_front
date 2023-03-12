@@ -32,12 +32,14 @@ const RootLayout = async ({ children, params: { lang } }: LayoutProps) => {
       <body
         className={`flex flex-col w-full min-h-screen ${fonts.mulish.variable} font-mulish`}
       >
-        <TonProvider lang={lang}>
-          <ReduxProvider>
-            <Navbar lang={lang} />
-            <main className="flex flex-col grow">{children}</main>
-          </ReduxProvider>
-        </TonProvider>
+        <ReduxProvider>
+          <TonProvider lang={lang}>
+            <>
+              <Navbar lang={lang} />
+              <main className="flex flex-col grow">{children}</main>
+            </>
+          </TonProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

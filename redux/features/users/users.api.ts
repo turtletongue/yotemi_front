@@ -24,6 +24,12 @@ const usersApi = baseApi.injectEndpoints({
         return [{ type: "Users", id }];
       },
     }),
+    getUserByUsername: builder.query<User, string>({
+      query: (username) => `users/by-username/${username}`,
+      providesTags: (result) => {
+        return [{ type: "Users", id: result?.id }];
+      },
+    }),
     addUser: builder.mutation<void, CreateUserData>({
       query: (data) => ({
         url: "users",
@@ -78,6 +84,7 @@ const usersApi = baseApi.injectEndpoints({
 export const {
   useListUsersQuery,
   useGetUserQuery,
+  useGetUserByUsernameQuery,
   useAddUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,

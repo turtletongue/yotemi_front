@@ -3,7 +3,6 @@
 import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Button } from "flowbite-react";
-import { HiOutlineExclamationCircle } from "react-icons/hi2";
 
 import ErrorNotification from "./error-notification";
 import { Language, useTranslation } from "@app/i18n/client";
@@ -48,12 +47,11 @@ const ErrorDialog = ({ error, onClose, lang }: ErrorDialogProps) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-card p-6 text-center align-middle shadow-xl transition-all text-white">
-                <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14" />
-                <Dialog.Title className="font-bold">
+              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-3xl bg-white p-6 text-center align-middle shadow-xl transition-all">
+                <Dialog.Title className="font-bold text-xl mt-4">
                   {error?.title}
                 </Dialog.Title>
-                <Dialog.Description className="my-8">
+                <Dialog.Description className="my-6 text-[#7A8999]">
                   {error?.description}
                 </Dialog.Description>
 

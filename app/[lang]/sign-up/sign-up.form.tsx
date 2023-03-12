@@ -19,12 +19,14 @@ interface SignUpFormProps {
 }
 
 interface SignUpSchema {
+  username: string;
   firstName: string;
   lastName: string;
   agreed: boolean;
 }
 
 const signUpSchema = yup.object().shape({
+  username: yup.string().min(3).required(),
   firstName: yup.string().required(),
   lastName: yup.string().required(),
   agreed: yup.boolean().isTrue().required(),
@@ -49,6 +51,7 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
     resolver: yupResolver(signUpSchema),
   });
 
+  const usernameProps = register("username");
   const firstNameProps = register("firstName");
   const lastNameProps = register("lastName");
   const agreedProps = register("agreed");
@@ -61,7 +64,7 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
 
   const [addUser, { error, isLoading, isSuccess }] = useAddUserMutation();
 
-  const signUp = async ({ firstName, lastName }: SignUpSchema) => {
+  const signUp = async ({ username, firstName, lastName }: SignUpSchema) => {
     if (!tonConnectUI.account) {
       try {
         await tonConnectUI.connectWallet();
@@ -79,6 +82,7 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
     }
 
     addUser({
+      username,
       accountAddress: address,
       firstName,
       lastName,
@@ -107,6 +111,16 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
         className="sm:mx-36 w-64 bg-white flex flex-col items-center"
         onSubmit={handleSubmit(signUp)}
       >
+        <div className="w-full mb-4">
+          <Label htmlFor="username">
+            <span className="font-bold">{translation("username")}</span>
+          </Label>
+          <TextInput
+            color={errors.username ? "failure" : "gray"}
+            helperText={errors.username ? translation("usernameError") : ""}
+            {...usernameProps}
+          />
+        </div>
         <div className="w-full mb-4">
           <Label htmlFor="firstName">
             <span className="font-bold">{translation("firstName")}</span>

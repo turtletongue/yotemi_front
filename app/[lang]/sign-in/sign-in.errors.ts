@@ -1,8 +1,7 @@
 import { generalErrors } from "@utils";
 
 const signUpErrors = {
-  ADDRESS_IS_TAKEN: "addressIsTakenError",
-  USERNAME_IS_TAKEN: "usernameIsTakenError",
+  401: "unauthorizedError",
   ...generalErrors,
 } as const;
 

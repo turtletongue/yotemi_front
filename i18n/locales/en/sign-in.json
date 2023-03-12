@@ -1,0 +1,14 @@
+{
+  "title": "Sign In | Yotemi",
+  "username": "Username",
+  "usernameError": "Username is required",
+  "submit": "Sign In",
+  "userNotFoundError": {
+    "title": "Could not find user",
+    "description": "User with specified username is not found. Maybe you want to sign up?"
+  },
+  "unauthorizedError": {
+    "title": "Signature incorrect",
+    "description": "The wallet signature of this account does not match yours. Try to connect another wallet."
+  }
+}

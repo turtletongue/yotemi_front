@@ -1,5 +1,6 @@
 import { Language, useTranslation } from "@app/i18n";
 import SignUpForm from "./sign-up.form";
+
 import FirstFigure from "@app/public/signup-figure-first.svg";
 import SecondFigure from "@app/public/signup-figure-second.svg";
 import ThirdFigure from "@app/public/signup-figure-third.svg";
