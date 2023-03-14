@@ -91,7 +91,7 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
 
   useEffect(() => {
     if (isSuccess) {
-      router.push("/");
+      router.push("/sign-in");
     }
   }, [isSuccess]);
 

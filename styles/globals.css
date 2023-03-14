@@ -36,8 +36,11 @@ body {
   }
 
   .mobile-navbar-items {
+    grid-template-rows: repeat(3, min-content) 1fr min-content;
     grid-template-areas:
       "members-link members-link"
+      "sign-in-link sign-in-link"
+      "sign-up-link sign-up-link"
       ". ."
       "notifications-link current-user-link";
   }
