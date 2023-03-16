@@ -22,7 +22,7 @@ const Home = async ({ params: { lang } }: HomeProps) => {
       <div className="w-full md:w-1/2 h-full flex justify-center items-center text-white relative">
         <FirstFigure className="absolute -top-48 left-48 motion-safe:animate-spin-slow" />
         <SecondFigure className="absolute top-72 left-16 motion-safe:animate-spin-slow" />
-        <ThirdFigure className="absolute top-72 right-28 hidden lg:block motion-safe:animate-spin-slow" />
+        <ThirdFigure className="absolute top-60 right-28 hidden lg:block motion-safe:animate-spin-slow" />
         <article className="flex flex-col items-center select-none">
           <h1 className="flex flex-col text-center items-center font-black text-5xl sm:text-6xl">
             {translation("heading.normal")}{" "}
