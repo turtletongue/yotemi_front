@@ -18,8 +18,8 @@ const Home = async ({ params: { lang } }: HomeProps) => {
   const { translation } = await useTranslation(lang, "homepage");
 
   return (
-    <section className="grow bg-cetacean-blue flex items-center w-screen px-4">
-      <div className="w-full md:w-1/2 h-full flex justify-center items-center text-white relative oveflow-y-hidden">
+    <section className="grow bg-cetacean-blue flex items-center w-full px-4 overflow-hidden">
+      <div className="w-full md:w-1/2 h-full flex justify-center items-center text-white relative">
         <FirstFigure className="absolute -top-48 left-48 motion-safe:animate-spin-slow" />
         <SecondFigure className="absolute top-72 left-16 motion-safe:animate-spin-slow" />
         <ThirdFigure className="absolute top-72 right-28 hidden lg:block motion-safe:animate-spin-slow" />
