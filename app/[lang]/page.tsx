@@ -2,6 +2,8 @@ import Image from "next/image";
 
 import { Button } from "@components";
 import { Language, useTranslation } from "@app/i18n";
+import ProjectDescription from "./project-description";
+
 import FirstFigure from "@app/public/homepage-figure-first.svg";
 import SecondFigure from "@app/public/homepage-figure-second.svg";
 import ThirdFigure from "@app/public/homepage-figure-third.svg";
@@ -20,23 +22,19 @@ const Home = async ({ params: { lang } }: HomeProps) => {
   return (
     <section className="grow bg-cetacean-blue flex items-center w-full px-4 overflow-hidden">
       <div className="w-full lg:w-1/2 h-full flex justify-center items-center text-white relative">
-        <FirstFigure className="absolute -top-48 left-48 motion-safe:animate-spin-slow" />
+        <FirstFigure className="absolute -top-72 left-56 motion-safe:animate-spin-slow" />
         <SecondFigure className="absolute top-72 left-16 motion-safe:animate-spin-slow" />
         <ThirdFigure className="absolute top-60 right-28 hidden lg:block motion-safe:animate-spin-slow" />
-        <article className="flex flex-col items-center select-none">
-          <h1 className="flex flex-col text-center items-center font-black text-4xl sm:text-5xl 2xl:text-6xl">
-            {translation("heading.normal")}{" "}
+        <article className="absolute select-none max-w-full sm:max-w-[40rem]">
+          <h1 className="font-black text-3xl sm:text-5xl 2xl:text-6xl">
+            {translation("heading.start")}{" "}
             <span className="bg-title-blue-gradient bg-clip-text text-transparent">
-              {translation("heading.colored")}
+              {translation("heading.middle")}{" "}
             </span>
+            {translation("heading.end")}
           </h1>
-          <p className="my-4 text-sm sm:text-md text-center uppercase tracking-widest max-w-xs sm:max-w-md">
-            {translation("description")}
-          </p>
-          <Button
-            className="w-40 h-12 sm:w-48 sm:h-14 sm:mt-2 font-bold"
-            animated
-          >
+          <ProjectDescription translation={translation} />
+          <Button className="w-40 h-12 sm:w-48 sm:h-14 mt-4 font-bold" animated>
             {translation("button")}
           </Button>
         </article>

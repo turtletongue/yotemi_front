@@ -1,10 +1,24 @@
 {
   "title": "Home | Yotemi",
   "heading": {
-    "normal": "Attention for",
-    "colored": "everyone"
+    "start": "Platform for",
+    "middle": "modern",
+    "end": "experience sharing"
   },
-  "description": "Modern platform for experience sharing",
+  "description": {
+    "companyName": "Yotemi",
+    "platform": "is a platform where users can",
+    "experience": "share experience",
+    "instruments": "with each other via video calls or chats.",
+    "doNotWorry": "Do not worry",
+    "about": "about commissions and fraud, because",
+    "reliability": "the reliability",
+    "speed": "speed",
+    "and": "and",
+    "security": "security",
+    "guaranteed": "of payment is guaranteed by the",
+    "blockchain": "TON blockchain"
+  },
   "button": "Get It",
   "mock": "Yotemi App on the screen of iMac"
 }

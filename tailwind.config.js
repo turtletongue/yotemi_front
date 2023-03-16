@@ -12,6 +12,7 @@ module.exports = {
         "cetacean-blue": "#0F1132",
         "space-cadet": "#1C1E4E",
         card: "#16183C",
+        "concentrated-blue": "#6BE4FF",
       },
       screens: {
         xs: "375px",
