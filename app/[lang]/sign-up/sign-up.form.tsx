@@ -93,7 +93,7 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
     if (isSuccess) {
       router.push("/sign-in");
     }
-  }, [isSuccess]);
+  }, [router, translation, tonConnectUI, isSuccess]);
 
   useEffect(() => {
     if (error) {
@@ -103,7 +103,7 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
 
       tonConnectUI.disconnect();
     }
-  }, [tonConnectUI, error]);
+  }, [translation, tonConnectUI, error]);
 
   return (
     <>

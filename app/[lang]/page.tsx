@@ -19,7 +19,7 @@ const Home = async ({ params: { lang } }: HomeProps) => {
 
   return (
     <section className="grow bg-cetacean-blue flex items-center w-screen px-4">
-      <div className="w-full md:w-1/2 h-full flex justify-center items-center text-white relative">
+      <div className="w-full md:w-1/2 h-full flex justify-center items-center text-white relative oveflow-y-hidden">
         <FirstFigure className="absolute -top-48 left-48 motion-safe:animate-spin-slow" />
         <SecondFigure className="absolute top-72 left-16 motion-safe:animate-spin-slow" />
         <ThirdFigure className="absolute top-72 right-28 hidden lg:block motion-safe:animate-spin-slow" />
@@ -31,7 +31,7 @@ const Home = async ({ params: { lang } }: HomeProps) => {
             </span>
           </h1>
           <Button
-            className="w-40 h-12 sm:w-48 sm:h-14 sm:mt-3 font-bold"
+            className="w-40 h-12 sm:w-48 sm:h-14 sm:mt-2 font-bold"
             animated
           >
             {translation("button")}

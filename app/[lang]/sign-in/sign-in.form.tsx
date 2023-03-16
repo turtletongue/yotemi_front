@@ -60,7 +60,7 @@ const SignInForm = ({ lang }: SignInFormProps) => {
     });
 
     return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [dispatch, watch]);
 
   /* Submit handler */
 
@@ -104,7 +104,7 @@ const SignInForm = ({ lang }: SignInFormProps) => {
     if (isSuccess) {
       router.push("/");
     }
-  }, [isSuccess]);
+  }, [router, translation, tonConnectUI, isSuccess]);
 
   useEffect(() => {
     if (error) {
@@ -114,7 +114,7 @@ const SignInForm = ({ lang }: SignInFormProps) => {
 
       tonConnectUI.disconnect();
     }
-  }, [tonConnectUI, error]);
+  }, [translation, tonConnectUI, error]);
 
   return (
     <>
