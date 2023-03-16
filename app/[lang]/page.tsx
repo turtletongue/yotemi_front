@@ -44,7 +44,7 @@ const Home = async ({ params: { lang } }: HomeProps) => {
           className="relative"
           src={MacMock}
           alt={translation("mock")}
-          width={700}
+          width={600}
           unoptimized
           priority
         />
