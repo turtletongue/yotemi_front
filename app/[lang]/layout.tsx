@@ -46,7 +46,6 @@ const RootLayout = async ({ children, params: { lang } }: LayoutProps) => {
 };
 
 export const generateMetadata = async () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   return {
     icons: "/favicon.ico",
   };
