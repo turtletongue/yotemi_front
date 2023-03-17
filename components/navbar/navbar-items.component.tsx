@@ -22,16 +22,31 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
 
   return (
     <>
-      <NavbarLink key="members" link={`/${lang}/members`} id="members-link">
+      <NavbarLink
+        key="members"
+        link={`/${lang}/members`}
+        id="members-link"
+        onClick={onClick}
+      >
         {translation("links.members")}
       </NavbarLink>
       {!isAuthenticated && (
-        <NavbarLink key="signIn" link={`/${lang}/sign-in`} id="sign-in-link">
+        <NavbarLink
+          key="signIn"
+          link={`/${lang}/sign-in`}
+          id="sign-in-link"
+          onClick={onClick}
+        >
           {translation("links.sign-in")}
         </NavbarLink>
       )}
       {!isAuthenticated && (
-        <NavbarLink key="signUp" link={`/${lang}/sign-up`} id="sign-up-link">
+        <NavbarLink
+          key="signUp"
+          link={`/${lang}/sign-up`}
+          id="sign-up-link"
+          onClick={onClick}
+        >
           {translation("links.sign-up")}
         </NavbarLink>
       )}

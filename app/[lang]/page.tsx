@@ -25,15 +25,15 @@ const Home = async ({ params: { lang } }: HomeProps) => {
         <FirstFigure className="absolute -top-80 left-56 motion-safe:animate-spin-slow" />
         <SecondFigure className="absolute top-72 left-16 motion-safe:animate-spin-slow" />
         <ThirdFigure className="absolute top-60 right-28 hidden lg:block motion-safe:animate-spin-slow" />
-        <article className="absolute select-none max-w-full sm:max-w-[35rem]">
-          <h1 className="font-black text-3xl sm:text-5xl 2xl:text-6xl">
+        <article className="absolute select-none max-w-[35rem]">
+          <h1 className="font-black text-4xl sm:text-5xl 2xl:text-6xl">
             {translation("heading.normal")}{" "}
             <span className="bg-title-blue-gradient bg-clip-text text-transparent">
               {translation("heading.colored")}{" "}
             </span>
           </h1>
           <ProjectDescription translation={translation} />
-          <Button className="w-40 h-12 sm:w-48 sm:h-14 mt-4 font-bold" animated>
+          <Button className="w-40 h-12 sm:w-48 sm:h-14 mt-5 font-bold" animated>
             {translation("button")}
           </Button>
         </article>

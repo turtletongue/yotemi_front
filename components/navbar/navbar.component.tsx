@@ -33,7 +33,7 @@ const Navbar = ({ lang }: NavbarProps) => {
       </nav>
       <GradientLine />
       <MobileNavbar isOpened={isMobileNavbarOpened}>
-        <NavbarItems lang={lang} />
+        <NavbarItems lang={lang} onClick={closeMobileNavbar} />
       </MobileNavbar>
     </header>
   );

@@ -6,7 +6,7 @@ interface ProjectDescriptionProps {
 
 const ProjectDescription = ({ translation }: ProjectDescriptionProps) => {
   return (
-    <p className="text-xs sm:text-sm 2xl:text-base tracking-widest uppercase mt-4 mb-3 text-gray-50 font-mulish">
+    <p className="text-sm 2xl:text-base tracking-widest uppercase mt-4 mb-3 text-gray-50 font-mulish">
       <span className="text-concentrated-blue font-mulish">
         {translation("description.companyName")}
       </span>{" "}
