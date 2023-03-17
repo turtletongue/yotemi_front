@@ -1,23 +1,15 @@
 {
   "title": "Главная | Yotemi",
   "heading": {
-    "start": "Платформа для",
-    "middle": "современного",
-    "end": "обмена опытом"
+    "normal": "Вы – в центре",
+    "colored": "внимания"
   },
   "description": {
     "companyName": "Yotemi",
-    "platform": "это платформа, где пользователи",
-    "experience": "делятся опытом",
-    "instruments": "друг с другом с помощью видеосвязи или чатов.",
-    "doNotWorry": "Не беспокойтесь",
-    "about": "о комиссиях и мошенничестве, потому что",
-    "reliability": "надёжность",
-    "speed": "скорость",
-    "and": "и",
-    "security": "безопасность",
-    "guaranteed": "платежей гарантируются",
-    "blockchain": "блокчейном TON"
+    "platform": "это платформа для",
+    "experience": "обмена опытом",
+    "instruments": "работающая с",
+    "cryptocurrency": "криптовалютой TON"
   },
   "button": "Начать",
   "mock": "Yotemi на экране iMac"

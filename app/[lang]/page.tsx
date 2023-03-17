@@ -22,16 +22,15 @@ const Home = async ({ params: { lang } }: HomeProps) => {
   return (
     <section className="grow bg-cetacean-blue flex items-center w-full px-4 overflow-hidden">
       <div className="w-full lg:w-1/2 h-full flex justify-center items-center text-white relative">
-        <FirstFigure className="absolute -top-72 left-56 motion-safe:animate-spin-slow" />
+        <FirstFigure className="absolute -top-80 left-56 motion-safe:animate-spin-slow" />
         <SecondFigure className="absolute top-72 left-16 motion-safe:animate-spin-slow" />
         <ThirdFigure className="absolute top-60 right-28 hidden lg:block motion-safe:animate-spin-slow" />
-        <article className="absolute select-none max-w-full sm:max-w-[40rem]">
+        <article className="absolute select-none max-w-full sm:max-w-[35rem]">
           <h1 className="font-black text-3xl sm:text-5xl 2xl:text-6xl">
-            {translation("heading.start")}{" "}
+            {translation("heading.normal")}{" "}
             <span className="bg-title-blue-gradient bg-clip-text text-transparent">
-              {translation("heading.middle")}{" "}
+              {translation("heading.colored")}{" "}
             </span>
-            {translation("heading.end")}
           </h1>
           <ProjectDescription translation={translation} />
           <Button className="w-40 h-12 sm:w-48 sm:h-14 mt-4 font-bold" animated>
