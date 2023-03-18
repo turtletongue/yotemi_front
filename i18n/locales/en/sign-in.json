@@ -3,6 +3,10 @@
   "username": "Username",
   "usernameError": "Username is required",
   "submit": "Sign In",
+  "walletConnectionError": {
+    "title": "Connection error",
+    "description": "Failed to connect to your TON wallet."
+  },
   "userNotFoundError": {
     "title": "Could not find user",
     "description": "User with specified username is not found. Maybe you want to sign up?"
