@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Button } from "@components";
+import { GradientButton } from "@components";
 import { Language, useTranslation } from "@app/i18n";
 import ProjectDescription from "./project-description";
 
@@ -33,9 +33,12 @@ const Home = async ({ params: { lang } }: HomeProps) => {
             </span>
           </h1>
           <ProjectDescription translation={translation} />
-          <Button className="w-40 h-12 sm:w-48 sm:h-14 mt-5 font-bold" animated>
+          <GradientButton
+            className="w-40 h-12 sm:w-48 sm:h-14 mt-5 font-bold"
+            animated
+          >
             {translation("button")}
-          </Button>
+          </GradientButton>
         </article>
       </div>
       <div className="hidden lg:block relative w-1/2 h-full flex justify-center items-center text-white">

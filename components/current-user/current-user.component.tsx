@@ -2,13 +2,14 @@
 
 import { MouseEventHandler } from "react";
 import Link from "next/link";
-import { Avatar } from "flowbite-react";
 
+import { Avatar } from "@components";
 import { Language } from "@app/i18n/client";
 
 interface CurrentUserProps {
   lang: Language;
   firstName: string;
+  username?: string;
   avatarUrl?: string;
   id?: string;
   onClick?: MouseEventHandler;
@@ -17,13 +18,14 @@ interface CurrentUserProps {
 const CurrentUser = ({
   lang,
   firstName,
+  username,
   avatarUrl,
   id,
   onClick,
 }: CurrentUserProps) => {
   return (
     <Link
-      href={`/${lang}/profile`}
+      href={`/${lang}/profile/${username}`}
       className="flex items-center cursor-pointer"
       onClick={onClick}
       id={id}

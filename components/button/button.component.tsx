@@ -1,41 +1,34 @@
-import classnames from "classnames";
+import { MouseEventHandler, ReactNode } from "react";
 
 interface ButtonProps {
-  className?: string;
-  animated?: boolean;
-  disabled?: boolean;
-  children: string;
+  addition?: string | number;
+  outline?: boolean;
+  onClick?: MouseEventHandler;
+  children: ReactNode;
 }
 
-const Button = ({
-  className = "w-40 h-12",
-  animated = false,
-  disabled = false,
-  children,
-}: ButtonProps) => {
-  const disableClass = classnames(disabled && "opacity-70");
-  const cursorClass = classnames(!disabled && "cursor-pointer");
-  const animateBorderClass = classnames(
-    animated && !disabled && "hover:animate-gradient-ellipse"
-  );
-  const animateTextClass = classnames(
-    animated && !disabled && "group-hover:animate-gradient-ellipse"
-  );
+const Button = ({ addition, outline, onClick, children }: ButtonProps) => {
+  const additionStyling = addition
+    ? "rounded-l-full pr-3"
+    : "rounded-full pr-5";
+  const outlineStyling = outline
+    ? "bg-transparent border-2 border-vivid-medium text-vivid-medium"
+    : "bg-vivid-light hover:bg-vivid-dark";
 
   return (
-    <button
-      className={`group rounded-full bg-blue-pink-pink-gradient bg-300% bg-full ${cursorClass} ${animateBorderClass} ${disableClass} p-1 ${className}`}
-      aria-label={children}
-      disabled={disabled}
-    >
-      <div className="rounded-full bg-space-cadet w-full h-full flex items-center justify-center">
-        <span
-          className={`bg-blue-pink-pink-gradient bg-300% bg-full ${animateTextClass} bg-clip-text text-transparent text-sm tracking-widest uppercase`}
-        >
-          {children}
+    <div className="flex max-h-9 font-medium">
+      <button
+        className={`${additionStyling} ${outlineStyling} py-1 pl-5 transition ease-in-out duration-100`}
+        onClick={onClick}
+      >
+        {children}
+      </button>
+      {addition && (
+        <span className="flex items-center bg-vivid-medium py-1 pl-3 pr-4 rounded-r-full text-sm">
+          {addition}
         </span>
-      </div>
-    </button>
+      )}
+    </div>
   );
 };
 
