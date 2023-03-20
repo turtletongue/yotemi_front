@@ -17,6 +17,7 @@ module.exports = {
         "vivid-light": "#00A3FF",
         "vivid-medium": "#0098EE",
         "vivid-dark": "#008DDC",
+        "calendar-date": "#6BB6FF",
         independence: "#4A5169",
       },
       screens: {

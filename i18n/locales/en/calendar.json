@@ -1,5 +1,7 @@
 {
   "header": "Sign Up for an interview",
   "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November" ,"December"],
-  "daysOfWeek": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"]
+  "daysOfWeek": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+  "startOfWeekIndex": 0,
+  "endOfWeekIndex": 6
 }

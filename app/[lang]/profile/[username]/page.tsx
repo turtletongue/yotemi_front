@@ -42,12 +42,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
         <article className="max-w-screen-md mx-24">
           <div className="flex justify-between">
             <div className="max-w-sm">
-              <div className="flex items-center">
-                <h1 className="text-xl">{profile.fullName}</h1>
-                <span className="mx-4 text-gray-500 text-sm">
-                  @{profile.username}
-                </span>
-              </div>
+              <h1 className="text-xl">{profile.fullName}</h1>
               <div className="flex flex-wrap gap-2 mt-3">
                 {profile.topics.map((topic) => {
                   const label = topic.labels.find(
