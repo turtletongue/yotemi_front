@@ -210,7 +210,6 @@ const Calendar = ({ lang, user }: CalendarProps) => {
                             <InterviewCard
                               key={interview.id}
                               interview={interview}
-                              userAddress={user.accountAddress}
                               lang={lang}
                             />
                           ))}
@@ -228,7 +227,6 @@ const Calendar = ({ lang, user }: CalendarProps) => {
                             <InterviewCard
                               key={interview.id}
                               interview={interview}
-                              userAddress={user.accountAddress}
                               lang={lang}
                             />
                           ))}
@@ -246,7 +244,6 @@ const Calendar = ({ lang, user }: CalendarProps) => {
                             <InterviewCard
                               key={interview.id}
                               interview={interview}
-                              userAddress={user.accountAddress}
                               lang={lang}
                             />
                           ))}
@@ -264,7 +261,6 @@ const Calendar = ({ lang, user }: CalendarProps) => {
                             <InterviewCard
                               key={interview.id}
                               interview={interview}
-                              userAddress={user.accountAddress}
                               lang={lang}
                             />
                           ))}
