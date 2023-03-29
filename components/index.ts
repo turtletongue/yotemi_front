@@ -24,3 +24,5 @@ export { default as Calendar } from "./calendar";
 export { default as InterviewCard } from "./interview-card";
 
 export { default as ConfirmPaymentModal } from "./confirm-payment-modal";
+
+export { default as ProfileControl } from "./profile-control";

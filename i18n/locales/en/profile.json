@@ -2,6 +2,8 @@
   "title": "Profile (@_) | Yotemi",
   "follow": "Follow",
   "unfollow": "Unfollow",
+  "settings": "Settings",
+  "signOut": "Sign Out",
   "reviews": "Reviews",
   "noReviews": "There are no reviews here."
 }

@@ -1,11 +1,17 @@
 import { notFound } from "next/navigation";
 import classnames from "classnames";
 
-import { Avatar, Calendar, Rating, ReviewCard, Topic } from "@components";
+import {
+  Avatar,
+  Calendar,
+  ProfileControl,
+  Rating,
+  ReviewCard,
+  Topic,
+} from "@components";
 import { Language, useTranslation } from "@app/i18n";
 import fetchProfile from "./fetch-profile";
 import fetchReviews from "./fetch-reviews";
-import FollowingControlButton from "./following-control-button";
 
 interface ProfileProps {
   params: {
@@ -39,7 +45,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
           <article className="max-w-screen-sm 2xl:mr-24">
             <div className="flex items-center justify-between flex-col sm:flex-row">
               <h1 className="text-xl mb-2 sm:mb-0">{profile.fullName}</h1>
-              <FollowingControlButton lang={lang} profileId={profile.id} />
+              <ProfileControl lang={lang} profileId={profile.id} />
             </div>
             {hasTopics && (
               <div className="flex flex-wrap gap-2 mt-5">

@@ -20,6 +20,8 @@ module.exports = {
         "vivid-dark": "#008DDC",
         "calendar-date": "#6BB6FF",
         independence: "#4A5169",
+        danger: "#DC3545",
+        "danger-dark": "#C12C3B",
       },
       screens: {
         xs: "375px",
