@@ -1,6 +1,6 @@
 export default function* getCalendarDates(start: Date, end: Date) {
   for (
-    const currentDate = start;
+    const currentDate = new Date(start);
     currentDate.getTime() <= end.getTime();
     currentDate.setDate(currentDate.getDate() + 1)
   ) {

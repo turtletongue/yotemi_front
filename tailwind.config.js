@@ -10,6 +10,7 @@ module.exports = {
       colors: {
         "yankees-blue": "#14174A",
         "cetacean-blue": "#0F1132",
+        "light-cetacean": "#121236",
         "space-cadet": "#1C1E4E",
         card: "#16183C",
         line: "#27295C",

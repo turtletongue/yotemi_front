@@ -11,6 +11,7 @@ import {
 } from "redux-persist";
 
 import { authApi } from "@redux/features/auth";
+import { contractApi } from "@redux/features/contract";
 import baseApi from "@redux/features/base.api";
 import rootReducer from "./root-reducer";
 import persistStorage from "./persist-storage";
@@ -35,6 +36,7 @@ export const store = configureStore({
         },
       }),
       authApi.middleware,
+      contractApi.middleware,
       baseApi.middleware,
     ];
   },

@@ -6,6 +6,6 @@ export default interface Topic {
   labels: TopicLabel[];
   isModerated: boolean;
   colorHex: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }

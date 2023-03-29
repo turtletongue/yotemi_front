@@ -20,7 +20,10 @@ const fetchProfile = async (username: string): Promise<ProfileResponse> => {
 
   const profile = await response.json();
 
-  return { isFound: true, profile };
+  return {
+    isFound: true,
+    profile,
+  };
 };
 
 export default fetchProfile;

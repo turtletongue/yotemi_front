@@ -5,6 +5,4 @@ export default interface TopicLabel {
   id: Id;
   value: string;
   language: Language;
-  createdAt: Date;
-  updatedAt: Date;
 }

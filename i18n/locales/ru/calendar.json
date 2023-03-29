@@ -3,5 +3,10 @@
   "months": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
   "daysOfWeek": ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"],
   "startOfWeekIndex": 1,
-  "endOfWeekIndex": 7
+  "endOfWeekIndex": 7,
+  "noInterviews": "Здесь пока нет интервью.",
+  "morning": "Утро \uD83C\uDF04",
+  "afternoon": "День \uD83C\uDFDE",
+  "evening": "Вечер \uD83C\uDF06",
+  "night": "Ночь \uD83C\uDF03"
 }

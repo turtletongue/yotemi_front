@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import baseQuery from "@redux/base-query";
+import baseQuery from "@redux/queries/base-query";
 import AuthResponse from "./interfaces/auth-response";
 
 export interface LoginRequest {

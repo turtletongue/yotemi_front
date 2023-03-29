@@ -1,5 +1,5 @@
 import baseApi from "@redux/features/base.api";
-import PaginationResult from "@redux/pagination-result";
+import PaginationResult from "@redux/types/pagination-result";
 import { Id } from "@app/declarations";
 import User from "./interfaces/user";
 import CreateUserData from "./interfaces/create-user.data";

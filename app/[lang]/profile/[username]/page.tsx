@@ -11,6 +11,7 @@ import {
 import { Language, useTranslation } from "@app/i18n";
 import fetchProfile from "./fetch-profile";
 import fetchReviews from "./fetch-reviews";
+import classnames from "classnames";
 
 interface ProfileProps {
   params: {
@@ -27,23 +28,29 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
   }
 
   const reviews = await fetchReviews(profile.id);
+  const hasTopics = profile.topics.length !== 0;
 
   const { translation } = await useTranslation(lang, "profile");
 
   return (
-    <section className="grow bg-cetacean-blue text-white">
-      <div className="flex justify-center w-full mt-32">
+    <section className="grow bg-cetacean-blue text-white p-4">
+      <div className="flex justify-center w-full mt-10 lg:mt-32 flex-col lg:flex-row">
         <Avatar
           img={profile.avatarPath ?? undefined}
-          className="h-min"
+          className="h-min mb-12"
           size="xl"
           rounded
         />
-        <article className="max-w-screen-md mx-24">
-          <div className="flex justify-between">
-            <div className="max-w-sm">
-              <h1 className="text-xl">{profile.fullName}</h1>
-              <div className="flex flex-wrap gap-2 mt-3">
+        <div className="flex flex-col items-center 2xl:flex-row 2xl:items-start lg:ml-24">
+          <article className="max-w-screen-sm 2xl:mr-24">
+            <div className="flex items-center justify-between flex-col sm:flex-row">
+              <h1 className="text-xl mb-2 sm:mb-0">{profile.fullName}</h1>
+              <Button addition={profile.followersCount}>
+                {translation("follow")}
+              </Button>
+            </div>
+            {hasTopics && (
+              <div className="flex flex-wrap gap-2 mt-5">
                 {profile.topics.map((topic) => {
                   const label = topic.labels.find(
                     (label) => label.language === lang
@@ -60,37 +67,36 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
                   );
                 })}
               </div>
+            )}
+            <div className={`mt-3 ${classnames(profile.biography && "mb-7")}`}>
+              {profile.biography.split("\n").map((text, index) => (
+                <p key={index} className="mt-2">
+                  {text}
+                </p>
+              ))}
             </div>
-            <Button addition={103}>{translation("follow")}</Button>
-          </div>
-          <div className="mt-7">
-            {profile.biography.split("\n").map((text, index) => (
-              <p key={index} className="mt-2">
-                {text}
-              </p>
+            <Calendar lang={lang} user={profile} />
+          </article>
+          <article className="flex flex-col w-full 2xl:w-96 px-6 lg:px-0">
+            <div className="flex w-full justify-between items-center">
+              <span>{translation("reviews")}</span>
+              <div className="flex">
+                <Rating points={profile.averagePoints} />
+                <span className="text-independence text-sm ml-1">
+                  ({profile.reviewsCount})
+                </span>
+              </div>
+            </div>
+            {reviews.map((review) => (
+              <ReviewCard key={review.id} review={review} />
             ))}
-          </div>
-          <Calendar lang={lang} />
-        </article>
-        <article className="flex flex-col w-96">
-          <div className="flex  w-full justify-between items-center">
-            <span>{translation("reviews")}</span>
-            <div className="flex">
-              <Rating points={profile.averagePoints} />
-              <span className="text-independence text-sm ml-1">
-                ({profile.reviewsCount})
+            {reviews.length === 0 && (
+              <span className="text-gray-500 text-center text-sm my-6">
+                {translation("noReviews")}
               </span>
-            </div>
-          </div>
-          {reviews.map((review) => (
-            <ReviewCard key={review.id} review={review} />
-          ))}
-          {reviews.length === 0 && (
-            <span className="text-gray-500 text-center text-sm mt-6">
-              {translation("noReviews")}
-            </span>
-          )}
-        </article>
+            )}
+          </article>
+        </div>
       </div>
     </section>
   );

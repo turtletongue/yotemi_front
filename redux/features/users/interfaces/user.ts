@@ -17,6 +17,6 @@ export default interface User {
   reviewsCount: number;
   avatarPath: string | null;
   coverPath: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
