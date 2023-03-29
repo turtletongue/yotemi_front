@@ -5,6 +5,7 @@
   "startOfWeekIndex": 0,
   "endOfWeekIndex": 6,
   "noInterviews": "There are no interviews yet.",
+  "notAuthenticated": "Authenticate to view interviews.",
   "morning": "Morning \uD83C\uDF04",
   "afternoon": "Afternoon \uD83C\uDFDE",
   "evening": "Evening \uD83C\uDF06",

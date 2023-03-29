@@ -5,6 +5,7 @@
   "startOfWeekIndex": 1,
   "endOfWeekIndex": 7,
   "noInterviews": "Здесь пока нет интервью.",
+  "notAuthenticated": "Войдите в аккаунт, чтобы просматривать интервью.",
   "morning": "Утро \uD83C\uDF04",
   "afternoon": "День \uD83C\uDFDE",
   "evening": "Вечер \uD83C\uDF06",

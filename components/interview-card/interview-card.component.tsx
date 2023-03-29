@@ -2,6 +2,7 @@
 
 import { DateTime } from "luxon";
 
+import { useState } from "react";
 import {
   Interview,
   useConfirmInterviewPaymentMutation,
@@ -16,14 +17,14 @@ import {
   useGetContractInfoQuery,
   usePurchaseContractMutation,
 } from "@redux/features/contract";
+import { useAppSelector } from "@redux/store-config/hooks";
+import { selectUser } from "@redux/features/auth";
 import TonSymbol from "@app/public/ton_symbol.svg";
 import { Language, useTranslation } from "@app/i18n/client";
-import { useState } from "react";
 
 interface InterviewCardProps {
   lang: Language;
   interview: Interview;
-  userAddress: string;
 }
 
 const errorInfo = {
@@ -32,13 +33,10 @@ const errorInfo = {
   payerAddress: null,
 } as const;
 
-const InterviewCard = ({
-  lang,
-  interview,
-  userAddress,
-}: InterviewCardProps) => {
+const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
   const { translation } = useTranslation(lang, "interview-card");
 
+  const authenticatedUser = useAppSelector(selectUser);
   const { data, isFetching } = useGetContractInfoQuery(interview.address);
 
   const info = data ? data : errorInfo;
@@ -59,13 +57,15 @@ const InterviewCard = ({
     );
   }
 
-  const isCreator = info.creatorAddress === userAddress;
-  const isPayer = info.payerAddress === userAddress;
+  const isCreator = info.creatorAddress === authenticatedUser?.accountAddress;
+  const isPayer = info.payerAddress === authenticatedUser?.accountAddress;
 
   const isStarted = DateTime.now() > DateTime.fromISO(interview.startAt);
   const remainingMinutes = DateTime.fromISO(interview.startAt).diffNow(
     "minutes"
   ).minutes;
+
+  const isActual = new Date(interview.endAt).getTime() >= Date.now();
 
   const canCancel =
     ((info.status === "paid" && isPayer) || isCreator) &&
@@ -76,10 +76,10 @@ const InterviewCard = ({
     info.status === "paid" && isPayer && !interview.participant;
   const canConnect =
     info.status === "paid" && interview.participant && (isCreator || isPayer);
-  const canFinish =
-    canConnect && new Date(interview.endAt).getTime() < Date.now();
+  const canFinish = canConnect && !isActual;
 
-  const hasButtons = !["canceled", "finished", "missing"].includes(info.status);
+  const hasButtons =
+    !["canceled", "finished", "missing"].includes(info.status) && isActual;
 
   return (
     <>

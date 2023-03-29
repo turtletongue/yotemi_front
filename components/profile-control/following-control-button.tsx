@@ -14,11 +14,13 @@ import { Id } from "@app/declarations";
 interface FollowingControlButtonProps {
   lang: Language;
   profileId: Id;
+  disabled?: boolean;
 }
 
 const FollowingControlButton = ({
   lang,
   profileId,
+  disabled,
 }: FollowingControlButtonProps) => {
   const { translation } = useTranslation(lang, "profile");
 
@@ -41,6 +43,7 @@ const FollowingControlButton = ({
         <Button
           addition={profile.followersCount}
           onClick={() => follow(profile.id)}
+          disabled={disabled}
         >
           {translation("follow")}
         </Button>
