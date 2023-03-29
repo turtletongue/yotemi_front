@@ -61,6 +61,7 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
             key="currentUser"
             lang={lang}
             firstName={user?.firstName ?? "Unknown"}
+            username={user?.username}
             avatarUrl={user?.avatarPath ?? undefined}
             onClick={onClick}
           />

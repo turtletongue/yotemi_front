@@ -9,16 +9,17 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 
 import { authApi } from "@redux/features/auth";
+import { contractApi } from "@redux/features/contract";
 import baseApi from "@redux/features/base.api";
 import rootReducer from "./root-reducer";
+import persistStorage from "./persist-storage";
 
 const persistConfig = {
   key: "root",
   version: 1,
-  storage,
+  storage: persistStorage,
   whitelist: ["auth"],
 };
 
@@ -35,6 +36,7 @@ export const store = configureStore({
         },
       }),
       authApi.middleware,
+      contractApi.middleware,
       baseApi.middleware,
     ];
   },

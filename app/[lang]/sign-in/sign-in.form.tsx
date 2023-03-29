@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { Label, TextInput } from "flowbite-react";
 import * as yup from "yup";
 
-import { Button, ErrorDialog, ErrorNotification } from "@components";
+import { ErrorDialog, ErrorNotification, GradientButton } from "@components";
 import { Language, useTranslation } from "@app/i18n/client";
 import { changeTargetUsername, useLoginMutation } from "@redux/features/auth";
 import { useAppDispatch } from "@redux/store-config/hooks";
@@ -132,13 +132,13 @@ const SignInForm = ({ lang }: SignInFormProps) => {
             {...usernameProps}
           />
         </div>
-        <Button
+        <GradientButton
           className="w-full h-12 mt-2"
           animated
           disabled={!isValid || isLoading}
         >
           {translation("submit")}
-        </Button>
+        </GradientButton>
       </form>
       <ErrorDialog
         error={dialogError}

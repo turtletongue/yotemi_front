@@ -30,6 +30,8 @@
         "components"
       ],
       "@redux/*": ["redux/*"],
+      "@hooks/*": ["hooks/*"],
+      "@contract": ["contract"],
       "@utils": [
         "utils"
       ],

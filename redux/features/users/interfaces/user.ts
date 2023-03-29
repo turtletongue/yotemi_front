@@ -11,10 +11,13 @@ export default interface User {
   fullName: string;
   biography: string;
   isVerified: boolean;
+  isFollowing: boolean | null;
   topics: Topic[];
   followersCount: number;
+  averagePoints: number;
+  reviewsCount: number;
   avatarPath: string | null;
   coverPath: string | null;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }

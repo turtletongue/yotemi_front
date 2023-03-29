@@ -1,11 +1,11 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { baseQueryWithRefresh } from "@redux/base-query";
+import { baseQueryWithRefresh } from "@redux/queries/base-query";
 
 const baseApi = createApi({
   baseQuery: baseQueryWithRefresh,
   reducerPath: "base",
-  tagTypes: ["Users"],
+  tagTypes: ["Users", "Interviews"],
   endpoints: () => ({}),
 });
 

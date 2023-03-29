@@ -5,6 +5,7 @@ export default interface Topic {
   id: Id;
   labels: TopicLabel[];
   isModerated: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  colorHex: string;
+  createdAt: string;
+  updatedAt: string;
 }

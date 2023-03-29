@@ -1,0 +1,12 @@
+{
+  "header": "Sign Up for an interview",
+  "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November" ,"December"],
+  "daysOfWeek": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
+  "startOfWeekIndex": 0,
+  "endOfWeekIndex": 6,
+  "noInterviews": "There are no interviews yet.",
+  "morning": "Morning \uD83C\uDF04",
+  "afternoon": "Afternoon \uD83C\uDFDE",
+  "evening": "Evening \uD83C\uDF06",
+  "night": "Night \uD83C\uDF03"
+}

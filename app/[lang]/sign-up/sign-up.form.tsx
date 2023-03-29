@@ -8,7 +8,12 @@ import { Checkbox, Label, TextInput } from "flowbite-react";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 import * as yup from "yup";
 
-import { Button, ErrorDialog, ErrorNotification, TextLink } from "@components";
+import {
+  ErrorDialog,
+  ErrorNotification,
+  GradientButton,
+  TextLink,
+} from "@components";
 import { Language, useTranslation } from "@app/i18n/client";
 import { useAddUserMutation } from "@redux/features/users";
 import { errorNameToError, extractErrorNotification } from "@utils";
@@ -152,13 +157,13 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
             </span>
           </Label>
         </div>
-        <Button
+        <GradientButton
           className="w-full h-12 mt-6"
           animated
           disabled={!isValid || isLoading}
         >
           {translation("submit")}
-        </Button>
+        </GradientButton>
       </form>
       <ErrorDialog
         error={dialogError}

@@ -10,9 +10,16 @@ module.exports = {
       colors: {
         "yankees-blue": "#14174A",
         "cetacean-blue": "#0F1132",
+        "light-cetacean": "#121236",
         "space-cadet": "#1C1E4E",
         card: "#16183C",
-        "concentrated-blue": "#6BE4FF",
+        line: "#27295C",
+        "concentrated-blue": "#94B3FD",
+        "vivid-light": "#00A3FF",
+        "vivid-medium": "#0098EE",
+        "vivid-dark": "#008DDC",
+        "calendar-date": "#6BB6FF",
+        independence: "#4A5169",
       },
       screens: {
         xs: "375px",

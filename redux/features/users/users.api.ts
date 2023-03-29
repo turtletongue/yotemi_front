@@ -1,5 +1,5 @@
 import baseApi from "@redux/features/base.api";
-import PaginationResult from "@redux/pagination-result";
+import PaginationResult from "@redux/types/pagination-result";
 import { Id } from "@app/declarations";
 import User from "./interfaces/user";
 import CreateUserData from "./interfaces/create-user.data";
@@ -68,6 +68,9 @@ const usersApi = baseApi.injectEndpoints({
           followingId: id,
         },
       }),
+      invalidatesTags: (_result, _error, id) => {
+        return [{ type: "Users", id }];
+      },
     }),
     unfollowUser: builder.mutation<void, Id>({
       query: (id) => ({
@@ -77,6 +80,9 @@ const usersApi = baseApi.injectEndpoints({
           followingId: id,
         },
       }),
+      invalidatesTags: (_result, _error, id) => {
+        return [{ type: "Users", id }];
+      },
     }),
   }),
 });

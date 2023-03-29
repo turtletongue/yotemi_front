@@ -9,6 +9,7 @@ import TonProvider from "./ton-provider";
 import ReduxProvider from "./redux-provider";
 
 import "flowbite";
+import "buffer";
 import "../../styles/globals.css";
 
 export const generateStaticParams = () => {
