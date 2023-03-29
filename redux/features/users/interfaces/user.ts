@@ -11,6 +11,7 @@ export default interface User {
   fullName: string;
   biography: string;
   isVerified: boolean;
+  isFollowing: boolean | null;
   topics: Topic[];
   followersCount: number;
   averagePoints: number;

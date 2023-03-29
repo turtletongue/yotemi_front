@@ -68,6 +68,9 @@ const usersApi = baseApi.injectEndpoints({
           followingId: id,
         },
       }),
+      invalidatesTags: (_result, _error, id) => {
+        return [{ type: "Users", id }];
+      },
     }),
     unfollowUser: builder.mutation<void, Id>({
       query: (id) => ({
@@ -77,6 +80,9 @@ const usersApi = baseApi.injectEndpoints({
           followingId: id,
         },
       }),
+      invalidatesTags: (_result, _error, id) => {
+        return [{ type: "Users", id }];
+      },
     }),
   }),
 });

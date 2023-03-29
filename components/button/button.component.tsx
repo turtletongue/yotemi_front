@@ -17,7 +17,7 @@ const Button = ({ addition, outline, onClick, children }: ButtonProps) => {
   return (
     <div className="flex max-h-9 font-medium">
       <button
-        className={`${additionStyling} ${outlineStyling} py-2 pl-5 transition ease-in-out duration-100 text-sm sm:text-base`}
+        className={`${additionStyling} ${outlineStyling} py-2 pl-5 transition ease-in-out duration-100 text-sm sm:text-base flex items-center`}
         onClick={onClick}
       >
         {children}
