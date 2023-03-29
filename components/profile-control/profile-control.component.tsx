@@ -40,8 +40,7 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
 
   const onLogOut = () => {
     dispatch(loggedOut());
-
-    tonConnectUI.disconnect().then();
+    tonConnectUI.disconnect().then(() => router.push("/"));
   };
 
   return (
