@@ -5,8 +5,6 @@ import { ChevronLeft, ChevronRight } from "react-feather";
 import { Spinner } from "flowbite-react";
 import classnames from "classnames";
 import { useListInterviewsQuery } from "@redux/features/interviews";
-import { selectUser } from "@redux/features/auth";
-import { useAppSelector } from "@redux/store-config/hooks";
 import { User } from "@redux/features/users";
 import { InterviewCard } from "@app/components";
 import { Language, useTranslation } from "@app/i18n/client";
@@ -22,8 +20,6 @@ const MONTHS_COUNT = 12;
 
 const Calendar = ({ lang, user }: CalendarProps) => {
   const { translation } = useTranslation(lang, "calendar");
-
-  const authenticatedUser = useAppSelector(selectUser);
 
   const now = new Date();
 
@@ -195,92 +191,84 @@ const Calendar = ({ lang, user }: CalendarProps) => {
               "flex justify-center items-center"
           )}`}
         >
-          {authenticatedUser?.id ? (
-            !isLoading ? (
-              <>
-                {interviews.length ? (
-                  <>
-                    {!!morningInterviews.length && (
-                      <>
-                        <span className="block my-4">
-                          {translation("morning")}
-                        </span>
-                        <div className="columns-1 md:columns-2 gap-6 mx-auto">
-                          {morningInterviews.map((interview) => (
-                            <InterviewCard
-                              key={interview.id}
-                              interview={interview}
-                              lang={lang}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
+          {!isLoading ? (
+            <>
+              {interviews.length ? (
+                <>
+                  {!!morningInterviews.length && (
+                    <>
+                      <span className="block my-4">
+                        {translation("morning")}
+                      </span>
+                      <div className="columns-1 md:columns-2 gap-6 mx-auto">
+                        {morningInterviews.map((interview) => (
+                          <InterviewCard
+                            key={interview.id}
+                            interview={interview}
+                            lang={lang}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
 
-                    {!!afternoonInterviews.length && (
-                      <>
-                        <span className="block my-4">
-                          {translation("afternoon")}
-                        </span>
-                        <div className="columns-1 md:columns-2 gap-6 mx-auto">
-                          {afternoonInterviews.map((interview) => (
-                            <InterviewCard
-                              key={interview.id}
-                              interview={interview}
-                              lang={lang}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
+                  {!!afternoonInterviews.length && (
+                    <>
+                      <span className="block my-4">
+                        {translation("afternoon")}
+                      </span>
+                      <div className="columns-1 md:columns-2 gap-6 mx-auto">
+                        {afternoonInterviews.map((interview) => (
+                          <InterviewCard
+                            key={interview.id}
+                            interview={interview}
+                            lang={lang}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
 
-                    {!!eveningInterviews.length && (
-                      <>
-                        <span className="block my-4">
-                          {translation("evening")}
-                        </span>
-                        <div className="columns-1 md:columns-2 gap-6 mx-auto">
-                          {eveningInterviews.map((interview) => (
-                            <InterviewCard
-                              key={interview.id}
-                              interview={interview}
-                              lang={lang}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
+                  {!!eveningInterviews.length && (
+                    <>
+                      <span className="block my-4">
+                        {translation("evening")}
+                      </span>
+                      <div className="columns-1 md:columns-2 gap-6 mx-auto">
+                        {eveningInterviews.map((interview) => (
+                          <InterviewCard
+                            key={interview.id}
+                            interview={interview}
+                            lang={lang}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
 
-                    {!!nightInterviews.length && (
-                      <>
-                        <span className="block my-4">
-                          {translation("night")}
-                        </span>
-                        <div className="columns-1 md:columns-2 gap-6 mx-auto">
-                          {nightInterviews.map((interview) => (
-                            <InterviewCard
-                              key={interview.id}
-                              interview={interview}
-                              lang={lang}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </>
-                ) : (
-                  <p className="text-md text-bold text-center text-gray-500">
-                    {translation("noInterviews")}
-                  </p>
-                )}
-              </>
-            ) : (
-              <Spinner color="purple" size="md" />
-            )
+                  {!!nightInterviews.length && (
+                    <>
+                      <span className="block my-4">{translation("night")}</span>
+                      <div className="columns-1 md:columns-2 gap-6 mx-auto">
+                        {nightInterviews.map((interview) => (
+                          <InterviewCard
+                            key={interview.id}
+                            interview={interview}
+                            lang={lang}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </>
+              ) : (
+                <p className="text-md text-bold text-center text-gray-500">
+                  {translation("noInterviews")}
+                </p>
+              )}
+            </>
           ) : (
-            <p className="text-md text-bold text-center text-gray-500">
-              {translation("notAuthenticated")}
-            </p>
+            <Spinner color="purple" size="md" />
           )}
         </section>
       </div>

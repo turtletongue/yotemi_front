@@ -24,7 +24,11 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
 
   const authenticatedUser = useAppSelector(selectUser);
 
-  if (profileId !== authenticatedUser?.id) {
+  if (!authenticatedUser) {
+    return <></>;
+  }
+
+  if (profileId !== authenticatedUser.id) {
     return (
       <FollowingControlButton
         lang={lang}

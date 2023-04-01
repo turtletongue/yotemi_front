@@ -28,7 +28,7 @@ interface InterviewCardProps {
 }
 
 const errorInfo = {
-  status: "missing",
+  status: "notConnected",
   creatorAddress: null,
   payerAddress: null,
 } as const;
@@ -92,7 +92,7 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
           <span>
             {formatTime(interview.startAt)} - {formatTime(interview.endAt)}
           </span>
-          <InterviewStatus lang={lang} status={info.status} />
+          <InterviewStatus lang={lang} status={info?.status} />
         </div>
         <span className="flex items-center">
           <span className="text-sm mr-1">{interview.price}</span>

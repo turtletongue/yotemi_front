@@ -3,5 +3,6 @@
   "paid": "Paid",
   "canceled": "Canceled",
   "finished": "Finished",
-  "missing": "Deleted"
+  "missing": "Missing",
+  "notConnected": "N/A"
 }
