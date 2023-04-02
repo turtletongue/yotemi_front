@@ -5,25 +5,25 @@ import { ChevronLeft, ChevronRight } from "react-feather";
 import { Spinner } from "flowbite-react";
 import classnames from "classnames";
 import { useListInterviewsQuery } from "@redux/features/interviews";
+import { User } from "@redux/features/users";
 import { selectUser } from "@redux/features/auth";
 import { useAppSelector } from "@redux/store-config/hooks";
-import { User } from "@redux/features/users";
 import { InterviewCard } from "@app/components";
 import { Language, useTranslation } from "@app/i18n/client";
 import { isDateInPartOfDay } from "@utils";
 import getCalendarDates from "./get-calendar-dates";
+import CreateInterviewForm from "./create-interview.form";
 
 interface CalendarProps {
   lang: Language;
   user: User;
+  contractCode: string;
 }
 
 const MONTHS_COUNT = 12;
 
-const Calendar = ({ lang, user }: CalendarProps) => {
+const Calendar = ({ lang, user, contractCode }: CalendarProps) => {
   const { translation } = useTranslation(lang, "calendar");
-
-  const authenticatedUser = useAppSelector(selectUser);
 
   const now = new Date();
 
@@ -125,12 +125,23 @@ const Calendar = ({ lang, user }: CalendarProps) => {
 
   const calendarDateClasses = "p-1 sm:p-3 lg:p-5 text-sm text-center font-bold";
 
+  const authenticatedUser = useAppSelector(selectUser);
+  const isOwnCalendar = authenticatedUser?.id === user.id;
+
   return (
-    <article className="bg-light-cetacean mb-10 mt-4 md:w-[40rem]">
-      <div className="py-3 px-8 text-sm">{translation("header")}</div>
+    <article
+      className={`bg-light-cetacean mb-10 mt-4 w-[22rem] sm:w-auto ${
+        isOwnCalendar ? "xl:w-[60rem]" : "lg:w-[40rem]"
+      }`}
+    >
+      <div className="py-3 px-8 text-sm">
+        {isOwnCalendar
+          ? translation("createHeader")
+          : translation("purchaseHeader")}
+      </div>
       <div className="border border-b-1 border-line" />
-      <div>
-        <section className="w-full py-3">
+      <div className="flex xl:justify-center items-center xl:items-stretch flex-col xl:flex-row">
+        <section className="py-3">
           <div className="flex w-full justify-between px-8 text-sm sm:text-base">
             <button>
               <ChevronLeft onClick={decrementMonthIndex} />
@@ -140,7 +151,7 @@ const Calendar = ({ lang, user }: CalendarProps) => {
               <ChevronRight onClick={incrementMonthIndex} />
             </button>
           </div>
-          <table className="mt-2 mx-auto">
+          <table className="mt-2">
             <thead>
               <tr>
                 {daysOfWeek.map((day) => (
@@ -188,102 +199,126 @@ const Calendar = ({ lang, user }: CalendarProps) => {
             </tbody>
           </table>
         </section>
-        <div className="border border-b-1 border-line" />
-        <section
-          className={`p-6 lg:max-w-screen-sm min-h-[15rem] ${classnames(
-            (isLoading || !interviews.length) &&
-              "flex justify-center items-center"
-          )}`}
-        >
-          {authenticatedUser?.id ? (
-            !isLoading ? (
+        {authenticatedUser && (
+          <>
+            <div className="border border-b-1 border-l-1 border-line w-full xl:w-auto" />
+            <section className="w-full py-12 flex items-center">
+              <CreateInterviewForm
+                lang={lang}
+                contractCode={contractCode}
+                date={new Date(year, monthIndex, currentDate)}
+              />
+            </section>
+          </>
+        )}
+      </div>
+      <div className="border border-b-1 border-line" />
+      <section
+        className={`p-6 min-h-[15rem] ${classnames(
+          (isLoading || !interviews.length) &&
+            "flex justify-center items-center"
+        )}`}
+      >
+        {!isLoading ? (
+          <>
+            {interviews.length ? (
               <>
-                {interviews.length ? (
+                {!!morningInterviews.length && (
                   <>
-                    {!!morningInterviews.length && (
-                      <>
-                        <span className="block my-4">
-                          {translation("morning")}
-                        </span>
-                        <div className="columns-1 md:columns-2 gap-6 mx-auto">
-                          {morningInterviews.map((interview) => (
-                            <InterviewCard
-                              key={interview.id}
-                              interview={interview}
-                              lang={lang}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
-
-                    {!!afternoonInterviews.length && (
-                      <>
-                        <span className="block my-4">
-                          {translation("afternoon")}
-                        </span>
-                        <div className="columns-1 md:columns-2 gap-6 mx-auto">
-                          {afternoonInterviews.map((interview) => (
-                            <InterviewCard
-                              key={interview.id}
-                              interview={interview}
-                              lang={lang}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
-
-                    {!!eveningInterviews.length && (
-                      <>
-                        <span className="block my-4">
-                          {translation("evening")}
-                        </span>
-                        <div className="columns-1 md:columns-2 gap-6 mx-auto">
-                          {eveningInterviews.map((interview) => (
-                            <InterviewCard
-                              key={interview.id}
-                              interview={interview}
-                              lang={lang}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
-
-                    {!!nightInterviews.length && (
-                      <>
-                        <span className="block my-4">
-                          {translation("night")}
-                        </span>
-                        <div className="columns-1 md:columns-2 gap-6 mx-auto">
-                          {nightInterviews.map((interview) => (
-                            <InterviewCard
-                              key={interview.id}
-                              interview={interview}
-                              lang={lang}
-                            />
-                          ))}
-                        </div>
-                      </>
-                    )}
+                    <span className="block my-4">{translation("morning")}</span>
+                    <div
+                      className={`columns-1 ${
+                        isOwnCalendar
+                          ? "xl:columns-3 md:columns-2"
+                          : "md:columns-2"
+                      } gap-6 mx-auto`}
+                    >
+                      {morningInterviews.map((interview) => (
+                        <InterviewCard
+                          key={interview.id}
+                          interview={interview}
+                          lang={lang}
+                        />
+                      ))}
+                    </div>
                   </>
-                ) : (
-                  <p className="text-md text-bold text-center text-gray-500">
-                    {translation("noInterviews")}
-                  </p>
+                )}
+
+                {!!afternoonInterviews.length && (
+                  <>
+                    <span className="block my-4">
+                      {translation("afternoon")}
+                    </span>
+                    <div
+                      className={`columns-1 ${
+                        isOwnCalendar
+                          ? "xl:columns-3 md:columns-2"
+                          : "md:columns-2"
+                      } gap-6 mx-auto`}
+                    >
+                      {afternoonInterviews.map((interview) => (
+                        <InterviewCard
+                          key={interview.id}
+                          interview={interview}
+                          lang={lang}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {!!eveningInterviews.length && (
+                  <>
+                    <span className="block my-4">{translation("evening")}</span>
+                    <div
+                      className={`columns-1 ${
+                        isOwnCalendar
+                          ? "xl:columns-3 md:columns-2"
+                          : "md:columns-2"
+                      } gap-6 mx-auto`}
+                    >
+                      {eveningInterviews.map((interview) => (
+                        <InterviewCard
+                          key={interview.id}
+                          interview={interview}
+                          lang={lang}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {!!nightInterviews.length && (
+                  <>
+                    <span className="block my-4">{translation("night")}</span>
+                    <div
+                      className={`columns-1 ${
+                        isOwnCalendar
+                          ? "xl:columns-3 md:columns-2"
+                          : "md:columns-2"
+                      } gap-6 mx-auto`}
+                    >
+                      {nightInterviews.map((interview) => (
+                        <InterviewCard
+                          key={interview.id}
+                          interview={interview}
+                          lang={lang}
+                        />
+                      ))}
+                    </div>
+                  </>
                 )}
               </>
             ) : (
-              <Spinner color="purple" size="md" />
-            )
-          ) : (
-            <p className="text-md text-bold text-center text-gray-500">
-              {translation("notAuthenticated")}
-            </p>
-          )}
-        </section>
-      </div>
+              <p className="text-md text-bold text-center text-gray-500">
+                {translation("noInterviews")}
+              </p>
+            )}
+          </>
+        ) : (
+          <Spinner color="purple" size="md" />
+        )}
+      </section>
     </article>
   );
 };

@@ -1,5 +1,6 @@
 {
-  "header": "Sign Up for an interview",
+  "purchaseHeader": "Sign Up for an interview",
+  "createHeader": "Create an interview",
   "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November" ,"December"],
   "daysOfWeek": ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"],
   "startOfWeekIndex": 0,

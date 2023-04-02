@@ -5,7 +5,7 @@ import { getHttpEndpoint } from "@orbs-network/ton-access";
 import { CHAIN } from "@tonconnect/protocol";
 
 import { getConnector, getSender } from "@contract";
-import { OnlyFunctions } from "@utils";
+import { getSeqno, OnlyFunctions } from "@utils";
 
 const getContractQuery = <
   T extends { address: Address; init?: { code: Cell; data: Cell } }
@@ -21,9 +21,11 @@ const getContractQuery = <
   FetchBaseQueryError
 > => {
   return async ({ parameters = [], ...args }, api) => {
-    const network = getConnector().wallet?.account?.chain ?? null;
+    const connector = getConnector();
 
-    if (!getConnector().connected || network === null) {
+    const network = connector.wallet?.account?.chain ?? null;
+
+    if (!connector.connected || !connector.account || network === null) {
       return {
         error: { status: 400, data: { description: "WALLET_NOT_CONNECTED" } },
       };
@@ -45,11 +47,21 @@ const getContractQuery = <
     ) => Promise<T[typeof args.method] | void>;
 
     try {
-      return {
-        data: await (api.type === "query"
-          ? method(...parameters)
-          : method(getSender(), ...parameters)),
-      };
+      if (api.type === "query") {
+        return { data: await method(...parameters) };
+      }
+
+      const accountAddress = Address.parse(connector.account.address);
+      let seqno = await getSeqno(accountAddress);
+
+      const data = await method(getSender(), ...parameters);
+
+      let currentSeqno = seqno;
+      while (currentSeqno === seqno) {
+        currentSeqno = await getSeqno(accountAddress);
+      }
+
+      return { data };
     } catch (error: unknown) {
       return {
         error: {

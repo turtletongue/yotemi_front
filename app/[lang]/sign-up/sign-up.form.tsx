@@ -56,11 +56,6 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
     resolver: yupResolver(signUpSchema),
   });
 
-  const usernameProps = register("username");
-  const firstNameProps = register("firstName");
-  const lastNameProps = register("lastName");
-  const agreedProps = register("agreed");
-
   const [dialogError, setDialogError] = useState<ErrorNotification | null>(
     null
   );
@@ -123,7 +118,7 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
           <TextInput
             color={errors.username ? "failure" : "gray"}
             helperText={errors.username ? translation("usernameError") : ""}
-            {...usernameProps}
+            {...register("username")}
           />
         </div>
         <div className="w-full mb-4">
@@ -133,7 +128,7 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
           <TextInput
             color={errors.firstName ? "failure" : "gray"}
             helperText={errors.firstName ? translation("firstNameError") : ""}
-            {...firstNameProps}
+            {...register("firstName")}
           />
         </div>
         <div className="w-full">
@@ -143,11 +138,15 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
           <TextInput
             color={errors.lastName ? "failure" : "gray"}
             helperText={errors.lastName ? translation("lastNameError") : ""}
-            {...lastNameProps}
+            {...register("lastName")}
           />
         </div>
         <div className="w-full mt-3 flex items-center gap-2">
-          <Checkbox id="agree" className="text-purple-600" {...agreedProps} />
+          <Checkbox
+            id="agree"
+            className="text-purple-600"
+            {...register("agreed")}
+          />
           <Label htmlFor="agree">
             <span className="font-normal text-gray-400">
               {translation("agree")}{" "}

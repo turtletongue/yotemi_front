@@ -44,7 +44,7 @@ const Button = ({
       )}`}
     >
       <button
-        className={`${additionStyling} ${outlineStyling} py-2 pl-5 transition ease-in-out duration-100 text-sm sm:text-base flex items-center`}
+        className={`${additionStyling} ${outlineStyling} py-2 pl-5 text-sm sm:text-base flex items-center`}
         onClick={onClick}
         disabled={disabled}
       >

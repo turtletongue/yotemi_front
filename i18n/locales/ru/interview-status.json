@@ -3,5 +3,6 @@
   "paid": "Оплачено",
   "canceled": "Отменено",
   "finished": "Завершено",
-  "missing": "Удалено"
+  "missing": "Не найдено",
+  "notConnected": "N/A"
 }

@@ -48,8 +48,6 @@ const SignInForm = ({ lang }: SignInFormProps) => {
     resolver: yupResolver(signInSchema),
   });
 
-  const usernameProps = register("username");
-
   const [dialogError, setDialogError] = useState<ErrorNotification | null>(
     null
   );
@@ -129,7 +127,7 @@ const SignInForm = ({ lang }: SignInFormProps) => {
           <TextInput
             color={errors.username ? "failure" : "gray"}
             helperText={errors.username ? translation("usernameError") : ""}
-            {...usernameProps}
+            {...register("username")}
           />
         </div>
         <GradientButton

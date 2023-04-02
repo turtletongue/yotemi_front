@@ -11,7 +11,7 @@ const fetchProfile = async (username: string): Promise<ProfileResponse> => {
   );
 
   if (response.status !== 200) {
-    if (response.status === 404) {
+    if (response.status === 404 || response.status === 500) {
       return { isFound: false, profile: null };
     }
 

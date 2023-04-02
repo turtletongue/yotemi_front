@@ -3,5 +3,14 @@
   "purchase": "Purchase",
   "confirm": "Confirm",
   "connect": "Connect",
-  "finish": "Finish"
+  "finish": "Finish",
+  "showOn": "Show on",
+  "paymentAlreadyConfirmedError": {
+    "title": "Payment already confirmed",
+    "description": "Seems like you already confirmed this payment. Try reloading page."
+  },
+  "contractMethodCallError": {
+    "title": "Smart-contract does not respond",
+    "description": "Something went wrong during call to smart-contract."
+  }
 }
