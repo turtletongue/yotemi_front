@@ -1,0 +1,21 @@
+{
+  "price": "Price",
+  "startAt": "Start time",
+  "startAtError": "Minimum 5 minutes from now.",
+  "endAt": "End time",
+  "endAtError": "Minimum 5 minutes from start.",
+  "firstTipPart": "You will get a reward on",
+  "wallet": "your wallet",
+  "secondTipPart": "when you finish the interview.",
+  "thirdTipPart": "Make sure to not be too late or your client will cancel the interview.",
+  "submit": "Create",
+  "loading": "Loading...",
+  "deployFailedError": {
+    "title": "Interview deploy failed",
+    "description": "Something went wrong during smart-contract deploy process."
+  },
+  "hasTimeConflictError": {
+    "title": "Interview cannot be created",
+    "description": "You already have interview planned on this time."
+  }
+}

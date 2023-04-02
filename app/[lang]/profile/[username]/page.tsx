@@ -10,6 +10,7 @@ import {
   Topic,
 } from "@components";
 import { Language, useTranslation } from "@app/i18n";
+import contractCode from "@app/contract/contract-code";
 import fetchProfile from "./fetch-profile";
 import fetchReviews from "./fetch-reviews";
 
@@ -42,7 +43,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
           rounded
         />
         <div className="flex flex-col items-center 2xl:flex-row 2xl:items-start lg:ml-24">
-          <article className="max-w-screen-sm 2xl:mr-24">
+          <article className="2xl:mr-24">
             <div className="flex items-center justify-between flex-col sm:flex-row">
               <h1 className="text-xl mb-2 sm:mb-0">{profile.fullName}</h1>
               <ProfileControl lang={lang} profileId={profile.id} />
@@ -73,7 +74,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
                 </p>
               ))}
             </div>
-            <Calendar lang={lang} user={profile} />
+            <Calendar lang={lang} user={profile} contractCode={contractCode} />
           </article>
           <article className="flex flex-col w-full 2xl:w-96 px-6 lg:px-0">
             <div className="flex w-full justify-between items-center">

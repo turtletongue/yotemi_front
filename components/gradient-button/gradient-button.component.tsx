@@ -4,6 +4,8 @@ interface ButtonProps {
   className?: string;
   animated?: boolean;
   disabled?: boolean;
+  loading?: boolean;
+  loadingText?: string | null;
   children: string;
 }
 
@@ -11,6 +13,8 @@ const GradientButton = ({
   className = "w-40 h-12",
   animated = false,
   disabled = false,
+  loading = false,
+  loadingText = "Loading...",
   children,
 }: ButtonProps) => {
   const disableClass = classnames(disabled && "opacity-70");
@@ -32,7 +36,7 @@ const GradientButton = ({
         <span
           className={`bg-blue-pink-pink-gradient bg-300% bg-full ${animateTextClass} bg-clip-text text-transparent text-sm tracking-widest uppercase`}
         >
-          {children}
+          {loading ? loadingText : children}
         </span>
       </div>
     </button>

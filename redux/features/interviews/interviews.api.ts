@@ -1,6 +1,11 @@
 import baseApi from "@redux/features/base.api";
 import { Id } from "@app/declarations";
-import { ConfirmPayment, CreateInterview, Interview } from "./interfaces";
+import {
+  CheckInterviewTimeConflict,
+  ConfirmPayment,
+  CreateInterview,
+  Interview,
+} from "./interfaces";
 
 const interviewsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -33,7 +38,16 @@ const interviewsApi = baseApi.injectEndpoints({
         method: "POST",
         body: interview,
       }),
-      invalidatesTags: [{ type: "Interviews", id: "PARTIAL-LIST" }],
+    }),
+    checkInterviewTimeConflict: builder.mutation<
+      void,
+      CheckInterviewTimeConflict
+    >({
+      query: (interview) => ({
+        url: "interviews/check-conflicts",
+        method: "POST",
+        body: interview,
+      }),
     }),
     confirmInterviewPayment: builder.mutation<void, ConfirmPayment>({
       query: ({ id, ...data }) => ({
@@ -51,6 +65,7 @@ const interviewsApi = baseApi.injectEndpoints({
 export const {
   useListInterviewsQuery,
   useGetInterviewQuery,
+  useCheckInterviewTimeConflictMutation,
   useAddInterviewMutation,
   useConfirmInterviewPaymentMutation,
 } = interviewsApi;

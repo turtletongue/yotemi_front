@@ -15,3 +15,11 @@ export { default as isDateInPartOfDay } from "./is-date-in-part-of-day";
 export type { default as OnlyFunctions } from "./only-functions";
 
 export { default as createNoopStorage } from "./create-noop-storage";
+
+export * from "./milliseconds";
+
+export { default as sleep } from "./sleep";
+
+export { default as getSeqno } from "./get-seqno";
+
+export { default as getDateFromTime } from "./get-date-from-time";

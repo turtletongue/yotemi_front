@@ -9,9 +9,11 @@ const authSlice = createSlice({
   name: "auth",
   initialState: authInitialState,
   reducers: {
-    refreshTokens: (state, { payload }: PayloadAction<AuthResponse>) => {
+    refreshTokens: (
+      state,
+      { payload }: PayloadAction<Omit<AuthResponse, "user">>
+    ) => {
       state.accessToken = payload.accessToken;
-      state.user = payload.user;
     },
     loggedOut: (state) => {
       state.accessToken = null;

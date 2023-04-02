@@ -6,13 +6,20 @@ module.exports = {
     "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    screens: {
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1736px",
+    },
     extend: {
       colors: {
         "yankees-blue": "#14174A",
         "cetacean-blue": "#0F1132",
-        "light-cetacean": "#121236",
+        "light-cetacean": "#16163a",
         "space-cadet": "#1C1E4E",
-        card: "#16183C",
+        card: "#191a41",
         line: "#27295C",
         "concentrated-blue": "#94B3FD",
         "vivid-light": "#00A3FF",

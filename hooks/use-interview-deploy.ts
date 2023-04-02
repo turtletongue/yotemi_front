@@ -1,49 +1,64 @@
-import * as fs from "fs";
 import { Address, Cell, toNano } from "ton-core";
 import { CHAIN } from "@tonconnect/protocol";
 import { TonClient } from "ton";
 import { getHttpEndpoint } from "@orbs-network/ton-access";
 
 import InterviewContract, { getConnector, getSender } from "@contract";
+import { sleep } from "@utils";
 
-const contractCode = Cell.fromBoc(
-  fs.readFileSync("./contract/compiled/interview.cell")
-)[0];
+type DeployResult = {
+  address: string;
+  executeTransaction: () => Promise<string | void>;
+};
 
-const useInterviewDeploy = () => {
+const useInterviewDeploy = (contractCode: string) => {
   const network = getConnector().wallet?.account?.chain ?? null;
 
-  return async (
+  return (
     price: number,
     creatorAddress: string,
     startAt: Date,
     endAt: Date
-  ) => {
-    const client = new TonClient({
-      endpoint: await getHttpEndpoint({
-        network: network === CHAIN.MAINNET ? "mainnet" : "testnet",
-      }),
-    });
-
+  ): DeployResult => {
     const contract = InterviewContract.createForDeploy(
-      contractCode,
-      BigInt(toNano(price)),
+      Cell.fromBase64(contractCode),
+      BigInt(toNano(price.toString())),
       Address.parse(creatorAddress),
       startAt,
       endAt
     );
 
-    if (!client) {
-      return;
-    }
+    const executeTransaction = async () => {
+      const client = new TonClient({
+        endpoint: await getHttpEndpoint({
+          network: network === CHAIN.MAINNET ? "mainnet" : "testnet",
+        }),
+      });
 
-    if (await client.isContractDeployed(contract.address)) {
-      return;
-    }
+      if (!client) {
+        return;
+      }
 
-    const openedContract = client.open(contract);
+      if (await client.isContractDeployed(contract.address)) {
+        return;
+      }
 
-    return await openedContract.sendDeploy(getSender());
+      const openedContract = client.open(contract);
+
+      try {
+        await openedContract.sendDeploy(getSender());
+      } catch {
+        return;
+      }
+
+      while (!(await client.isContractDeployed(contract.address))) {
+        await sleep(500);
+      }
+
+      return contract.address.toRawString();
+    };
+
+    return { address: contract.address.toRawString(), executeTransaction };
   };
 };
 
