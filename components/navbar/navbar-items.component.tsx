@@ -50,19 +50,19 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
           {translation("links.sign-up")}
         </NavbarLink>
       )}
-      {isAuthenticated && (
+      {isAuthenticated && user && (
         <li className="self-end sm:self-center" id="notifications-link">
           <Notifications key="notifications" lang={lang} onClick={onClick} />
         </li>
       )}
-      {isAuthenticated && (
+      {isAuthenticated && user && (
         <li className="self-end justify-self-end" id="current-user-link">
           <CurrentUser
             key="currentUser"
             lang={lang}
-            firstName={user?.firstName ?? "Unknown"}
-            username={user?.username}
-            avatarUrl={user?.avatarPath ?? undefined}
+            firstName={user.firstName ?? "Unknown"}
+            username={user.username}
+            avatarUrl={user.avatarPath}
             onClick={onClick}
           />
         </li>

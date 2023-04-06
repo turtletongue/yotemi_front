@@ -10,7 +10,7 @@ interface CurrentUserProps {
   lang: Language;
   firstName: string;
   username?: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
   id?: string;
   onClick?: MouseEventHandler;
 }

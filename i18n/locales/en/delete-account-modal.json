@@ -1,0 +1,5 @@
+{
+  "title": "Delete account",
+  "description": "Are you sure you want to delete the account? All your data will be permanently removed.",
+  "confirm": "Delete"
+}

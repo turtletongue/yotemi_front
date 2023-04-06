@@ -1,5 +1,13 @@
 "use client";
 
-import { Avatar } from "flowbite-react";
+import { Avatar, AvatarProps } from "flowbite-react";
 
-export default Avatar;
+interface CustomAvatarProps extends Omit<AvatarProps, "img"> {
+  img?: string | null;
+}
+
+const CustomAvatar = ({ img, ...props }: CustomAvatarProps) => {
+  return <Avatar img={img ?? undefined} {...props} />;
+};
+
+export default CustomAvatar;

@@ -23,3 +23,9 @@ export { default as sleep } from "./sleep";
 export { default as getSeqno } from "./get-seqno";
 
 export { default as getDateFromTime } from "./get-date-from-time";
+
+export { default as axiosInstance } from "./axios-instance";
+
+export { default as getRandomNumber } from "./get-random-number";
+
+export { default as getRandomColdColor } from "./get-random-badge-color";

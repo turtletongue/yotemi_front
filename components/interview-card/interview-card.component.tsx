@@ -141,7 +141,7 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
             <div className="flex justify-between items-center my-3">
               <span>{interview.participant.fullName}</span>
               <Avatar
-                img={interview.participant.avatarPath ?? undefined}
+                img={interview.participant.avatarPath}
                 size="sm"
                 rounded
               />

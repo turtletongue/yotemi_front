@@ -37,7 +37,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
     <section className="grow bg-cetacean-blue text-white p-4">
       <div className="flex justify-center w-full mt-10 lg:mt-32 flex-col lg:flex-row">
         <Avatar
-          img={profile.avatarPath ?? undefined}
+          img={profile.avatarPath}
           className="h-min mb-12"
           size="xl"
           rounded
@@ -49,7 +49,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
               <ProfileControl lang={lang} profileId={profile.id} />
             </div>
             {hasTopics && (
-              <div className="flex flex-wrap gap-2 mt-5">
+              <div className="flex flex-wrap gap-2 mt-3 lg:mt-0">
                 {profile.topics.map((topic) => {
                   const label = topic.labels.find(
                     (label) => label.language === lang
