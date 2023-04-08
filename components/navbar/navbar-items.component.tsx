@@ -8,6 +8,7 @@ import { selectIsAuthenticated, selectUser } from "@redux/features/auth";
 import NavbarLink from "../navbar-link";
 import Notifications from "../notifications";
 import CurrentUser from "../current-user";
+import { useGetUserQuery } from "@redux/features/users";
 
 interface NavbarItemsProps {
   lang: Language;
@@ -18,7 +19,11 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
   const { translation } = useTranslation(lang, "navbar");
 
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  const user = useAppSelector(selectUser);
+  const authenticatedUser = useAppSelector(selectUser);
+
+  const { data: user } = useGetUserQuery(authenticatedUser?.id!, {
+    skip: !authenticatedUser,
+  });
 
   return (
     <>
@@ -60,9 +65,9 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
           <CurrentUser
             key="currentUser"
             lang={lang}
-            firstName={user.firstName ?? "Unknown"}
-            username={user.username}
-            avatarUrl={user.avatarPath}
+            firstName={user?.firstName ?? ""}
+            username={user?.username}
+            avatarUrl={user?.avatarPath ?? null}
             onClick={onClick}
           />
         </li>

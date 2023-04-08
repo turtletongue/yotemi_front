@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ["storage.yandexcloud.net"],
+    domains: [],
   },
   webpack: (config) => {
     config.watchOptions = {

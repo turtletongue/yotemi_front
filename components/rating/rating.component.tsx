@@ -12,7 +12,10 @@ const Rating = ({ points }: RatingProps) => {
     <span className="flex">
       {new Array(5).fill(null).map((_, index) => {
         return (
-          <span key={index} className="mx-0.5 flex items-center">
+          <span
+            key={index}
+            className={`${index === 0 ? "mr-0.5" : "mx-0.5"} flex items-center`}
+          >
             {index + 1 <= roundedPoints ? <FilledStar /> : <NotFilledStar />}
           </span>
         );

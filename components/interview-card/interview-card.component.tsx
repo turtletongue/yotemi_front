@@ -76,7 +76,7 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
 
   if (isFetching) {
     return (
-      <div className="bg-card rounded-3xl w-72 px-5 py-5 mb-4 break-inside-avoid shadow-md animate-pulse">
+      <div className="bg-card rounded-3xl w-72 p-5 mb-4 break-inside-avoid shadow-md animate-pulse">
         <div className="h-2.5 mx-auto mb-2.5 bg-gray-400 rounded-full"></div>
         <div className="h-2.5 bg-gray-400 mb-2.5 rounded-full w-1/3"></div>
         <div className="h-2.5 bg-gray-400 rounded-full w-2/3"></div>

@@ -5,10 +5,26 @@ import User from "./interfaces/user";
 import CreateUserData from "./interfaces/create-user.data";
 import UpdateUserData from "./interfaces/update-user.data";
 
+type SearchUsersParams = {
+  page?: number;
+  topicIds?: Id[];
+  search?: string;
+  orderBy?: "rating" | "activity";
+};
+
 const usersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    listUsers: builder.query<PaginationResult<User>, number | void>({
-      query: (page = 1) => `users?page=${page}&pageSize=10&hideSelf=true`,
+    listUsers: builder.query<PaginationResult<User>, SearchUsersParams | void>({
+      query: ({
+        page = 1,
+        topicIds = [],
+        search = "",
+        orderBy = "rating",
+      } = {}) => {
+        const joinedTopicIds = topicIds.join(",");
+
+        return `users?page=${page}&pageSize=20&hideSelf=true&topicIds=${joinedTopicIds}&search=${search}&orderBy=${orderBy}`;
+      },
       providesTags: (result) => {
         return result
           ? [

@@ -341,9 +341,9 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
                   colorHex={topic.colorHex}
                   deletable
                   onDelete={() => detachTopic(index)}
-                >
-                  {topic.labels.find((label) => label.language === lang)?.value}
-                </TopicBadge>
+                  lang={lang}
+                  labels={topic.labels}
+                />
               ))}
             </div>
           )}

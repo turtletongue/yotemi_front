@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 
 import { Topic, useGetTopicQuery } from "@redux/features/topics";
-import { selectAccessToken } from "@redux/features/auth";
-import { useAppSelector } from "@redux/store-config/hooks";
 import { Language } from "@app/i18n/client";
 import { axiosInstance } from "@utils";
 import { Id } from "@app/declarations";
@@ -46,8 +44,6 @@ const useTopicsSelect = (
     return topicToOption(topic);
   };
 
-  const accessToken = useAppSelector(selectAccessToken);
-
   const topicsLoader = async (
     search: string,
     loadedOptions: unknown,
@@ -62,9 +58,6 @@ const useTopicsSelect = (
             label: search,
           }),
         },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
       }
     );
 
@@ -76,7 +69,7 @@ const useTopicsSelect = (
 
     return {
       options: loadedTopics.map((topic: Topic) => topicToOption(topic)),
-      hasMore: data.pageSize * page < data.totalItems,
+      hasMore: page < data.totalPages,
       additional: {
         page: page + 1,
       },

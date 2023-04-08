@@ -1,15 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTonConnectUI } from "@tonconnect/ui-react";
 
-import { Button } from "@components";
+import { Button, FollowingControlButton } from "@components";
 import { loggedOut, selectUser } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
-import { Language } from "@app/i18n";
-import { useTranslation } from "@app/i18n/client";
+import { Language, useTranslation } from "@app/i18n/client";
 import { Id } from "@app/declarations";
-import FollowingControlButton from "./following-control-button";
-import { useTonConnectUI } from "@tonconnect/ui-react";
+import { useGetUserQuery } from "@redux/features/users";
 
 interface ProfileControlProps {
   lang: Language;
@@ -23,8 +22,9 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
   const [tonConnectUI] = useTonConnectUI();
 
   const authenticatedUser = useAppSelector(selectUser);
+  const { data: profile } = useGetUserQuery(profileId);
 
-  if (!authenticatedUser) {
+  if (!authenticatedUser || !profile) {
     return <></>;
   }
 
@@ -32,7 +32,7 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
     return (
       <FollowingControlButton
         lang={lang}
-        profileId={profileId}
+        profile={profile}
         disabled={!authenticatedUser}
       />
     );
@@ -48,7 +48,7 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
   };
 
   return (
-    <div className="flex items-center gap-4 my-2 sm:ml-12">
+    <div className="flex items-center gap-4 mt-2 sm:ml-12">
       <Button outline onClick={onSettingsOpen}>
         {translation("settings")}
       </Button>

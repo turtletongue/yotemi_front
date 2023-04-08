@@ -5,26 +5,27 @@ import { Spinner } from "flowbite-react";
 import { Button } from "@components";
 import {
   useFollowUserMutation,
-  useGetUserQuery,
+  User,
   useUnfollowUserMutation,
 } from "@redux/features/users";
 import { Language, useTranslation } from "@app/i18n/client";
-import { Id } from "@app/declarations";
 
 interface FollowingControlButtonProps {
   lang: Language;
-  profileId: Id;
+  profile: User;
+  className?: string;
   disabled?: boolean;
+  addition?: boolean;
 }
 
 const FollowingControlButton = ({
   lang,
-  profileId,
+  profile,
+  className,
   disabled,
+  addition = false,
 }: FollowingControlButtonProps) => {
   const { translation } = useTranslation(lang, "profile");
-
-  const { data: profile } = useGetUserQuery(profileId);
 
   const [follow] = useFollowUserMutation();
   const [unfollow] = useUnfollowUserMutation();
@@ -41,8 +42,9 @@ const FollowingControlButton = ({
     <>
       {!profile.isFollowing ? (
         <Button
-          addition={profile.followersCount}
+          addition={addition ? profile.followersCount : undefined}
           onClick={() => follow(profile.id)}
+          className={className}
           disabled={disabled}
         >
           {translation("follow")}
@@ -50,7 +52,8 @@ const FollowingControlButton = ({
       ) : (
         <Button
           outline
-          addition={profile.followersCount}
+          addition={addition ? profile.followersCount : undefined}
+          className={className}
           onClick={() => unfollow(profile.id)}
         >
           {translation("unfollow")}
