@@ -30,7 +30,7 @@ const Navbar = ({ lang }: NavbarProps) => {
       dispatch(baseApi.util.resetApiState());
       dispatch(loggedOut());
     }
-  }, [wallet]);
+  }, [dispatch, wallet]);
 
   return (
     <header>

@@ -1,0 +1,22 @@
+{
+  "title": "Settings | Yotemi",
+  "upload": "Upload",
+  "headerImage": "Card cover",
+  "username": "Username",
+  "usernameError": "Username must be at least 3 characters long",
+  "firstName": "First name",
+  "firstNameError": "First name is required",
+  "lastName": "Last name",
+  "lastNameError": "Last name is required",
+  "topics": "Topics",
+  "addTopicPlaceholder": "",
+  "biography": "Biography",
+  "biographyError": "Biography must not be longer than 350 characters",
+  "biographyPlaceholder": "For example, write about your skills, knowledge and interests.",
+  "deleteAccount": "Delete account",
+  "submit": "Save settings",
+  "usernameIsTakenError": {
+    "title": "Username is taken",
+    "description": "Seems like user with this username is already exist. Maybe you want to sign in?"
+  }
+}

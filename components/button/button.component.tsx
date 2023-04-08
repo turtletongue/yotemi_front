@@ -7,6 +7,7 @@ interface ButtonProps {
   color?: "primary" | "danger";
   disabled?: boolean;
   onClick?: MouseEventHandler;
+  className?: string;
   children: ReactNode;
 }
 
@@ -16,6 +17,7 @@ const Button = ({
   color = "primary",
   disabled = false,
   onClick,
+  className = "",
   children,
 }: ButtonProps) => {
   const colors = {
@@ -44,7 +46,7 @@ const Button = ({
       )}`}
     >
       <button
-        className={`${additionStyling} ${outlineStyling} py-2 pl-5 text-sm sm:text-base flex items-center`}
+        className={`${additionStyling} ${outlineStyling} ${className} py-2 pl-5 text-sm sm:text-base flex items-center`}
         onClick={onClick}
         disabled={disabled}
       >

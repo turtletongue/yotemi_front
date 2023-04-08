@@ -20,7 +20,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
       onClick={onClick}
     >
       <Avatar
-        img={review.reviewer.avatarPath ?? undefined}
+        img={review.reviewer.avatarPath}
         className="h-min mt-1 mr-4"
         rounded
       />

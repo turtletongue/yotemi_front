@@ -1,0 +1,6 @@
+{
+  "uploadingError": {
+    "title": "Uploading failed",
+    "description": "Something went wrong during file uploading."
+  }
+}

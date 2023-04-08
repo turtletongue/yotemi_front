@@ -15,6 +15,12 @@ import {
   TextLink,
 } from "@components";
 import { Language, useTranslation } from "@app/i18n/client";
+import {
+  MAX_FIRST_NAME_LENGTH,
+  MAX_LAST_NAME_LENGTH,
+  MAX_USERNAME_LENGTH,
+  MIN_USERNAME_LENGTH,
+} from "@app/constants";
 import { useAddUserMutation } from "@redux/features/users";
 import { errorNameToError, extractErrorNotification } from "@utils";
 import signUpErrors from "./sign-up.errors";
@@ -31,9 +37,13 @@ interface SignUpSchema {
 }
 
 const signUpSchema = yup.object().shape({
-  username: yup.string().min(3).required(),
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
+  username: yup
+    .string()
+    .min(MIN_USERNAME_LENGTH)
+    .max(MAX_USERNAME_LENGTH)
+    .required(),
+  firstName: yup.string().max(MAX_FIRST_NAME_LENGTH).required(),
+  lastName: yup.string().max(MAX_LAST_NAME_LENGTH).required(),
   agreed: yup.boolean().isTrue().required(),
 });
 
@@ -93,7 +103,7 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
     if (isSuccess) {
       router.push("/sign-in");
     }
-  }, [router, translation, tonConnectUI, isSuccess]);
+  }, [router, isSuccess]);
 
   useEffect(() => {
     if (error) {

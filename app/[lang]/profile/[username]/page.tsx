@@ -9,6 +9,7 @@ import {
   ReviewCard,
   Topic,
 } from "@components";
+import { User } from "@redux/features/users";
 import { Language, useTranslation } from "@app/i18n";
 import contractCode from "@app/contract/contract-code";
 import fetchProfile from "./fetch-profile";
@@ -20,6 +21,8 @@ interface ProfileProps {
     username: string;
   };
 }
+
+export const dynamicParams = true;
 
 const Profile = async ({ params: { lang, username } }: ProfileProps) => {
   const { isFound, profile } = await fetchProfile(username);
@@ -37,7 +40,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
     <section className="grow bg-cetacean-blue text-white p-4">
       <div className="flex justify-center w-full mt-10 lg:mt-32 flex-col lg:flex-row">
         <Avatar
-          img={profile.avatarPath ?? undefined}
+          img={profile.avatarPath}
           className="h-min mb-12"
           size="xl"
           rounded
@@ -49,7 +52,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
               <ProfileControl lang={lang} profileId={profile.id} />
             </div>
             {hasTopics && (
-              <div className="flex flex-wrap gap-2 mt-5">
+              <div className="flex flex-wrap gap-2 mt-3 lg:mt-0">
                 {profile.topics.map((topic) => {
                   const label = topic.labels.find(
                     (label) => label.language === lang
@@ -116,6 +119,16 @@ export const generateMetadata = async ({
   return {
     title: translation("title").replace("_", profile.username),
   };
+};
+
+export const generateStaticParams = async () => {
+  const users = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`)
+    .then((res) => res.json())
+    .then(({ items }) => items);
+
+  return users.map((user: User) => ({
+    username: user.username,
+  }));
 };
 
 export default Profile;
