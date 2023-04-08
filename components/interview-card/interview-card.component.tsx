@@ -72,7 +72,7 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
         extractErrorNotification(error, interviewCardErrors, translation)
       );
     }
-  }, [purchaseError, cancelError, finishError, confirmError]);
+  }, [translation, purchaseError, cancelError, finishError, confirmError]);
 
   if (isFetching) {
     return (

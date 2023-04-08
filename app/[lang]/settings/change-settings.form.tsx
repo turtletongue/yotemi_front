@@ -132,7 +132,7 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
       setValue("topics", data.topics);
       setValue("biography", data.biography);
     }
-  }, [data]);
+  }, [setValue, data]);
 
   /* Submit handler */
 
@@ -172,7 +172,7 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
     if (isUpdated) {
       router.push(`/profile/${data?.username}`);
     }
-  }, [router, isUpdated]);
+  }, [router, isUpdated, data?.username]);
 
   useEffect(() => {
     if (isDeleted) {

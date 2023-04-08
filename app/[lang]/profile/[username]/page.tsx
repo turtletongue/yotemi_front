@@ -9,6 +9,7 @@ import {
   ReviewCard,
   Topic,
 } from "@components";
+import { User } from "@redux/features/users";
 import { Language, useTranslation } from "@app/i18n";
 import contractCode from "@app/contract/contract-code";
 import fetchProfile from "./fetch-profile";
@@ -20,6 +21,8 @@ interface ProfileProps {
     username: string;
   };
 }
+
+export const dynamicParams = true;
 
 const Profile = async ({ params: { lang, username } }: ProfileProps) => {
   const { isFound, profile } = await fetchProfile(username);
@@ -116,6 +119,16 @@ export const generateMetadata = async ({
   return {
     title: translation("title").replace("_", profile.username),
   };
+};
+
+export const generateStaticParams = async () => {
+  const users = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`)
+    .then((res) => res.json())
+    .then(({ items }) => items);
+
+  return users.map((user: User) => ({
+    username: user.username,
+  }));
 };
 
 export default Profile;
