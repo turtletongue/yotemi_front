@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import { getRefreshedToken } from "@utils";
+
 const axiosInstance = axios.create();
 
 axiosInstance.interceptors.response.use(
@@ -7,24 +9,12 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    console.log(1, originalRequest);
-
     if (error.status !== 401 || originalRequest._retry) {
       return Promise.reject(error);
     }
 
-    console.log(2);
-
     originalRequest._retry = true;
-    const { data } = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/authentication/refresh`,
-      null,
-      {
-        withCredentials: true,
-      }
-    );
-
-    originalRequest.height.Authorization = `Bearer ${data.accessToken}`;
+    originalRequest.height.Authorization = `Bearer ${await getRefreshedToken()}`;
 
     return await axiosInstance(originalRequest);
   }

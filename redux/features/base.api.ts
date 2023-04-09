@@ -5,7 +5,7 @@ import { baseQueryWithRefresh } from "@redux/queries/base-query";
 const baseApi = createApi({
   baseQuery: baseQueryWithRefresh,
   reducerPath: "base",
-  tagTypes: ["Users", "Interviews", "Topics"],
+  tagTypes: ["Users", "Interviews", "Topics", "Notifications"],
   endpoints: () => ({}),
 });
 

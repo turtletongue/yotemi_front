@@ -1,5 +1,6 @@
 {
   "title": "Notifications",
   "button": "View all",
-  "bell-icon": "Notifications"
+  "bell-icon": "Notifications",
+  "noNotificationFound": "No unseen notifications found"
 }

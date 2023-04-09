@@ -2,13 +2,13 @@
 
 import { MouseEventHandler } from "react";
 
-import { Language, useTranslation } from "@app/i18n/client";
+import { NotificationsPopover } from "@components";
 import { useAppSelector } from "@redux/store-config/hooks";
 import { selectIsAuthenticated, selectUser } from "@redux/features/auth";
-import NavbarLink from "../navbar-link";
-import Notifications from "../notifications";
-import CurrentUser from "../current-user";
 import { useGetUserQuery } from "@redux/features/users";
+import { Language, useTranslation } from "@app/i18n/client";
+import NavbarLink from "../navbar-link";
+import CurrentUser from "../current-user";
 
 interface NavbarItemsProps {
   lang: Language;
@@ -57,7 +57,11 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
       )}
       {isAuthenticated && user && (
         <li className="self-end sm:self-center" id="notifications-link">
-          <Notifications key="notifications" lang={lang} onClick={onClick} />
+          <NotificationsPopover
+            key="notifications"
+            lang={lang}
+            onClick={onClick}
+          />
         </li>
       )}
       {isAuthenticated && user && (

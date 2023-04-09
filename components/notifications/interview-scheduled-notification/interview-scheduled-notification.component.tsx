@@ -1,0 +1,64 @@
+"use client";
+
+import Link from "next/link";
+import classnames from "classnames";
+
+import { Avatar } from "@components";
+import { useGetUserQuery } from "@redux/features/users";
+import { Language, useTranslation } from "@app/i18n/client";
+import { Id } from "@app/declarations";
+import { formatDateTime } from "@utils";
+
+interface InterviewScheduledNotificationProps {
+  lang: Language;
+  interview: {
+    startAt: string;
+  };
+  creator: {
+    id: Id;
+    fullName: string;
+  };
+  isSeen: boolean;
+  reactOnHover?: boolean;
+}
+
+const InterviewScheduledNotification = ({
+  lang,
+  interview,
+  creator,
+  isSeen,
+  reactOnHover = false,
+}: InterviewScheduledNotificationProps) => {
+  const { translation } = useTranslation(
+    lang,
+    "interview-scheduled-notification"
+  );
+
+  const { data } = useGetUserQuery(creator.id);
+
+  return (
+    <Link
+      href={data ? `/profile/${data.username}` : "#"}
+      className={`flex w-full justify-center items-center py-5 ${
+        isSeen
+          ? "opacity-20"
+          : `cursor-pointer ${classnames(
+              reactOnHover && "hover:bg-yankees-blue"
+            )}`
+      }`}
+    >
+      <Avatar
+        img={data?.avatarPath ?? null}
+        size="md"
+        rounded
+        className="mx-6"
+      />
+      <p className="text-sm w-56">
+        {creator.fullName} {translation("plannedInterview")}{" "}
+        {formatDateTime(interview.startAt)}
+      </p>
+    </Link>
+  );
+};
+
+export default InterviewScheduledNotification;

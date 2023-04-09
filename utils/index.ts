@@ -9,6 +9,7 @@ export { default as errorNameToError } from "./error-name-to-error";
 export { default as extractErrorNotification } from "./extract-error-notification";
 
 export { default as formatTime } from "./format-time";
+export { default as formatDateTime } from "./format-date-time";
 
 export { default as isDateInPartOfDay } from "./is-date-in-part-of-day";
 
@@ -29,3 +30,7 @@ export { default as axiosInstance } from "./axios-instance";
 export { default as getRandomNumber } from "./get-random-number";
 
 export { default as getRandomColdColor } from "./get-random-badge-color";
+
+export { default as getRefreshedToken } from "./get-refreshed-token";
+
+export { default as getSocket } from "./get-socket";
