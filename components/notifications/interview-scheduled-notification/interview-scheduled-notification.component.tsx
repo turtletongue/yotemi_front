@@ -51,9 +51,9 @@ const InterviewScheduledNotification = ({
         img={data?.avatarPath ?? null}
         size="md"
         rounded
-        className="mx-6"
+        className="mx-3"
       />
-      <p className="text-sm w-56">
+      <p className="text-sm w-fit">
         {creator.fullName} {translation("plannedInterview")}{" "}
         {formatDateTime(interview.startAt)}
       </p>
