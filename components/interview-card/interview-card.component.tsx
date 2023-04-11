@@ -142,7 +142,7 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
         </span>
         {interview.participant && (
           <>
-            <div className="flex justify-between items-center my-3">
+            <div className="flex justify-between items-center my-3 text-sm">
               <span>{interview.participant.fullName}</span>
               <Avatar
                 img={interview.participant.avatarPath}
@@ -151,9 +151,11 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
               />
             </div>
             {interview.payerComment &&
-              interview.payerComment
-                .split("\n")
-                .map((commentPart, index) => <p key={index}>{commentPart}</p>)}
+              interview.payerComment.split("\n").map((commentPart, index) => (
+                <p key={index} className="text-sm">
+                  {commentPart}
+                </p>
+              ))}
           </>
         )}
         {hasButtons && (
