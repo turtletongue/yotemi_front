@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "start:prod": "node -r ts-node/register -r ./tsconfig-paths-bootstrap.js dist/server.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
