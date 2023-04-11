@@ -1,5 +1,6 @@
 "use client";
 
+import { MouseEventHandler } from "react";
 import { Spinner } from "flowbite-react";
 
 import { Button } from "@components";
@@ -38,12 +39,22 @@ const FollowingControlButton = ({
     );
   }
 
+  const onFollow: MouseEventHandler = (event) => {
+    event.preventDefault();
+    follow(profile.id);
+  };
+
+  const onUnfollow: MouseEventHandler = (event) => {
+    event.preventDefault();
+    unfollow(profile.id);
+  };
+
   return (
     <>
       {!profile.isFollowing ? (
         <Button
           addition={addition ? profile.followersCount : undefined}
-          onClick={() => follow(profile.id)}
+          onClick={onFollow}
           className={className}
           disabled={disabled}
         >
@@ -54,7 +65,7 @@ const FollowingControlButton = ({
           outline
           addition={addition ? profile.followersCount : undefined}
           className={className}
-          onClick={() => unfollow(profile.id)}
+          onClick={onUnfollow}
         >
           {translation("unfollow")}
         </Button>
