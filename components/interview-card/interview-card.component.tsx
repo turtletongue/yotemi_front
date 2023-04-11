@@ -199,7 +199,7 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
             {canConnect && (
               <button
                 className="text-blue-400"
-                onClick={() => redirect(`/interviews/${interview.id}`)}
+                onClick={() => router.push(`/interviews/${interview.id}`)}
               >
                 {translation("connect")}
               </button>
