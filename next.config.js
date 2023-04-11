@@ -5,7 +5,6 @@ const nextConfig = {
   images: {
     domains: [],
   },
-  distDir: "./dist",
   webpack: (config) => {
     config.watchOptions = {
       poll: 1000,

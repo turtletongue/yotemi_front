@@ -9,13 +9,21 @@
       "@components": [
         "components"
       ],
-      "@redux/*": ["redux/*"],
-      "@hooks/*": ["hooks/*"],
-      "@contract": ["contract"],
+      "@redux/*": [
+        "redux/*"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
+      "@contract": [
+        "contract"
+      ],
       "@utils": [
         "utils"
       ],
-      "@types": ["types"],
+      "@types": [
+        "types"
+      ],
       "@app/*": [
         "./*"
       ]
@@ -45,7 +53,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "./dist/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
