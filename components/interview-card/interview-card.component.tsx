@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { DateTime } from "luxon";
 import { ExternalLink } from "react-feather";
@@ -43,6 +44,7 @@ const errorInfo = {
 } as const;
 
 const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
+  const router = useRouter();
   const { translation } = useTranslation(lang, "interview-card");
 
   const authenticatedUser = useAppSelector(selectUser);
@@ -106,7 +108,9 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
   const canFinish = canConnect && !isActual;
 
   const hasButtons =
-    !["canceled", "finished", "notConnected"].includes(info.status) && isActual;
+    !["canceled", "finished", "notConnected"].includes(info.status) &&
+    isActual &&
+    authenticatedUser;
 
   return (
     <>
@@ -193,7 +197,10 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
               </button>
             )}
             {canConnect && (
-              <button className="text-blue-400">
+              <button
+                className="text-blue-400"
+                onClick={() => redirect(`/interviews/${interview.id}`)}
+              >
                 {translation("connect")}
               </button>
             )}
