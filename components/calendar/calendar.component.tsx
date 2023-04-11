@@ -199,7 +199,7 @@ const Calendar = ({ lang, user, contractCode }: CalendarProps) => {
             </tbody>
           </table>
         </section>
-        {authenticatedUser && (
+        {isOwnCalendar && (
           <>
             <div className="border border-b-1 border-l-1 border-line w-full xl:w-auto" />
             <section className="w-full py-12 flex items-center">

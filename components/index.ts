@@ -41,3 +41,7 @@ export { default as MemberCardSkeleton } from "./member-card-skeleton";
 export { default as Notifications } from "./notifications";
 export { default as NotificationsPopover } from "./notifications-popover";
 export { default as NotificationBell } from "./notification-bell";
+
+export { default as InterviewMessage } from "./interview-message";
+
+export { default as AuthorBadge } from "./author-badge";

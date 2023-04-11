@@ -26,6 +26,7 @@ module.exports = {
         "vivid-medium": "#0098EE",
         "vivid-dark": "#008DDC",
         "calendar-date": "#6BB6FF",
+        "pale-lavender": "#D4D8FC",
         independence: "#4A5169",
         danger: "#DC3545",
         "danger-dark": "#C12C3B",

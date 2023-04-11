@@ -41,7 +41,9 @@ const notificationsApi = baseApi.injectEndpoints({
 
           await api.cacheEntryRemoved;
           socket.close();
-        } catch {}
+        } catch (error: unknown) {
+          console.error(error);
+        }
       },
     }),
     markAllAsSeen: builder.mutation<void, void>({
