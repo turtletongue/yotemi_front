@@ -36,7 +36,7 @@ const MemberCard = ({ lang, data }: MemberCardProps) => {
                 <Rating points={data.averagePoints} />
               </div>
             </div>
-            {authenticatedUser && (
+            {authenticatedUser && authenticatedUser.id !== data.id && (
               <FollowingControlButton
                 lang={lang}
                 profile={data}
