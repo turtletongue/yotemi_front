@@ -13,7 +13,7 @@ const authSlice = createSlice({
       state,
       { payload }: PayloadAction<Omit<AuthResponse, "user">>
     ) => {
-      state.accessToken = payload.accessToken;
+      state.accessToken = state.user ? payload.accessToken : null;
     },
     loggedOut: (state) => {
       state.accessToken = null;
