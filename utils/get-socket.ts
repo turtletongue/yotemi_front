@@ -7,6 +7,7 @@ const getSocket = async () => {
     auth: {
       token: await getRefreshedToken(),
     },
+    transports: ["websocket"],
   });
 };
 
