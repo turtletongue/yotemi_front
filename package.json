@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "start:prod": "next build && next start"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
@@ -29,6 +30,7 @@
     "i18next-resources-to-backend": "^1.1.1",
     "luxon": "^3.3.0",
     "next": "13.2.4",
+    "peerjs": "^1.4.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-feather": "^2.0.10",
