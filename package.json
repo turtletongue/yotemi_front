@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "start:prod": "next build && next start"
+    "start:prod": "node -r ./tsconfig-paths-bootstrap.js dist/main.js"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.7",
@@ -46,6 +46,7 @@
     "ton": "^13.4.1",
     "ton-core": "^0.49.0",
     "ton-crypto": "^3.2.0",
+    "tsconfig-paths": "^4.2.0",
     "utf-8-validate": "^6.0.3",
     "yup": "^1.0.2"
   },
