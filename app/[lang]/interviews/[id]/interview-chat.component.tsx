@@ -32,15 +32,12 @@ const InterviewChat = ({
 
   const authenticatedUser = useAppSelector(selectUser);
   const [message, setMessage] = useState("");
-  const changeMessage = (value: string) => {
-    setMessage(value.trim());
-  };
 
   const [addMessage, { isLoading: isAdding }] =
     useAddInterviewMessageMutation();
   const onSend = () => {
-    addMessage({ content: message, interviewId });
-    changeMessage("");
+    addMessage({ content: message.trim(), interviewId });
+    setMessage("");
   };
 
   const { data: { items: messages } = {}, isLoading } =
@@ -54,7 +51,7 @@ const InterviewChat = ({
       return;
     }
 
-    if (isAdding || message.length === 0) {
+    if (isAdding || message.trim().length === 0) {
       return;
     }
 
@@ -122,7 +119,7 @@ const InterviewChat = ({
           id="messageInput"
           name="message"
           value={message}
-          onChange={(event) => changeMessage(event.target.value)}
+          onChange={(event) => setMessage(event.target.value)}
           placeholder={translation("messageInputPlaceholder") ?? ""}
           onKeyDown={onEnter}
           className="grow min-h-[3.5rem] max-h-[20rem]"
@@ -130,7 +127,7 @@ const InterviewChat = ({
         <Button
           className="text-white mr-4"
           onClick={onSend}
-          disabled={isAdding || message.length === 0}
+          disabled={isAdding || message.trim().length === 0}
         >
           {translation("send")}
         </Button>
