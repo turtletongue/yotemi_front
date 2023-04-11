@@ -4,6 +4,7 @@
     "jsx": "preserve",
     "module": "commonjs",
     "baseUrl": "./",
+    "outDir": "./dist",
     "paths": {
       "@components": [
         "components"
