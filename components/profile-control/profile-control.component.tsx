@@ -34,6 +34,7 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
         lang={lang}
         profile={profile}
         disabled={!authenticatedUser}
+        addition
       />
     );
   }
