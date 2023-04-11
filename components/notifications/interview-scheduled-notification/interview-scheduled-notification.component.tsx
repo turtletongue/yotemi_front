@@ -53,7 +53,7 @@ const InterviewScheduledNotification = ({
         rounded
         className="mx-3"
       />
-      <p className="text-sm w-fit">
+      <p className="text-sm max-w-[19rem]">
         {creator.fullName} {translation("plannedInterview")}{" "}
         {formatDateTime(interview.startAt)}
       </p>

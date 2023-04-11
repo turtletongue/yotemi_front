@@ -45,7 +45,7 @@ const NewFollowerNotification = ({
         rounded
         className="mx-3"
       />
-      <p className="text-sm w-fit">
+      <p className="text-sm max-w-[19rem]">
         {follower.fullName} {translation("subscribed")}
       </p>
     </Link>
