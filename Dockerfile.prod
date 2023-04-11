@@ -16,4 +16,4 @@ RUN chown -R node:node /app
 
 USER node
 
-CMD ["yarn", "start:prod"]
+CMD ["yarn", "start"]
