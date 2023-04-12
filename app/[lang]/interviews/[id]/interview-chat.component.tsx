@@ -53,7 +53,7 @@ const InterviewChat = ({
 
   useEffect(() => {
     if (messages?.length) {
-      scrollBoundaryRef.current.scrollIntoView({ behavior: "smooth" });
+      scrollBoundaryRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages?.length]);
 
