@@ -1,6 +1,12 @@
 "use client";
 
-import { Fragment, KeyboardEventHandler, useRef, useState } from "react";
+import {
+  Fragment,
+  KeyboardEventHandler,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { Spinner, Textarea } from "flowbite-react";
 
 import { AuthorBadge, Button, InterviewMessage } from "@components";
@@ -29,7 +35,6 @@ const InterviewChat = ({
   participantId,
 }: InterviewChatProps) => {
   const { translation } = useTranslation(lang, "interview-chat");
-  const scrollBoundaryRef = useRef<HTMLDivElement>(null);
 
   const authenticatedUser = useAppSelector(selectUser);
   const [message, setMessage] = useState("");
@@ -39,14 +44,18 @@ const InterviewChat = ({
   const onSend = () => {
     addMessage({ content: message.trim(), interviewId });
     setMessage("");
-
-    if (scrollBoundaryRef.current) {
-      scrollBoundaryRef.current.scrollIntoView({ behavior: "smooth" });
-    }
   };
+
+  const scrollBoundaryRef = useRef<HTMLDivElement>(null);
 
   const { data: { items: messages } = {}, isLoading } =
     useListInterviewMessagesQuery(interviewId);
+
+  useEffect(() => {
+    if (messages?.length) {
+      scrollBoundaryRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages?.length]);
 
   const { data: creator } = useGetUserQuery(creatorId);
   const { data: participant } = useGetUserQuery(participantId);
