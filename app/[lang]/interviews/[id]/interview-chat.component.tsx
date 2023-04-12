@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, KeyboardEventHandler, useState } from "react";
+import { Fragment, KeyboardEventHandler, useRef, useState } from "react";
 import { Spinner, Textarea } from "flowbite-react";
 
 import { AuthorBadge, Button, InterviewMessage } from "@components";
@@ -29,6 +29,7 @@ const InterviewChat = ({
   participantId,
 }: InterviewChatProps) => {
   const { translation } = useTranslation(lang, "interview-chat");
+  const scrollBoundaryRef = useRef<HTMLDivElement>(null);
 
   const authenticatedUser = useAppSelector(selectUser);
   const [message, setMessage] = useState("");
@@ -38,6 +39,10 @@ const InterviewChat = ({
   const onSend = () => {
     addMessage({ content: message.trim(), interviewId });
     setMessage("");
+
+    if (scrollBoundaryRef.current) {
+      scrollBoundaryRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const { data: { items: messages } = {}, isLoading } =
@@ -107,6 +112,7 @@ const InterviewChat = ({
                 </Fragment>
               );
             })}
+          <div ref={scrollBoundaryRef} />
         </div>
         {isLoading && (
           <div className="w-full h-full flex items-center justify-center">
