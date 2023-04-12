@@ -12,6 +12,9 @@ const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
   const peer = useMemo(() => new Peer(id), [id]);
   const [isConnected, setIsConnected] = useState(false);
 
+  console.log(id, otherId);
+  console.log(peer);
+
   peer.on("connection", () => setIsConnected(true));
 
   useEffect(() => {
