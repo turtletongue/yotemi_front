@@ -3,16 +3,28 @@
 import { useRef, useState } from "react";
 
 import usePeer from "@hooks/use-peer";
+import { Interview } from "@redux/features/interviews";
+import { useAppSelector } from "@redux/store-config/hooks";
+import { selectUser } from "@redux/features/auth";
 import { Language, useTranslation } from "@app/i18n/client";
-import { Id } from "@app/declarations";
 
 interface MediaSessionProps {
   lang: Language;
-  interviewId: Id;
+  interview: Interview;
 }
 
-const MediaSession = ({ lang, interviewId }: MediaSessionProps) => {
+const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const { translation } = useTranslation(lang, "media-session");
+  const authenticatedUser = useAppSelector(selectUser);
+
+  const peerId =
+    authenticatedUser?.id === interview.creatorId
+      ? interview.creatorId
+      : interview.participant!.id;
+  const otherPeerId =
+    peerId === interview.creatorId
+      ? interview.participant!.id
+      : interview.creatorId;
 
   const videoOutput = useRef<HTMLVideoElement>(null);
   const [isVideo, setIsVideo] = useState(true);
@@ -33,7 +45,8 @@ const MediaSession = ({ lang, interviewId }: MediaSessionProps) => {
   };
 
   const { isConnected } = usePeer({
-    peerId: interviewId.toString(),
+    id: peerId.toString(),
+    otherId: otherPeerId.toString(),
     onCall,
     onCallData,
   });

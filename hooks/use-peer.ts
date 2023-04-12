@@ -2,29 +2,40 @@ import { useEffect, useMemo, useState } from "react";
 import Peer from "peerjs";
 
 interface PeerOptions {
-  peerId: string;
+  id: string;
+  otherId: string;
   onCall: () => Promise<MediaStream>;
   onCallData: (remoteStream: MediaStream) => unknown;
 }
 
-const usePeer = ({ peerId, onCall, onCallData }: PeerOptions) => {
-  const peer = useMemo(() => new Peer(), [peerId]);
+const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
+  const peer = useMemo(() => new Peer(id), [id]);
   const [isConnected, setIsConnected] = useState(false);
 
   peer.on("connection", () => setIsConnected(true));
 
   useEffect(() => {
-    const connection = peer.connect(peerId);
+    const connection = peer.connect(otherId);
 
-    connection.on("open", () => setIsConnected(true));
+    console.log("connecting...");
+
+    connection.on("open", () => {
+      console.log("opened");
+      setIsConnected(true);
+    });
+    connection.on("close", () => {
+      console.log("closed");
+      setIsConnected(false);
+    });
 
     return () => connection.close();
-  }, []);
+  }, [peer, otherId]);
 
   const call = () => {
     if (isConnected) {
+      console.log("call");
       onCall().then((stream) => {
-        const call = peer.call(peerId, stream);
+        const call = peer.call(otherId, stream);
         call.on("stream", (remoteStream) => onCallData(remoteStream));
       });
     }
@@ -32,7 +43,7 @@ const usePeer = ({ peerId, onCall, onCallData }: PeerOptions) => {
 
   useEffect(() => {
     call();
-  }, [peer, onCall, isConnected]);
+  }, [peer, otherId, onCall, onCallData, isConnected]);
 
   peer.on("call", async (call) => {
     call.answer(await onCall());
