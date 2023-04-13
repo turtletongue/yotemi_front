@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Peer from "peerjs";
 
 interface PeerOptions {
@@ -34,7 +34,7 @@ const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
     return () => connection.close();
   }, [peer, otherId]);
 
-  const call = () => {
+  const call = useCallback(() => {
     if (isConnected) {
       console.log("call");
       onCall().then((stream) => {
@@ -42,15 +42,19 @@ const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
         call.on("stream", (remoteStream) => onCallData(remoteStream));
       });
     }
-  };
+  }, [peer, otherId, onCall, onCallData, isConnected]);
 
   useEffect(() => {
     call();
-  }, [peer, otherId, onCall, onCallData, isConnected]);
+  }, [call]);
 
   peer.on("call", async (call) => {
     call.answer(await onCall());
     call.on("stream", (remoteStream) => onCallData(remoteStream));
+  });
+
+  peer.on("close", () => {
+    console.log("closed");
   });
 
   return { isConnected, call };
