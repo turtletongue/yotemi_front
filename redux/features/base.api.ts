@@ -11,6 +11,7 @@ const baseApi = createApi({
     "Topics",
     "Notifications",
     "InterviewMessages",
+    "Peers",
   ],
   endpoints: () => ({}),
 });

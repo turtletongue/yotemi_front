@@ -2,14 +2,14 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Peer from "peerjs";
 
 interface PeerOptions {
-  id: string;
-  otherId: string;
+  id?: string;
+  otherId?: string;
   onCall: () => Promise<MediaStream>;
   onCallData: (remoteStream: MediaStream) => unknown;
 }
 
 const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
-  const peer = useMemo(() => new Peer(id), [id]);
+  const peer = useMemo(() => (id ? new Peer(id) : new Peer()), [id]);
   const [isConnected, setIsConnected] = useState(false);
 
   console.log(id, otherId);
@@ -18,24 +18,26 @@ const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
   peer.on("connection", () => setIsConnected(true));
 
   useEffect(() => {
-    const connection = peer.connect(otherId);
+    if (otherId) {
+      const connection = peer.connect(otherId);
 
-    console.log("connecting...");
+      console.log("connecting...");
 
-    connection.on("open", () => {
-      console.log("opened");
-      setIsConnected(true);
-    });
-    connection.on("close", () => {
-      console.log("closed");
-      setIsConnected(false);
-    });
+      connection.on("open", () => {
+        console.log("opened");
+        setIsConnected(true);
+      });
+      connection.on("close", () => {
+        console.log("closed");
+        setIsConnected(false);
+      });
 
-    return () => connection.close();
+      return () => connection.close();
+    }
   }, [peer, otherId]);
 
   const call = useCallback(() => {
-    if (isConnected) {
+    if (isConnected && otherId) {
       console.log("call");
       onCall().then((stream) => {
         const call = peer.call(otherId, stream);
