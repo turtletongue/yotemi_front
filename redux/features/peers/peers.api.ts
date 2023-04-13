@@ -18,6 +18,7 @@ const peersApi = baseApi.injectEndpoints({
 
             socket.on("peer.created", (data) => {
               api.updateCachedData((draft) => {
+                console.log(data);
                 if (data.type === "own") {
                   draft.peerId = data.peerId;
                 } else {
