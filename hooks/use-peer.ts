@@ -13,15 +13,15 @@ const options = {
     iceServers: [
       [
         {
-          urls: "stun:a.relay.metered.ca:80",
+          url: "stun:a.relay.metered.ca:80",
         },
         {
-          urls: "turn:a.relay.metered.ca:80?transport=tcp",
+          url: "turn:a.relay.metered.ca:80?transport=tcp",
           username: "3af336c70304a8a685f3b5f3",
           credential: "4R1qY3NAUu39uke/",
         },
         {
-          urls: "turn:a.relay.metered.ca:443?transport=tcp",
+          url: "turn:a.relay.metered.ca:443?transport=tcp",
           username: "3af336c70304a8a685f3b5f3",
           credential: "4R1qY3NAUu39uke/",
         },
