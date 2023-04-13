@@ -11,11 +11,29 @@ interface PeerOptions {
 const options = {
   config: {
     iceServers: [
-      [
-        {
-          urls: "stun:a.relay.metered.ca:80",
-        },
-      ],
+      {
+        urls: "stun:a.relay.metered.ca:80",
+      },
+      {
+        urls: "turn:a.relay.metered.ca:80?transport=udp",
+        username: "3af336c70304a8a685f3b5f3",
+        credential: "4R1qY3NAUu39uke/",
+      },
+      {
+        urls: "turn:a.relay.metered.ca:80?transport=tcp",
+        username: "3af336c70304a8a685f3b5f3",
+        credential: "4R1qY3NAUu39uke/",
+      },
+      {
+        urls: "turn:a.relay.metered.ca:443?transport=udp",
+        username: "3af336c70304a8a685f3b5f3",
+        credential: "4R1qY3NAUu39uke/",
+      },
+      {
+        urls: "turn:a.relay.metered.ca:443?transport=tcp",
+        username: "3af336c70304a8a685f3b5f3",
+        credential: "4R1qY3NAUu39uke/",
+      },
     ],
   },
 } as const;
