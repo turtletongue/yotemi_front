@@ -46,8 +46,7 @@ const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
   console.log(peer);
 
   peer.on("connection", () => setIsConnected(true));
-
-  useEffect(() => {
+  peer.on("open", () => {
     if (otherId) {
       const connection = peer.connect(otherId);
 
@@ -61,10 +60,8 @@ const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
         console.log("closed");
         setIsConnected(false);
       });
-
-      return () => connection.close();
     }
-  }, [peer, otherId]);
+  });
 
   const call = useCallback(() => {
     if (isConnected && otherId) {
