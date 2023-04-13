@@ -18,7 +18,11 @@ const peersApi = baseApi.injectEndpoints({
 
             socket.on("peer.created", (data) => {
               api.updateCachedData((draft) => {
-                draft.otherPeerId = data;
+                if (data.type === "own") {
+                  draft.peerId = data.peerId;
+                } else {
+                  draft.otherPeerId = data.otherPeerId;
+                }
               });
             });
 
