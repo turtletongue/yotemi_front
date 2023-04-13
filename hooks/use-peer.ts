@@ -8,8 +8,40 @@ interface PeerOptions {
   onCallData: (remoteStream: MediaStream) => unknown;
 }
 
+const options = {
+  config: {
+    iceServers: [
+      [
+        {
+          urls: "stun:a.relay.metered.ca:80",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:80",
+          username: "3af336c70304a8a685f3b5f3",
+          credential: "4R1qY3NAUu39uke/",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:80?transport=tcp",
+          username: "3af336c70304a8a685f3b5f3",
+          credential: "4R1qY3NAUu39uke/",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:443",
+          username: "3af336c70304a8a685f3b5f3",
+          credential: "4R1qY3NAUu39uke/",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:443?transport=tcp",
+          username: "3af336c70304a8a685f3b5f3",
+          credential: "4R1qY3NAUu39uke/",
+        },
+      ],
+    ],
+  },
+} as const;
+
 const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
-  const peer = useMemo(() => (id ? new Peer(id) : new Peer()), [id]);
+  const peer = useMemo(() => (id ? new Peer(id, options) : new Peer()), [id]);
   const [isConnected, setIsConnected] = useState(false);
 
   console.log(id, otherId);
