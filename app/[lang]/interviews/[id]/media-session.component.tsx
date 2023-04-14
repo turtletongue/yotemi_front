@@ -52,8 +52,8 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
   const remoteVideoOutput = useRef<HTMLVideoElement>(null);
   const localVideoOutput = useRef<HTMLVideoElement>(null);
-  const [isVideo, setIsVideo] = useState(true);
-  const [isAudio, setIsAudio] = useState(true);
+  const [isVideo, setIsVideo] = useState(false);
+  const [isAudio, setIsAudio] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
 
   const [dialogError, setDialogError] = useState<ErrorNotification | null>(
@@ -155,6 +155,16 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
   return (
     <>
+      {isVideo && (
+        <video
+          className="w-1/4 absolute top-0 right-0"
+          ref={localVideoOutput}
+          autoPlay
+          playsInline
+          controls={false}
+          muted
+        />
+      )}
       <article className="grow absolute max-h-full">
         {isRemoteVideo && (
           <video
@@ -169,16 +179,6 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
           <div className="w-full flex items-center justify-center">
             <Avatar img={otherUser?.avatarPath} size="xl" rounded />
           </div>
-        )}
-        {isVideo && (
-          <video
-            className="w-1/4 absolute top-0 right-0"
-            ref={localVideoOutput}
-            autoPlay
-            playsInline
-            controls={false}
-            muted
-          />
         )}
         <div
           className={`block ${classnames(

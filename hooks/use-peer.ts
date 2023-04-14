@@ -59,7 +59,6 @@ const usePeer = ({
 
         call.on("stream", (remoteStream) => {
           onCallData(remoteStream);
-          console.log(remoteStream.getVideoTracks());
           setIsRemoteVideo(remoteStream.getVideoTracks().length > 0);
         });
 
@@ -76,7 +75,12 @@ const usePeer = ({
 
   peer.on("call", async (call) => {
     call.answer(await onCall());
-    call.on("stream", (remoteStream) => onCallData(remoteStream));
+    setCall(call);
+
+    call.on("stream", (remoteStream) => {
+      onCallData(remoteStream);
+      setIsRemoteVideo(remoteStream.getVideoTracks.length > 0);
+    });
 
     if (onFinish) {
       call.on("close", onFinish);
