@@ -45,3 +45,5 @@ export { default as NotificationBell } from "./notification-bell";
 export { default as InterviewMessage } from "./interview-message";
 
 export { default as AuthorBadge } from "./author-badge";
+
+export { default as SessionControl } from "./session-control";

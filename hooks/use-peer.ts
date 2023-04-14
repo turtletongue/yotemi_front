@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Peer from "peerjs";
+import Peer, { DataConnection } from "peerjs";
 
 export interface IceServer {
   urls: string | string[];
@@ -12,6 +12,8 @@ interface PeerOptions {
   otherId?: string;
   onCall: () => Promise<MediaStream>;
   onCallData: (remoteStream: MediaStream) => unknown;
+  onFinish?: () => unknown;
+  onError?: (error: Error) => unknown;
   iceServers?: IceServer[];
 }
 
@@ -20,6 +22,8 @@ const usePeer = ({
   otherId,
   onCall,
   onCallData,
+  onFinish,
+  onError,
   iceServers = [],
 }: PeerOptions) => {
   const peer = useMemo(
@@ -27,37 +31,32 @@ const usePeer = ({
     [id, iceServers]
   );
   const [isConnected, setIsConnected] = useState(false);
-
-  console.log(id, otherId);
-  console.log(peer);
+  const [connection, setConnection] = useState<DataConnection | null>(null);
 
   peer.on("connection", () => setIsConnected(true));
   peer.on("open", () => {
     if (otherId) {
       const connection = peer.connect(otherId);
 
-      console.log("connecting...");
+      connection.on("open", () => setIsConnected(true));
+      connection.on("close", () => setIsConnected(false));
 
-      connection.on("open", () => {
-        console.log("opened");
-        setIsConnected(true);
-      });
-      connection.on("close", () => {
-        console.log("closed");
-        setIsConnected(false);
-      });
+      setConnection(connection);
     }
   });
 
   const call = useCallback(() => {
     if (isConnected && otherId) {
-      console.log("call");
       onCall().then((stream) => {
         const call = peer.call(otherId, stream);
         call.on("stream", (remoteStream) => onCallData(remoteStream));
+
+        if (onFinish) {
+          call.on("close", onFinish);
+        }
       });
     }
-  }, [peer, otherId, onCall, onCallData, isConnected]);
+  }, [peer, otherId, onCall, onCallData, onFinish, isConnected]);
 
   useEffect(() => {
     call();
@@ -66,14 +65,17 @@ const usePeer = ({
   peer.on("call", async (call) => {
     call.answer(await onCall());
     call.on("stream", (remoteStream) => onCallData(remoteStream));
-    call.on("close", () => console.log("call closed"));
+
+    if (onFinish) {
+      call.on("close", onFinish);
+    }
   });
 
-  peer.on("close", () => {
-    console.log("closed");
-  });
+  if (onError) {
+    peer.on("error", onError);
+  }
 
-  return { isConnected, call };
+  return { isConnected, connection, call };
 };
 
 export default usePeer;

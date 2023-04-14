@@ -7,19 +7,23 @@ import {
   useRef,
   useState,
 } from "react";
+import { Transition } from "@headlessui/react";
 import { Spinner, Textarea } from "flowbite-react";
+import { ArrowLeft } from "react-feather";
+import { DateTime } from "luxon";
 
 import { AuthorBadge, Button, InterviewMessage } from "@components";
 import {
+  selectIsChatOpened,
+  setIsChatOpened,
   useAddInterviewMessageMutation,
   useListInterviewMessagesQuery,
 } from "@redux/features/interview-messages";
 import { useGetUserQuery, User } from "@redux/features/users";
-import { useAppSelector } from "@redux/store-config/hooks";
+import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { selectUser } from "@redux/features/auth";
 import { Language, useTranslation } from "@app/i18n/client";
 import { Id } from "@app/declarations";
-import { DateTime } from "luxon";
 
 interface InterviewChatProps {
   lang: Language;
@@ -72,9 +76,32 @@ const InterviewChat = ({
     onSend();
   };
 
+  const dispatch = useAppDispatch();
+  const isChatOpened = useAppSelector(selectIsChatOpened);
+  const closeChat = () => {
+    dispatch(setIsChatOpened(false));
+  };
+
   return (
-    <article className="w-full md:w-96 bg-white text-black flex flex-col pb-4 pl-4">
-      <section className="grow relative overflow-y-scroll scrollbar mb-4">
+    <Transition
+      show={isChatOpened}
+      enter="transition ease-in-out duration-300 transform"
+      enterFrom="translate-x-full"
+      enterTo="translate-x-0"
+      leave="transition ease-in-out duration-300 transform"
+      leaveFrom="translate-x-0"
+      leaveTo="translate-x-full"
+      as="article"
+      className="w-full lg:w-96 bg-white text-black flex flex-col pb-4 z-40 absolute top-0 bottom-0 lg:static"
+    >
+      <div
+        className="lg:hidden h-14 w-full bg-gray-50 flex items-center gap-3 p-3 text-independence font-bold cursor-pointer"
+        onClick={closeChat}
+      >
+        <ArrowLeft size={20} />
+        <span>{translation("back")}</span>
+      </div>
+      <section className="grow relative overflow-y-scroll scrollbar mb-4 pl-4 h-full">
         <div className="absolute w-full pr-4">
           {!isLoading &&
             messages &&
@@ -129,7 +156,7 @@ const InterviewChat = ({
           </div>
         )}
       </section>
-      <div className="flex w-full justify-between items-center gap-4">
+      <div className="flex w-full justify-between items-center gap-4 pl-4">
         <Textarea
           id="messageInput"
           name="message"
@@ -147,7 +174,7 @@ const InterviewChat = ({
           {translation("send")}
         </Button>
       </div>
-    </article>
+    </Transition>
   );
 };
 

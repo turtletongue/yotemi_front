@@ -23,8 +23,14 @@ const InterviewPage = async ({ params: { lang, id } }: InterviewPageProps) => {
   const iceServers = await fetchIceServers();
 
   return (
-    <section className="grow bg-cetacean-blue text-white flex">
-      <MediaSession lang={lang} interview={interview} iceServers={iceServers} />
+    <section className="grow bg-cetacean-blue text-white flex overflow-hidden">
+      <section className="grow relative flex items-center justify-center">
+        <MediaSession
+          lang={lang}
+          interview={interview}
+          iceServers={iceServers}
+        />
+      </section>
       <InterviewChat
         lang={lang}
         interviewId={interview.id}

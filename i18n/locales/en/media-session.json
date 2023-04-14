@@ -1,3 +1,8 @@
 {
-  "waitingConnection": "Waiting connection..."
+  "waitingConnection": "Waiting for participant...",
+  "sessionFinished": "Session finished.",
+  "connectionError": {
+    "title": "Connection failed",
+    "description": "Something went wrong during establishing connection between participants."
+  }
 }
