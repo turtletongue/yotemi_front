@@ -20,7 +20,11 @@ import {
 } from "@components";
 import usePeer, { IceServer } from "@hooks/use-peer";
 import { Interview } from "@redux/features/interviews";
-import { useExchangePeerIdQuery } from "@redux/features/peers";
+import {
+  useExchangePeerIdQuery,
+  useMuteMutation,
+  useUnmuteMutation,
+} from "@redux/features/peers";
 import {
   selectIsChatOpened,
   setIsChatOpened,
@@ -41,22 +45,49 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
   const { translation } = useTranslation(lang, "media-session");
   const authenticatedUser = useAppSelector(selectUser);
 
+  const { data: { peerId, otherPeerId, otherHasVideo } = {} } =
+    useExchangePeerIdQuery(interview.id);
+
   const otherUserId =
     authenticatedUser?.id === interview.creatorId
       ? interview.participant!.id
       : interview.creatorId;
-
-  const { data: { peerId, otherPeerId } = {} } =
-    useExchangePeerIdQuery(otherUserId);
 
   const { data: otherUser } = useGetUserQuery(otherUserId);
 
   const remoteVideoOutput = useRef<HTMLVideoElement>(null);
   const localVideoOutput = useRef<HTMLVideoElement>(null);
   const localStream = useRef<MediaStream | null>(null);
-  const [isVideo, setIsVideo] = useState(false);
-  const [isAudio, setIsAudio] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+
+  const [mute] = useMuteMutation();
+  const [unmute] = useUnmuteMutation();
+
+  const [isVideo, setIsVideo] = useState(false);
+  const toggleVideo = () => {
+    const options = { type: "video", interviewId: interview.id } as const;
+
+    if (isVideo) {
+      mute(options);
+    } else {
+      unmute(options);
+    }
+
+    setIsVideo(!isVideo);
+  };
+
+  const [isAudio, setIsAudio] = useState(false);
+  const toggleAudio = () => {
+    const options = { type: "audio", interviewId: interview.id } as const;
+
+    if (isAudio) {
+      mute(options);
+    } else {
+      unmute(options);
+    }
+
+    setIsAudio(!isAudio);
+  };
 
   const [dialogError, setDialogError] = useState<ErrorNotification | null>(
     null
@@ -87,7 +118,6 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
       video: true,
     });
 
-    console.log("oncall");
     syncStreamWithControls(stream, isVideo, isAudio);
     localStream.current = stream;
 
@@ -112,7 +142,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
     setDialogError(translation("connectionError", { returnObjects: true }));
   }, [translation]);
 
-  const { isConnected, isRemoteVideo, connection } = usePeer({
+  const { isConnected, connection } = usePeer({
     id: peerId?.toString(),
     otherId: otherPeerId?.toString(),
     onCall,
@@ -145,7 +175,6 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
   useEffect(() => {
     if (localStream.current) {
-      console.log("oneffect");
       syncStreamWithControls(localStream.current, isVideo, isAudio);
     }
   }, [isVideo, isAudio]);
@@ -173,7 +202,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
         />
       )}
       <article className="grow absolute max-h-full">
-        {isRemoteVideo && (
+        {otherHasVideo && (
           <video
             className="w-full"
             ref={remoteVideoOutput}
@@ -182,20 +211,20 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
             controls={false}
           />
         )}
-        {!isRemoteVideo && (
+        {!otherHasVideo && (
           <div className="w-full flex items-center justify-center">
             <Avatar img={otherUser?.avatarPath} size="xl" rounded />
           </div>
         )}
         <div
           className={`block ${classnames(
-            isRemoteVideo && "md:absolute"
+            otherHasVideo && "md:absolute"
           )} w-full bottom-0 my-6 flex gap-4 justify-center`}
         >
-          <SessionControl onClick={() => setIsAudio((isAudio) => !isAudio)}>
+          <SessionControl onClick={toggleAudio}>
             {isAudio ? <MicOff size={20} /> : <Mic size={20} />}
           </SessionControl>
-          <SessionControl onClick={() => setIsVideo((isVideo) => !isVideo)}>
+          <SessionControl onClick={toggleVideo}>
             {isVideo ? <CameraOff size={20} /> : <Camera size={20} />}
           </SessionControl>
           <SessionControl onClick={toggleChat}>

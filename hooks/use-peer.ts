@@ -32,7 +32,6 @@ const usePeer = ({
   );
   const [isConnected, setIsConnected] = useState(false);
   const [isCalled, setIsCalled] = useState(false);
-  const [isRemoteVideo, setIsRemoteVideo] = useState(false);
   const [connection, setConnection] = useState<DataConnection | null>(null);
 
   peer.on("connection", () => setIsConnected(true));
@@ -59,11 +58,6 @@ const usePeer = ({
 
         call.on("stream", (remoteStream) => {
           onCallData(remoteStream);
-          setIsRemoteVideo(
-            remoteStream
-              .getVideoTracks()
-              .some((track) => track.enabled && !track.muted)
-          );
         });
 
         if (onFinish) {
@@ -82,11 +76,6 @@ const usePeer = ({
 
     call.on("stream", (remoteStream) => {
       onCallData(remoteStream);
-      setIsRemoteVideo(
-        remoteStream
-          .getVideoTracks()
-          .some((track) => track.enabled && !track.muted)
-      );
     });
 
     if (onFinish) {
@@ -100,7 +89,6 @@ const usePeer = ({
 
   return {
     isConnected,
-    isRemoteVideo,
     connection,
     createCall,
   };
