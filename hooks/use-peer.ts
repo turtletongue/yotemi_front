@@ -1,45 +1,31 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Peer from "peerjs";
 
+export interface IceServer {
+  urls: string | string[];
+  username?: string;
+  credential?: string;
+}
+
 interface PeerOptions {
   id?: string;
   otherId?: string;
   onCall: () => Promise<MediaStream>;
   onCallData: (remoteStream: MediaStream) => unknown;
+  iceServers?: IceServer[];
 }
 
-const options = {
-  config: {
-    iceServers: [
-      {
-        urls: "stun:a.relay.metered.ca:80",
-      },
-      {
-        urls: "turn:a.relay.metered.ca:80?transport=udp",
-        username: "3af336c70304a8a685f3b5f3",
-        credential: "4R1qY3NAUu39uke/",
-      },
-      {
-        urls: "turn:a.relay.metered.ca:80?transport=tcp",
-        username: "3af336c70304a8a685f3b5f3",
-        credential: "4R1qY3NAUu39uke/",
-      },
-      {
-        urls: "turn:a.relay.metered.ca:443?transport=udp",
-        username: "3af336c70304a8a685f3b5f3",
-        credential: "4R1qY3NAUu39uke/",
-      },
-      {
-        urls: "turn:a.relay.metered.ca:443?transport=tcp",
-        username: "3af336c70304a8a685f3b5f3",
-        credential: "4R1qY3NAUu39uke/",
-      },
-    ],
-  },
-} as const;
-
-const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
-  const peer = useMemo(() => (id ? new Peer(id, options) : new Peer()), [id]);
+const usePeer = ({
+  id,
+  otherId,
+  onCall,
+  onCallData,
+  iceServers = [],
+}: PeerOptions) => {
+  const peer = useMemo(
+    () => (id ? new Peer(id, { config: { iceServers } }) : new Peer()),
+    [id, iceServers]
+  );
   const [isConnected, setIsConnected] = useState(false);
 
   console.log(id, otherId);
@@ -80,6 +66,7 @@ const usePeer = ({ id, otherId, onCall, onCallData }: PeerOptions) => {
   peer.on("call", async (call) => {
     call.answer(await onCall());
     call.on("stream", (remoteStream) => onCallData(remoteStream));
+    call.on("close", () => console.log("call closed"));
   });
 
   peer.on("close", () => {

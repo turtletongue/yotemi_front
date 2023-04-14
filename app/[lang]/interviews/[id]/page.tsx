@@ -4,6 +4,7 @@ import { Language, useTranslation } from "@app/i18n";
 import MediaSession from "./media-session.component";
 import InterviewChat from "./interview-chat.component";
 import fetchInterview from "./fetch-interview";
+import fetchIceServers from "./fetch-ice-servers";
 
 interface InterviewPageProps {
   params: {
@@ -19,9 +20,11 @@ const InterviewPage = async ({ params: { lang, id } }: InterviewPageProps) => {
     return notFound();
   }
 
+  const iceServers = await fetchIceServers();
+
   return (
     <section className="grow bg-cetacean-blue text-white flex">
-      <MediaSession lang={lang} interview={interview} />
+      <MediaSession lang={lang} interview={interview} iceServers={iceServers} />
       <InterviewChat
         lang={lang}
         interviewId={interview.id}

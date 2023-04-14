@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 
-import usePeer from "@hooks/use-peer";
+import usePeer, { IceServer } from "@hooks/use-peer";
 import { Interview } from "@redux/features/interviews";
 import { useExchangePeerIdQuery } from "@redux/features/peers";
 import { useAppSelector } from "@redux/store-config/hooks";
@@ -12,9 +12,10 @@ import { Language, useTranslation } from "@app/i18n/client";
 interface MediaSessionProps {
   lang: Language;
   interview: Interview;
+  iceServers: IceServer[];
 }
 
-const MediaSession = ({ lang, interview }: MediaSessionProps) => {
+const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
   const { translation } = useTranslation(lang, "media-session");
   const authenticatedUser = useAppSelector(selectUser);
 
@@ -49,6 +50,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     otherId: otherPeerId?.toString(),
     onCall,
     onCallData,
+    iceServers,
   });
 
   if (!isConnected) {
