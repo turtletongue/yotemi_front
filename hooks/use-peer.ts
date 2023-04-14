@@ -40,7 +40,7 @@ const usePeer = ({
 
         call.on("stream", (remoteStream) => {
           setIsConnected(true);
-          console.log("call remote", call.remoteStream);
+          console.log("call remote", remoteStream);
           handleRemoteStream(remoteStream);
         });
 
@@ -65,8 +65,10 @@ const usePeer = ({
 
     console.log("answer");
 
-    console.log("answer remote", call.remoteStream);
-    handleRemoteStream(call.remoteStream);
+    call.on("stream", (remoteStream) => {
+      console.log("answer remote", remoteStream);
+      handleRemoteStream(remoteStream);
+    });
 
     call.on("close", () => {
       setIsConnected(false);
