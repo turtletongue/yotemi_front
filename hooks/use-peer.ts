@@ -27,8 +27,11 @@ const usePeer = ({
     [id, iceServers]
   );
 
+  const [isOpened, setIsOpened] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [call, setCall] = useState<MediaConnection | null>(null);
+
+  peer.on("open", () => setIsOpened(true));
 
   const makeCall = useCallback(() => {
     if (otherId && !call) {
@@ -53,10 +56,14 @@ const usePeer = ({
   }, [peer, otherId, getLocalStream, handleRemoteStream, call]);
 
   useEffect(() => {
-    const timerId = setTimeout(makeCall, 1500);
+    const timerId = setTimeout(() => {
+      if (isOpened) {
+        makeCall();
+      }
+    }, 0);
 
     return () => clearTimeout(timerId);
-  }, [makeCall]);
+  }, [makeCall, isOpened]);
 
   peer.on("call", async (call) => {
     setCall(call);
