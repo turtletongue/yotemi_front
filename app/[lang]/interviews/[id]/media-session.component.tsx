@@ -118,6 +118,8 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
       video: true,
     });
 
+    console.log("local", stream.getVideoTracks());
+
     syncStreamWithControls(stream, isVideo, isAudio);
     localStream.current = stream;
 

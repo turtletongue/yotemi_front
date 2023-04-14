@@ -30,6 +30,10 @@ const usePeer = ({
     () => (id ? new Peer(id, { config: { iceServers } }) : new Peer()),
     [id, iceServers]
   );
+
+  // @ts-ignore
+  console.log(arguments);
+
   const [isConnected, setIsConnected] = useState(false);
   const [isCalled, setIsCalled] = useState(false);
   const [connection, setConnection] = useState<DataConnection | null>(null);
@@ -38,6 +42,8 @@ const usePeer = ({
   peer.on("open", () => {
     if (otherId) {
       const connection = peer.connect(otherId);
+
+      console.log("opened");
 
       connection.on("open", () => setIsConnected(true));
       connection.on("close", () => setIsConnected(false));
@@ -52,11 +58,14 @@ const usePeer = ({
 
   const createCall = useCallback(() => {
     if (isConnected && otherId && !isCalled) {
+      console.log("createCall");
+
       onCall().then((stream) => {
         const call = peer.call(otherId, stream);
         setIsCalled(true);
 
         call.on("stream", (remoteStream) => {
+          console.log("remote", remoteStream);
           onCallData(remoteStream);
         });
 
@@ -73,6 +82,8 @@ const usePeer = ({
 
   peer.on("call", async (call) => {
     call.answer(await onCall());
+
+    console.log("answer");
 
     call.on("stream", (remoteStream) => {
       onCallData(remoteStream);
