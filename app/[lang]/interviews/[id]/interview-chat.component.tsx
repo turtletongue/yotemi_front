@@ -101,7 +101,7 @@ const InterviewChat = ({
         <ArrowLeft size={20} />
         <span>{translation("back")}</span>
       </div>
-      <section className="grow relative overflow-y-scroll scrollbar mb-4 pl-4 h-full">
+      <section className="grow relative overflow-y-scroll scrollbar pl-4 h-full">
         <div className="absolute w-full pr-4">
           {!isLoading &&
             messages &&

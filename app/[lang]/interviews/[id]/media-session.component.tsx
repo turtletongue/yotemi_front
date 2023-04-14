@@ -87,8 +87,13 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
       video: true,
     });
 
+    console.log("oncall");
     syncStreamWithControls(stream, isVideo, isAudio);
     localStream.current = stream;
+
+    if (localVideoOutput.current) {
+      localVideoOutput.current.srcObject = stream;
+    }
 
     return stream;
   }, [isVideo, isAudio]);
@@ -140,6 +145,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
   useEffect(() => {
     if (localStream.current) {
+      console.log("oneffect");
       syncStreamWithControls(localStream.current, isVideo, isAudio);
     }
   }, [isVideo, isAudio]);
