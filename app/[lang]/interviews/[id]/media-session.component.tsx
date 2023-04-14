@@ -11,7 +11,12 @@ import {
   PhoneOff,
 } from "react-feather";
 
-import { ErrorDialog, ErrorNotification, SessionControl } from "@components";
+import {
+  Avatar,
+  ErrorDialog,
+  ErrorNotification,
+  SessionControl,
+} from "@components";
 import usePeer, { IceServer } from "@hooks/use-peer";
 import { Interview } from "@redux/features/interviews";
 import { useExchangePeerIdQuery } from "@redux/features/peers";
@@ -19,8 +24,9 @@ import {
   selectIsChatOpened,
   setIsChatOpened,
 } from "@redux/features/interview-messages";
-import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
+import { useGetUserQuery } from "@redux/features/users";
 import { selectUser } from "@redux/features/auth";
+import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
 
 interface MediaSessionProps {
@@ -40,6 +46,8 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
   const { data: { peerId, otherPeerId } = {} } =
     useExchangePeerIdQuery(otherUserId);
+
+  const { data: otherUser } = useGetUserQuery(otherUserId);
 
   const videoOutput = useRef<HTMLVideoElement>(null);
   const [isVideo, setIsVideo] = useState(true);
@@ -71,10 +79,10 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
   const onCall = useCallback(async () => {
     return await navigator.mediaDevices.getUserMedia({
-      video: isVideo,
-      audio: isAudio,
+      video: false,
+      audio: false,
     });
-  }, [isVideo, isAudio]);
+  }, []);
 
   const onCallData = useCallback((remoteStream: MediaStream) => {
     if (videoOutput.current) {
@@ -90,15 +98,22 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
     setDialogError(translation("connectionError", { returnObjects: true }));
   }, [translation]);
 
-  const { isConnected, connection } = usePeer({
-    id: peerId?.toString(),
-    otherId: otherPeerId?.toString(),
-    onCall,
-    onCallData,
-    onFinish,
-    onError,
-    iceServers,
-  });
+  const { isConnected, isRemoteVideo, connection, replaceMediaStream } =
+    usePeer({
+      id: peerId?.toString(),
+      otherId: otherPeerId?.toString(),
+      onCall,
+      onCallData,
+      onFinish,
+      onError,
+      iceServers,
+    });
+
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: isVideo, audio: isAudio })
+      .then((stream) => replaceMediaStream(stream));
+  }, [replaceMediaStream, isVideo, isAudio]);
 
   const router = useRouter();
   const closeConnection = () => {
@@ -134,13 +149,20 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
   return (
     <>
       <article className="grow absolute max-h-full">
-        <video
-          className="w-full"
-          ref={videoOutput}
-          autoPlay
-          playsInline
-          controls={false}
-        />
+        {isRemoteVideo && (
+          <video
+            className="w-full"
+            ref={videoOutput}
+            autoPlay
+            playsInline
+            controls={false}
+          />
+        )}
+        {!isRemoteVideo && (
+          <div className="w-full flex items-center justify-center">
+            <Avatar img={otherUser?.avatarPath} size="xl" rounded />
+          </div>
+        )}
         <div className="block md:absolute w-full bottom-0 my-6 flex gap-4 justify-center">
           <SessionControl onClick={() => setIsAudio((isAudio) => !isAudio)}>
             {isAudio ? <MicOff size={20} /> : <Mic size={20} />}
