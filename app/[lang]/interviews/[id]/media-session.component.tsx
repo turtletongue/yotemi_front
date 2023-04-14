@@ -118,8 +118,6 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
       video: true,
     });
 
-    console.log("local", stream);
-
     syncStreamWithControls(stream, isVideo, isAudio);
     localStream.current = stream;
 
@@ -131,7 +129,6 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
   }, [isVideo, isAudio]);
 
   const onCallData = useCallback((remoteStream: MediaStream) => {
-    console.log("remote", remoteStream);
     if (remoteVideoOutput.current) {
       remoteVideoOutput.current.srcObject = remoteStream;
     }
@@ -181,6 +178,13 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
       syncStreamWithControls(localStream.current, isVideo, isAudio);
     }
   }, [isVideo, isAudio]);
+
+  useEffect(() => {
+    if (!isConnected) {
+      setIsAudio(false);
+      setIsVideo(false);
+    }
+  }, [isConnected]);
 
   if (!isConnected || isFinished) {
     return (
