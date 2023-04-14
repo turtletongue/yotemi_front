@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Peer, { DataConnection, MediaConnection } from "peerjs";
+import Peer, { DataConnection } from "peerjs";
 
 export interface IceServer {
   urls: string | string[];
@@ -31,9 +31,9 @@ const usePeer = ({
     [id, iceServers]
   );
   const [isConnected, setIsConnected] = useState(false);
+  const [isCalled, setIsCalled] = useState(false);
   const [isRemoteVideo, setIsRemoteVideo] = useState(false);
   const [connection, setConnection] = useState<DataConnection | null>(null);
-  const [call, setCall] = useState<MediaConnection | null>(null);
 
   peer.on("connection", () => setIsConnected(true));
   peer.on("open", () => {
@@ -52,10 +52,10 @@ const usePeer = ({
   });
 
   const createCall = useCallback(() => {
-    if (isConnected && otherId) {
+    if (isConnected && otherId && !isCalled) {
       onCall().then((stream) => {
         const call = peer.call(otherId, stream);
-        setCall(call);
+        setIsCalled(true);
 
         call.on("stream", (remoteStream) => {
           onCallData(remoteStream);
@@ -67,7 +67,7 @@ const usePeer = ({
         }
       });
     }
-  }, [peer, otherId, onCall, onCallData, onFinish, isConnected]);
+  }, [peer, otherId, onCall, onCallData, onFinish, isConnected, isCalled]);
 
   useEffect(() => {
     createCall();
@@ -75,7 +75,6 @@ const usePeer = ({
 
   peer.on("call", async (call) => {
     call.answer(await onCall());
-    setCall(call);
 
     call.on("stream", (remoteStream) => {
       onCallData(remoteStream);
@@ -91,39 +90,11 @@ const usePeer = ({
     peer.on("close", onFinish);
   }
 
-  const replaceMediaStream = useCallback(
-    async (stream: MediaStream) => {
-      if (!call || !call.peerConnection) {
-        return;
-      }
-
-      return await Promise.all(
-        call.peerConnection.getSenders().map(async (sender) => {
-          if (
-            sender.track?.kind === "audio" &&
-            stream.getAudioTracks().length > 0
-          ) {
-            await sender.replaceTrack(stream.getAudioTracks()[0]);
-          }
-
-          if (
-            sender.track?.kind === "video" &&
-            stream.getVideoTracks().length > 0
-          ) {
-            await sender.replaceTrack(stream.getVideoTracks()[0]);
-          }
-        })
-      );
-    },
-    [call]
-  );
-
   return {
     isConnected,
     isRemoteVideo,
     connection,
     createCall,
-    replaceMediaStream,
   };
 };
 

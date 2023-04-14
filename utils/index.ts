@@ -34,3 +34,5 @@ export { default as getRandomColdColor } from "./get-random-badge-color";
 export { default as getRefreshedToken } from "./get-refreshed-token";
 
 export { default as getSocket } from "./get-socket";
+
+export { default as syncStreamWithControls } from "./sync-stream-with-controls";
