@@ -28,6 +28,7 @@ import { useGetUserQuery } from "@redux/features/users";
 import { selectUser } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
+import classnames from "classnames";
 
 interface MediaSessionProps {
   lang: Language;
@@ -49,7 +50,8 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
   const { data: otherUser } = useGetUserQuery(otherUserId);
 
-  const videoOutput = useRef<HTMLVideoElement>(null);
+  const remoteVideoOutput = useRef<HTMLVideoElement>(null);
+  const localVideoOutput = useRef<HTMLVideoElement>(null);
   const [isVideo, setIsVideo] = useState(true);
   const [isAudio, setIsAudio] = useState(true);
   const [isFinished, setIsFinished] = useState(false);
@@ -80,13 +82,13 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
   const onCall = useCallback(async () => {
     return await navigator.mediaDevices.getUserMedia({
       video: false,
-      audio: false,
+      audio: true,
     });
   }, []);
 
   const onCallData = useCallback((remoteStream: MediaStream) => {
-    if (videoOutput.current) {
-      videoOutput.current.srcObject = remoteStream;
+    if (remoteVideoOutput.current) {
+      remoteVideoOutput.current.srcObject = remoteStream;
     }
   }, []);
 
@@ -112,7 +114,13 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
   useEffect(() => {
     navigator.mediaDevices
       .getUserMedia({ video: isVideo, audio: isAudio })
-      .then((stream) => replaceMediaStream(stream));
+      .then((stream) => {
+        if (localVideoOutput.current) {
+          localVideoOutput.current.srcObject = stream;
+        }
+
+        return replaceMediaStream(stream);
+      });
   }, [replaceMediaStream, isVideo, isAudio]);
 
   const router = useRouter();
@@ -152,7 +160,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
         {isRemoteVideo && (
           <video
             className="w-full"
-            ref={videoOutput}
+            ref={remoteVideoOutput}
             autoPlay
             playsInline
             controls={false}
@@ -163,7 +171,21 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
             <Avatar img={otherUser?.avatarPath} size="xl" rounded />
           </div>
         )}
-        <div className="block md:absolute w-full bottom-0 my-6 flex gap-4 justify-center">
+        {isVideo && (
+          <video
+            className="w-1/4 top-0 right-0"
+            ref={localVideoOutput}
+            autoPlay
+            playsInline
+            controls={false}
+            muted
+          />
+        )}
+        <div
+          className={`block ${classnames(
+            isRemoteVideo && "md:absolute"
+          )} w-full bottom-0 my-6 flex gap-4 justify-center`}
+        >
           <SessionControl onClick={() => setIsAudio((isAudio) => !isAudio)}>
             {isAudio ? <MicOff size={20} /> : <Mic size={20} />}
           </SessionControl>

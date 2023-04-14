@@ -41,7 +41,10 @@ const usePeer = ({
       const connection = peer.connect(otherId);
 
       connection.on("open", () => setIsConnected(true));
-      connection.on("close", () => setIsConnected(false));
+
+      if (onFinish) {
+        connection.on("close", onFinish);
+      }
 
       if (onError) {
         connection.on("error", onError);
