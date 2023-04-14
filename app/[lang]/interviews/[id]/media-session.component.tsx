@@ -142,22 +142,18 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
     }
   }, []);
 
-  const onFinish = useCallback(() => {
-    setIsFinished(true);
-  }, []);
-
-  const { isConnected } = usePeer({
+  const { isConnected, call } = usePeer({
     id: peerId?.toString(),
     otherId: otherPeerId?.toString(),
     getLocalStream,
     handleRemoteStream,
-    onFinish,
     iceServers,
   });
 
   const router = useRouter();
   const closeConnection = () => {
-    if (isConnected) {
+    if (call) {
+      call.close();
       setIsFinished(true);
       router.back();
     }

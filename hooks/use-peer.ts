@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Peer from "peerjs";
+import Peer, { MediaConnection } from "peerjs";
 
 export interface IceServer {
   urls: string | string[];
@@ -28,13 +28,15 @@ const usePeer = ({
   );
 
   const [isConnected, setIsConnected] = useState(false);
+  const [call, setCall] = useState<MediaConnection | null>(null);
 
-  const call = useCallback(() => {
-    if (otherId && !isConnected) {
+  const makeCall = useCallback(() => {
+    if (otherId && !call) {
       console.log("call", otherId);
 
       getLocalStream().then((stream) => {
         const call = peer.call(otherId, stream);
+        setCall(call);
 
         call.on("stream", (remoteStream) => {
           setIsConnected(true);
@@ -42,16 +44,20 @@ const usePeer = ({
           handleRemoteStream(remoteStream);
         });
 
-        call.on("close", () => setIsConnected(false));
+        call.on("close", () => {
+          setIsConnected(false);
+          setCall(null);
+        });
       });
     }
-  }, [peer, otherId, getLocalStream, handleRemoteStream, isConnected]);
+  }, [peer, otherId, getLocalStream, handleRemoteStream, call]);
 
   useEffect(() => {
-    call();
-  }, [call]);
+    makeCall();
+  }, [makeCall]);
 
   peer.on("call", async (call) => {
+    setCall(call);
     setIsConnected(true);
     call.answer(await getLocalStream());
 
@@ -60,11 +66,15 @@ const usePeer = ({
     console.log("answer remote", call.remoteStream);
     handleRemoteStream(call.remoteStream);
 
-    call.on("close", () => setIsConnected(false));
+    call.on("close", () => {
+      setIsConnected(false);
+      setCall(null);
+    });
   });
 
   return {
     isConnected,
+    makeCall,
     call,
   };
 };
