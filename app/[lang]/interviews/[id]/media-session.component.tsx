@@ -34,6 +34,7 @@ import { useGetUserQuery } from "@redux/features/users";
 import { selectUser } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
+import { syncStreamWithControls } from "@utils";
 
 interface MediaSessionProps {
   lang: Language;
@@ -124,7 +125,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
       console.log("local", stream.getVideoTracks());
 
-      // syncStreamWithControls(stream, isVideo, isAudio);
+      syncStreamWithControls(stream, isVideo, isAudio);
       localStream.current = stream;
 
       if (localVideoOutput.current) {
@@ -135,7 +136,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
     } catch {
       setDialogError(translation("deviceError", { returnObjects: true }));
 
-      return new MediaStream();
+      return null;
     }
   }, [translation, isVideo, isAudio]);
 
@@ -164,7 +165,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
   useEffect(() => {
     if (localStream.current) {
-      // syncStreamWithControls(localStream.current, isVideo, isAudio);
+      syncStreamWithControls(localStream.current, isVideo, isAudio);
     }
   }, [isVideo, isAudio]);
 
@@ -187,16 +188,6 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
   return (
     <>
-      {isVideo && (
-        <video
-          className="w-1/2 md:w-36 absolute top-0 right-0"
-          ref={localVideoOutput}
-          autoPlay
-          playsInline
-          controls={false}
-          muted
-        />
-      )}
       <article className="grow absolute max-h-full">
         {otherHasVideo && (
           <video
@@ -231,6 +222,16 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
           </SessionControl>
         </div>
       </article>
+      {isVideo && (
+        <video
+          className="w-1/2 md:w-52 absolute z-10 top-0 right-0"
+          ref={localVideoOutput}
+          autoPlay
+          playsInline
+          controls={false}
+          muted
+        />
+      )}
       <ErrorDialog
         error={dialogError}
         onClose={() => setDialogError(null)}

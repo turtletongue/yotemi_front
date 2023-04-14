@@ -10,7 +10,7 @@ export interface IceServer {
 interface PeerOptions {
   id?: string;
   otherId?: string;
-  getLocalStream: () => Promise<MediaStream>;
+  getLocalStream: () => Promise<MediaStream | null>;
   handleRemoteStream: (remoteStream: MediaStream) => unknown;
   iceServers?: IceServer[];
 }
@@ -37,8 +37,12 @@ const usePeer = ({
     if (otherId && !call) {
       console.log("call", otherId);
 
-      getLocalStream().then((stream) => {
-        const call = peer.call(otherId, stream);
+      getLocalStream().then((localStream) => {
+        if (!localStream) {
+          return;
+        }
+
+        const call = peer.call(otherId, localStream);
         setCall(call);
 
         call.on("stream", (remoteStream) => {
@@ -60,7 +64,7 @@ const usePeer = ({
       if (isOpened) {
         makeCall();
       }
-    }, 0);
+    }, 1500);
 
     return () => clearTimeout(timerId);
   }, [makeCall, isOpened]);
@@ -68,7 +72,14 @@ const usePeer = ({
   peer.on("call", async (call) => {
     setCall(call);
     setIsConnected(true);
-    call.answer(await getLocalStream());
+
+    const localStream = await getLocalStream();
+
+    if (!localStream) {
+      return;
+    }
+
+    call.answer(localStream);
 
     console.log("answer");
 
