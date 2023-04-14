@@ -112,25 +112,31 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
     return () => window.removeEventListener("beforeunload", onUnload);
   }, []);
 
-  const onCall = useCallback(async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: true,
-      video: true,
-    });
+  const getLocalStream = useCallback(async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: true,
+      });
 
-    console.log("local", stream.getVideoTracks());
+      console.log("local", stream.getVideoTracks());
 
-    syncStreamWithControls(stream, isVideo, isAudio);
-    localStream.current = stream;
+      syncStreamWithControls(stream, isVideo, isAudio);
+      localStream.current = stream;
 
-    if (localVideoOutput.current) {
-      localVideoOutput.current.srcObject = stream;
+      if (localVideoOutput.current) {
+        localVideoOutput.current.srcObject = stream;
+      }
+
+      return stream;
+    } catch {
+      setDialogError(translation("deviceError", { returnObjects: true }));
+
+      return new MediaStream();
     }
+  }, [translation, isVideo, isAudio]);
 
-    return stream;
-  }, [isVideo, isAudio]);
-
-  const onCallData = useCallback((remoteStream: MediaStream) => {
+  const handleRemoteStream = useCallback((remoteStream: MediaStream) => {
     if (remoteVideoOutput.current) {
       remoteVideoOutput.current.srcObject = remoteStream;
     }
@@ -140,40 +146,22 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
     setIsFinished(true);
   }, []);
 
-  const onError = useCallback(() => {
-    setDialogError(translation("connectionError", { returnObjects: true }));
-  }, [translation]);
-
-  const { isConnected, connection } = usePeer({
+  const { isConnected } = usePeer({
     id: peerId?.toString(),
     otherId: otherPeerId?.toString(),
-    onCall,
-    onCallData,
+    getLocalStream,
+    handleRemoteStream,
     onFinish,
-    onError,
     iceServers,
   });
 
   const router = useRouter();
   const closeConnection = () => {
-    if (connection) {
-      connection.close();
+    if (isConnected) {
       setIsFinished(true);
       router.back();
     }
   };
-
-  useEffect(() => {
-    const onTabClose = () => {
-      if (connection && document.visibilityState === "hidden") {
-        connection.close();
-      }
-    };
-
-    document.addEventListener("visibilitychange", onTabClose);
-
-    return () => document.removeEventListener("visibilitychange", onTabClose);
-  }, [connection]);
 
   useEffect(() => {
     if (localStream.current) {

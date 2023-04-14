@@ -1,8 +1,8 @@
 {
   "waitingConnection": "Waiting for participant...",
   "sessionFinished": "Session finished.",
-  "connectionError": {
-    "title": "Connection failed",
-    "description": "Something went wrong during establishing connection between participants."
+  "deviceError": {
+    "title": "Cannot connect to camera",
+    "description": "Please, give permissions to access camera and microphone."
   }
 }

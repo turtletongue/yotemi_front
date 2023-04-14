@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Peer, { DataConnection } from "peerjs";
+import Peer from "peerjs";
 
 export interface IceServer {
   urls: string | string[];
@@ -10,20 +10,18 @@ export interface IceServer {
 interface PeerOptions {
   id?: string;
   otherId?: string;
-  onCall: () => Promise<MediaStream>;
-  onCallData: (remoteStream: MediaStream) => unknown;
+  getLocalStream: () => Promise<MediaStream>;
+  handleRemoteStream: (remoteStream: MediaStream) => unknown;
   onFinish?: () => unknown;
-  onError?: (error: Error) => void;
   iceServers?: IceServer[];
 }
 
 const usePeer = ({
   id,
   otherId,
-  onCall,
-  onCallData,
+  getLocalStream,
+  handleRemoteStream,
   onFinish,
-  onError,
   iceServers = [],
 }: PeerOptions) => {
   const peer = useMemo(
@@ -31,77 +29,53 @@ const usePeer = ({
     [id, iceServers]
   );
 
-  // @ts-ignore
-  console.log(arguments);
-
   const [isConnected, setIsConnected] = useState(false);
   const [isCalled, setIsCalled] = useState(false);
-  const [connection, setConnection] = useState<DataConnection | null>(null);
 
   peer.on("connection", () => setIsConnected(true));
-  peer.on("open", () => {
-    if (otherId) {
-      const connection = peer.connect(otherId);
+  peer.on("disconnected", () => setIsConnected(false));
 
-      console.log("opened");
+  const call = useCallback(() => {
+    if (otherId && !isCalled) {
+      console.log("call", otherId);
 
-      connection.on("open", () => setIsConnected(true));
-      connection.on("close", () => setIsConnected(false));
-
-      if (onError) {
-        connection.on("error", onError);
-      }
-
-      setConnection(connection);
-    }
-  });
-
-  const createCall = useCallback(() => {
-    if (isConnected && otherId && !isCalled) {
-      console.log("createCall");
-
-      onCall().then((stream) => {
-        const call = peer.call(otherId, stream);
+      getLocalStream().then((stream) => {
         setIsCalled(true);
+        const call = peer.call(otherId, stream);
 
-        call.on("stream", (remoteStream) => {
-          console.log("remote", remoteStream);
-          onCallData(remoteStream);
+        console.log("call remote", call.remoteStream);
+        handleRemoteStream(call.remoteStream);
+
+        call.on("close", () => {
+          onFinish?.();
+          setIsCalled(false);
         });
-
-        if (onFinish) {
-          call.on("close", onFinish);
-        }
       });
     }
-  }, [peer, otherId, onCall, onCallData, onFinish, isConnected, isCalled]);
+  }, [peer, otherId, getLocalStream, handleRemoteStream, onFinish, isCalled]);
 
   useEffect(() => {
-    createCall();
-  }, [createCall]);
+    call();
+  }, [call]);
 
   peer.on("call", async (call) => {
-    call.answer(await onCall());
+    setIsCalled(true);
+    call.answer(await getLocalStream());
 
     console.log("answer");
 
-    call.on("stream", (remoteStream) => {
-      onCallData(remoteStream);
+    console.log("answer remote", call.remoteStream);
+    handleRemoteStream(call.remoteStream);
+
+    call.on("close", () => {
+      onFinish?.();
+      setIsCalled(false);
     });
-
-    if (onFinish) {
-      call.on("close", onFinish);
-    }
   });
-
-  if (onFinish) {
-    peer.on("close", onFinish);
-  }
 
   return {
     isConnected,
-    connection,
-    createCall,
+    call,
   };
 };
 
