@@ -34,7 +34,6 @@ import { useGetUserQuery } from "@redux/features/users";
 import { selectUser } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
-import { syncStreamWithControls } from "@utils";
 
 interface MediaSessionProps {
   lang: Language;
@@ -125,7 +124,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
       console.log("local", stream.getVideoTracks());
 
-      syncStreamWithControls(stream, isVideo, isAudio);
+      // syncStreamWithControls(stream, isVideo, isAudio);
       localStream.current = stream;
 
       if (localVideoOutput.current) {
@@ -165,7 +164,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
 
   useEffect(() => {
     if (localStream.current) {
-      syncStreamWithControls(localStream.current, isVideo, isAudio);
+      // syncStreamWithControls(localStream.current, isVideo, isAudio);
     }
   }, [isVideo, isAudio]);
 
