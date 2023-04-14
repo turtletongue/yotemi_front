@@ -4,33 +4,21 @@ import { getSocket } from "@utils";
 
 type PeerApiResponse = {
   interviewId: Id;
-  peerId: string;
-  otherPeerId: string;
   otherHasAudio: boolean;
   otherHasVideo: boolean;
 };
 
 const peersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    exchangePeerId: builder.query<PeerApiResponse, Id>({
+    registerPeer: builder.query<PeerApiResponse, Id>({
       query: (id) => ({
         url: `peers/${id}`,
         method: "POST",
       }),
-      providesTags: [{ type: "Peers", id: "PEER" }],
       onCacheEntryAdded: async (arg, api) => {
         try {
           await api.cacheDataLoaded;
           const socket = await getSocket();
-
-          socket.on("peer.created", (data) => {
-            api.updateCachedData((draft) => {
-              if (draft.interviewId === data.interviewId) {
-                draft[data.type === "own" ? "peerId" : "otherPeerId"] =
-                  data.peerId;
-              }
-            });
-          });
 
           socket.on("peer.audio-muted", (interviewId) => {
             api.updateCachedData((draft) => {
@@ -69,6 +57,15 @@ const peersApi = baseApi.injectEndpoints({
         } catch {}
       },
     }),
+    takePeerIds: builder.query<{ peerId: string; otherPeerId: string }, Id>({
+      query: (id) => ({
+        url: `interviews/${id}/take-peer`,
+        method: "POST",
+      }),
+      providesTags: (_result, _error, id) => {
+        return [{ type: "Peers", id }];
+      },
+    }),
     mute: builder.mutation<void, { interviewId: Id; type: "video" | "audio" }>({
       query: ({ interviewId, type }) => ({
         url: `peers/${interviewId}/${type}/mute`,
@@ -87,7 +84,11 @@ const peersApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useExchangePeerIdQuery, useMuteMutation, useUnmuteMutation } =
-  peersApi;
+export const {
+  useRegisterPeerQuery,
+  useTakePeerIdsQuery,
+  useMuteMutation,
+  useUnmuteMutation,
+} = peersApi;
 
 export default peersApi;

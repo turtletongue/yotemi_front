@@ -53,7 +53,9 @@ const usePeer = ({
   }, [peer, otherId, getLocalStream, handleRemoteStream, call]);
 
   useEffect(() => {
-    makeCall();
+    const timerId = setTimeout(makeCall, 1500);
+
+    return () => clearTimeout(timerId);
   }, [makeCall]);
 
   peer.on("call", async (call) => {

@@ -21,8 +21,9 @@ import {
 import usePeer, { IceServer } from "@hooks/use-peer";
 import { Interview } from "@redux/features/interviews";
 import {
-  useExchangePeerIdQuery,
   useMuteMutation,
+  useRegisterPeerQuery,
+  useTakePeerIdsQuery,
   useUnmuteMutation,
 } from "@redux/features/peers";
 import {
@@ -45,8 +46,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
   const { translation } = useTranslation(lang, "media-session");
   const authenticatedUser = useAppSelector(selectUser);
 
-  const { data: { peerId, otherPeerId, otherHasVideo } = {} } =
-    useExchangePeerIdQuery(interview.id);
+  const { data: { otherHasVideo } = {} } = useRegisterPeerQuery(interview.id);
 
   const otherUserId =
     authenticatedUser?.id === interview.creatorId
@@ -54,6 +54,11 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
       : interview.creatorId;
 
   const { data: otherUser } = useGetUserQuery(otherUserId);
+
+  const { data: { peerId, otherPeerId } = {} } = useTakePeerIdsQuery(
+    interview.id,
+    { skip: authenticatedUser?.id !== interview.creatorId }
+  );
 
   const remoteVideoOutput = useRef<HTMLVideoElement>(null);
   const localVideoOutput = useRef<HTMLVideoElement>(null);
@@ -143,8 +148,8 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
   }, []);
 
   const { isConnected, call } = usePeer({
-    id: peerId?.toString(),
-    otherId: otherPeerId?.toString(),
+    id: peerId,
+    otherId: otherPeerId,
     getLocalStream,
     handleRemoteStream,
     iceServers,
