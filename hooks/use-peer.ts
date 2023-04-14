@@ -12,7 +12,6 @@ interface PeerOptions {
   otherId?: string;
   getLocalStream: () => Promise<MediaStream>;
   handleRemoteStream: (remoteStream: MediaStream) => unknown;
-  onFinish?: () => unknown;
   iceServers?: IceServer[];
 }
 
@@ -21,7 +20,6 @@ const usePeer = ({
   otherId,
   getLocalStream,
   handleRemoteStream,
-  onFinish,
   iceServers = [],
 }: PeerOptions) => {
   const peer = useMemo(
@@ -30,36 +28,31 @@ const usePeer = ({
   );
 
   const [isConnected, setIsConnected] = useState(false);
-  const [isCalled, setIsCalled] = useState(false);
-
-  peer.on("connection", () => setIsConnected(true));
-  peer.on("disconnected", () => setIsConnected(false));
 
   const call = useCallback(() => {
-    if (otherId && !isCalled) {
+    if (otherId && !isConnected) {
       console.log("call", otherId);
 
       getLocalStream().then((stream) => {
-        setIsCalled(true);
         const call = peer.call(otherId, stream);
 
-        console.log("call remote", call.remoteStream);
-        handleRemoteStream(call.remoteStream);
-
-        call.on("close", () => {
-          onFinish?.();
-          setIsCalled(false);
+        call.on("stream", (remoteStream) => {
+          setIsConnected(true);
+          console.log("call remote", call.remoteStream);
+          handleRemoteStream(remoteStream);
         });
+
+        call.on("close", () => setIsConnected(false));
       });
     }
-  }, [peer, otherId, getLocalStream, handleRemoteStream, onFinish, isCalled]);
+  }, [peer, otherId, getLocalStream, handleRemoteStream, isConnected]);
 
   useEffect(() => {
     call();
   }, [call]);
 
   peer.on("call", async (call) => {
-    setIsCalled(true);
+    setIsConnected(true);
     call.answer(await getLocalStream());
 
     console.log("answer");
@@ -67,10 +60,7 @@ const usePeer = ({
     console.log("answer remote", call.remoteStream);
     handleRemoteStream(call.remoteStream);
 
-    call.on("close", () => {
-      onFinish?.();
-      setIsCalled(false);
-    });
+    call.on("close", () => setIsConnected(false));
   });
 
   return {
