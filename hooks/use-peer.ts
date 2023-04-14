@@ -41,10 +41,7 @@ const usePeer = ({
       const connection = peer.connect(otherId);
 
       connection.on("open", () => setIsConnected(true));
-
-      if (onFinish) {
-        connection.on("close", onFinish);
-      }
+      connection.on("close", () => setIsConnected(false));
 
       if (onError) {
         connection.on("error", onError);
@@ -62,6 +59,7 @@ const usePeer = ({
 
         call.on("stream", (remoteStream) => {
           onCallData(remoteStream);
+          console.log(remoteStream.getVideoTracks());
           setIsRemoteVideo(remoteStream.getVideoTracks().length > 0);
         });
 

@@ -79,12 +79,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
     return () => window.removeEventListener("beforeunload", onUnload);
   }, []);
 
-  const onCall = useCallback(async () => {
-    return await navigator.mediaDevices.getUserMedia({
-      video: false,
-      audio: true,
-    });
-  }, []);
+  const onCall = useCallback(async () => new MediaStream(), []);
 
   const onCallData = useCallback((remoteStream: MediaStream) => {
     if (remoteVideoOutput.current) {
@@ -112,15 +107,19 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
     });
 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: isVideo, audio: isAudio })
-      .then((stream) => {
-        if (localVideoOutput.current) {
-          localVideoOutput.current.srcObject = stream;
-        }
+    if (isVideo || isAudio) {
+      navigator.mediaDevices
+        .getUserMedia({ video: isVideo, audio: isAudio })
+        .then((stream) => {
+          if (localVideoOutput.current) {
+            localVideoOutput.current.srcObject = stream;
+          }
 
-        return replaceMediaStream(stream);
-      });
+          return replaceMediaStream(stream);
+        });
+    } else {
+      replaceMediaStream(new MediaStream()).then();
+    }
   }, [replaceMediaStream, isVideo, isAudio]);
 
   const router = useRouter();
@@ -173,7 +172,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
         )}
         {isVideo && (
           <video
-            className="w-1/4 top-0 right-0"
+            className="w-1/4 absolute top-0 right-0"
             ref={localVideoOutput}
             autoPlay
             playsInline
