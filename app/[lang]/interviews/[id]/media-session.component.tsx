@@ -118,6 +118,8 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
       video: true,
     });
 
+    console.log("local", stream);
+
     syncStreamWithControls(stream, isVideo, isAudio);
     localStream.current = stream;
 
@@ -129,6 +131,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
   }, [isVideo, isAudio]);
 
   const onCallData = useCallback((remoteStream: MediaStream) => {
+    console.log("remote", remoteStream);
     if (remoteVideoOutput.current) {
       remoteVideoOutput.current.srcObject = remoteStream;
     }
