@@ -59,7 +59,9 @@ const usePeer = ({
 
         call.on("stream", (remoteStream) => {
           onCallData(remoteStream);
-          setIsRemoteVideo(remoteStream.getVideoTracks().length > 0);
+          setIsRemoteVideo(
+            remoteStream.getVideoTracks().some((track) => track.enabled)
+          );
         });
 
         if (onFinish) {
@@ -78,7 +80,9 @@ const usePeer = ({
 
     call.on("stream", (remoteStream) => {
       onCallData(remoteStream);
-      setIsRemoteVideo(remoteStream.getVideoTracks.length > 0);
+      setIsRemoteVideo(
+        remoteStream.getVideoTracks().some((track) => track.enabled)
+      );
     });
 
     if (onFinish) {
