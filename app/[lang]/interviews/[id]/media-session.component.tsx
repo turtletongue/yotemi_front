@@ -56,8 +56,7 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
   const { data: otherUser } = useGetUserQuery(otherUserId);
 
   const { data: { peerId, otherPeerId } = {} } = useTakePeerIdsQuery(
-    interview.id,
-    { skip: authenticatedUser?.id !== interview.creatorId }
+    interview.id
   );
 
   const remoteVideoOutput = useRef<HTMLVideoElement>(null);
