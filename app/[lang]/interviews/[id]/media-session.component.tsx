@@ -202,16 +202,23 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     <>
       {otherHasVideo && (
         <video
-          className="absolute min-h-full min-w-full left-0 top-0 overflow-hidden w-auto h-auto"
+          className="absolute max-h-full min-w-full left-0 top-0 overflow-hidden w-auto h-auto"
           ref={remoteVideoOutput}
           autoPlay
           playsInline
           controls={false}
         />
       )}
-      {otherHasAudio && <audio className="hidden" autoPlay controls={false} />}
+      {otherHasAudio && (
+        <audio
+          ref={remoteAudioOutput}
+          className="hidden"
+          autoPlay
+          controls={false}
+        />
+      )}
       {!otherHasVideo && (
-        <div className="w-full flex items-center justify-center">
+        <div className="grow flex items-center justify-center">
           <Avatar img={otherUser?.avatarPath} size="xl" rounded />
         </div>
       )}
