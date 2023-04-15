@@ -34,9 +34,7 @@ const interviewMessagesApi = baseApi.injectEndpoints({
 
           await api.cacheEntryRemoved;
           socket.close();
-        } catch (error: unknown) {
-          console.error(error);
-        }
+        } catch {}
       },
     }),
     getInterviewMessage: builder.query<InterviewMessage, Id>({
