@@ -18,7 +18,7 @@ import {
   ErrorNotification,
   SessionControl,
 } from "@components";
-import usePeer, { IceServer } from "@hooks/use-peer";
+import usePeer from "@hooks/use-peer";
 import { Interview } from "@redux/features/interviews";
 import {
   useMuteMutation,
@@ -39,10 +39,9 @@ import { syncStreamWithControls } from "@utils";
 interface MediaSessionProps {
   lang: Language;
   interview: Interview;
-  iceServers: IceServer[];
 }
 
-const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
+const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const { translation } = useTranslation(lang, "media-session");
   const authenticatedUser = useAppSelector(selectUser);
 
@@ -151,7 +150,6 @@ const MediaSession = ({ lang, interview, iceServers }: MediaSessionProps) => {
     otherId: otherPeerId,
     getLocalStream,
     handleRemoteStream,
-    iceServers,
   });
 
   const router = useRouter();

@@ -12,7 +12,6 @@ interface PeerOptions {
   otherId?: string;
   getLocalStream: () => Promise<MediaStream | null>;
   handleRemoteStream: (remoteStream: MediaStream) => unknown;
-  iceServers?: IceServer[];
 }
 
 const usePeer = ({
@@ -20,11 +19,23 @@ const usePeer = ({
   otherId,
   getLocalStream,
   handleRemoteStream,
-  iceServers = [],
 }: PeerOptions) => {
-  console.log(iceServers);
   const peer = useMemo(
-    () => (id ? new Peer(id, { config: { iceServers } }) : null),
+    () =>
+      id
+        ? new Peer(id, {
+            config: {
+              iceServers: [
+                { urls: process.env.NEXT_PUBLIC_STUN_URL },
+                {
+                  urls: process.env.NEXT_PUBLIC_TURN_URL,
+                  username: process.env.NEXT_PUBLIC_TURN_USERNAME,
+                  credential: process.env.NEXT_PUBLIC_TURN_PASSWORD,
+                },
+              ],
+            },
+          })
+        : null,
     [id]
   );
 
