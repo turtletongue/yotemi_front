@@ -54,9 +54,6 @@ const usePeer = ({
   }, [peer, otherId, getLocalStream, handleRemoteStream, call]);
 
   peer.on("call", async (call) => {
-    setIsConnected(true);
-    setCall(call);
-
     const localStream = await getLocalStream();
 
     if (!localStream) {
@@ -64,6 +61,8 @@ const usePeer = ({
     }
 
     call.answer(localStream);
+    setIsConnected(true);
+    setCall(call);
 
     console.log("answer");
 
