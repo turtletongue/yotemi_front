@@ -63,9 +63,11 @@ const usePeer = ({
           handleRemoteStream(remoteStream);
         });
 
-        call.on("close", () => {
-          setIsConnected(false);
-          setAnsweredCall(null);
+        call.on("iceStateChanged", (state) => {
+          if (state === "closed" || state === "disconnected") {
+            setIsConnected(false);
+            setAnsweredCall(null);
+          }
         });
       });
     }
@@ -93,9 +95,11 @@ const usePeer = ({
       handleRemoteStream(remoteStream);
     });
 
-    call.on("close", () => {
-      setIsConnected(false);
-      setAnsweredCall(null);
+    call.on("iceStateChanged", (state) => {
+      if (state === "closed" || state === "disconnected") {
+        setIsConnected(false);
+        setAnsweredCall(null);
+      }
     });
   });
 
