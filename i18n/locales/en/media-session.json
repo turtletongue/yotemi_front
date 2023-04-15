@@ -4,5 +4,9 @@
   "deviceError": {
     "title": "Cannot connect to camera",
     "description": "Please, give permissions to access camera and microphone."
+  },
+  "reviewError": {
+    "title": "Unable to create review",
+    "description": "Something went wrong during review creation. Try later."
   }
 }

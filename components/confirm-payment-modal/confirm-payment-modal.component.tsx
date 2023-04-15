@@ -1,11 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import { Button, Label, Textarea } from "flowbite-react";
 
 import { Modal } from "@components";
 import { Language, useTranslation } from "@app/i18n/client";
-import { useState } from "react";
 
 interface ConfirmPaymentModalProps {
   lang: Language;

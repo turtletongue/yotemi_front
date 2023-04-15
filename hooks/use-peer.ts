@@ -6,6 +6,7 @@ interface PeerOptions {
   otherId?: string;
   getLocalStream: () => Promise<MediaStream | null>;
   handleRemoteStream: (remoteStream: MediaStream) => unknown;
+  onFinish?: () => unknown;
 }
 
 const usePeer = ({
@@ -13,6 +14,7 @@ const usePeer = ({
   otherId,
   getLocalStream,
   handleRemoteStream,
+  onFinish,
 }: PeerOptions) => {
   const peer = useMemo(
     () =>
@@ -100,6 +102,7 @@ const usePeer = ({
     const handleDisconnect = () => {
       setIsConnected(false);
       setAnsweredCall(null);
+      onFinish?.();
     };
 
     peer?.on("close", handleDisconnect);
@@ -109,7 +112,7 @@ const usePeer = ({
       peer?.off("close", handleDisconnect);
       peer?.off("disconnected", handleDisconnect);
     };
-  }, [peer]);
+  }, [peer, onFinish]);
 
   return {
     isConnected,

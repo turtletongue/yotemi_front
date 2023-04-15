@@ -12,6 +12,7 @@ const baseApi = createApi({
     "Notifications",
     "InterviewMessages",
     "Peers",
+    "Reviews",
   ],
   endpoints: () => ({}),
 });

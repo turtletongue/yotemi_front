@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import {
   Camera,
   CameraOff,
@@ -13,6 +13,7 @@ import {
 import classnames from "classnames";
 
 import {
+  AddReviewModal,
   Avatar,
   ErrorDialog,
   ErrorNotification,
@@ -35,6 +36,7 @@ import { selectUser } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
 import { syncStreamWithControls } from "@utils";
+import { useGetReviewExistenceQuery } from "@redux/features/reviews";
 
 interface MediaSessionProps {
   lang: Language;
@@ -66,6 +68,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const localStream = useRef<MediaStream | null>(null);
   const remoteStream = useRef<MediaStream | null>(null);
   const [isFinished, setIsFinished] = useState(false);
+  const [isReviewModalOpened, setIsReviewModalOpened] = useState(false);
 
   const [mute] = useMuteMutation();
   const [unmute] = useUnmuteMutation();
@@ -140,19 +143,31 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     remoteStream.current = stream;
   }, []);
 
+  const { data: { isExist } = { isExist: null } } = useGetReviewExistenceQuery(
+    interview.creatorId,
+    { skip: interview.creatorId === authenticatedUser?.id }
+  );
+
+  const onFinish = useCallback(() => {
+    setIsFinished(true);
+
+    if (isExist !== null && !isExist) {
+      setIsReviewModalOpened(true);
+    }
+  }, [isExist]);
+
   const { isConnected, call } = usePeer({
     id: peerId,
     otherId: otherPeerId,
     getLocalStream,
     handleRemoteStream,
+    onFinish,
   });
 
-  const router = useRouter();
   const closeConnection = () => {
     if (call) {
       call.close();
       setIsFinished(true);
-      router.back();
     }
   };
 
@@ -258,6 +273,15 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
           muted
         />
       )}
+      <AddReviewModal
+        lang={lang}
+        targetUserId={interview.creatorId}
+        isOpen={isReviewModalOpened}
+        onClose={() => setIsReviewModalOpened(false)}
+        onError={() => {
+          setDialogError(translation("reviewError", { returnObjects: true }));
+        }}
+      />
       <ErrorDialog
         error={dialogError}
         onClose={() => setDialogError(null)}
