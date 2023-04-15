@@ -44,6 +44,7 @@ interface MediaSessionProps {
 }
 
 const MediaSession = ({ lang, interview }: MediaSessionProps) => {
+  const router = useRouter();
   const { translation } = useTranslation(lang, "media-session");
   const authenticatedUser = useAppSelector(selectUser);
 
@@ -148,8 +149,11 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     { skip: interview.creatorId === authenticatedUser?.id }
   );
 
-  const router = useRouter();
   const onFinish = useCallback(() => {
+    if (new Date() < new Date(interview.endAt)) {
+      return;
+    }
+
     setIsFinished(true);
 
     if (authenticatedUser?.id === interview.creatorId) {
@@ -165,6 +169,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     authenticatedUser?.id,
     authenticatedUser?.username,
     interview.creatorId,
+    interview.endAt,
   ]);
 
   const { isConnected, call } = usePeer({
@@ -179,6 +184,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     if (call) {
       call.close();
       setIsFinished(true);
+      router.push(`/profile/${authenticatedUser?.username}`);
     }
   };
 

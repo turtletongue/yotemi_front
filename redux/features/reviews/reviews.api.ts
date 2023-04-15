@@ -6,7 +6,7 @@ const reviewsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getReviewExistence: builder.query<{ isExist: boolean }, Id>({
       query: (userId) => ({
-        url: "reviews",
+        url: "reviews/existence",
         params: {
           userId,
         },
