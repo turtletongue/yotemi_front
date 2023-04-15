@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Peer, { MediaConnection } from "peerjs";
 
 export interface IceServer {
@@ -27,11 +27,12 @@ const usePeer = ({
     [id, iceServers]
   );
 
-  const [isOpened, setIsOpened] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [call, setCall] = useState<MediaConnection | null>(null);
 
-  peer.on("open", () => setIsOpened(true));
+  if (otherId) {
+    peer.on("open", () => peer.connect(otherId));
+  }
 
   const makeCall = useCallback(() => {
     if (otherId && !call) {
@@ -46,32 +47,15 @@ const usePeer = ({
         setCall(call);
 
         call.on("stream", (remoteStream) => {
-          setIsConnected(true);
           console.log("call remote", remoteStream.getVideoTracks());
           handleRemoteStream(remoteStream);
-        });
-
-        call.on("close", () => {
-          setIsConnected(false);
-          setCall(null);
         });
       });
     }
   }, [peer, otherId, getLocalStream, handleRemoteStream, call]);
 
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      if (isOpened) {
-        makeCall();
-      }
-    }, 1500);
-
-    return () => clearTimeout(timerId);
-  }, [makeCall, isOpened]);
-
   peer.on("call", async (call) => {
     setCall(call);
-    setIsConnected(true);
 
     const localStream = await getLocalStream();
 
@@ -87,11 +71,15 @@ const usePeer = ({
       console.log("answer remote", remoteStream.getVideoTracks());
       handleRemoteStream(remoteStream);
     });
+  });
 
-    call.on("close", () => {
-      setIsConnected(false);
-      setCall(null);
-    });
+  peer.on("connection", () => {
+    setIsConnected(true);
+    makeCall();
+  });
+
+  peer.on("close", () => {
+    setIsConnected(false);
   });
 
   return {
