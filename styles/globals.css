@@ -30,6 +30,25 @@ body {
     background: rgba(200, 200, 200, 0.7);
   }
 
+  .dark-scrollbar::-webkit-scrollbar {
+    width: 0.2rem;
+    height: 1rem;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #0F1132;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-thumb {
+    background: #1C1E4E;
+    border-radius: 100vh;
+  }
+
+  .dark-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #4A5169;
+  }
+
   .navbar-items {
     grid-template-columns: max-content 1fr repeat(4, max-content);
     grid-template-areas: "members-link . sign-in-link sign-up-link notifications-link current-user-link";

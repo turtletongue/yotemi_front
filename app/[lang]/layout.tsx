@@ -31,7 +31,7 @@ const RootLayout = async ({ children, params: { lang } }: LayoutProps) => {
   return (
     <html lang={lang} dir={dir(lang)}>
       <body
-        className={`flex flex-col w-full min-h-screen scrollbar ${fonts.mulish.variable}`}
+        className={`flex flex-col w-full min-h-screen dark-scrollbar ${fonts.mulish.variable}`}
       >
         <ReduxProvider>
           <TonProvider lang={lang}>
