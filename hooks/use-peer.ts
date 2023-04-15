@@ -25,7 +25,7 @@ const usePeer = ({
   console.log(iceServers);
   const peer = useMemo(
     () => (id ? new Peer(id, { config: { iceServers } }) : new Peer()),
-    [id, iceServers]
+    [id]
   );
 
   const [isConnected, setIsConnected] = useState(false);
