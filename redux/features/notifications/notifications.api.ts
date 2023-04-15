@@ -28,6 +28,7 @@ const notificationsApi = baseApi.injectEndpoints({
           socket.on("notification.created", (data) => {
             api.updateCachedData((draft) => {
               draft.items.unshift(data);
+              draft.notSeenCount++;
             });
           });
 
