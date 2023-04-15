@@ -126,7 +126,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         video: true,
       });
 
-      syncStreamWithControls(stream, isVideo, isAudio);
       localStream.current = stream;
 
       return stream;
@@ -135,7 +134,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
       return null;
     }
-  }, [translation, isVideo, isAudio]);
+  }, [translation]);
 
   const handleRemoteStream = useCallback((stream: MediaStream) => {
     remoteStream.current = stream;

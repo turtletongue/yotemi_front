@@ -1,5 +1,5 @@
 {
-  "waitingConnection": "Waiting for participant...",
+  "waitingConnection": "Waiting for second participant...",
   "sessionFinished": "Session finished.",
   "deviceError": {
     "title": "Cannot connect to camera",

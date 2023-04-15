@@ -1,5 +1,5 @@
 {
-  "waitingConnection": "Ожидание другого участника...",
+  "waitingConnection": "Ожидание второго участника...",
   "sessionFinished": "Сеанс окончен.",
   "deviceError": {
     "title": "Не удалось подключиться к камере",
