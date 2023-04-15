@@ -96,9 +96,7 @@ const usePeer = ({
     [answeredCall, getLocalStream, handleCall]
   );
 
-  useEffect(() => {
-    peer?.on("call", handleIncomingCall);
-  }, [peer, handleIncomingCall]);
+  peer?.on("call", handleIncomingCall);
 
   useEffect(() => {
     const handleDisconnect = () => {
