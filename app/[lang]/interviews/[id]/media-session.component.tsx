@@ -150,10 +150,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   );
 
   const onFinish = useCallback(() => {
-    if (new Date() < new Date(interview.endAt)) {
-      return;
-    }
-
     setIsFinished(true);
 
     if (authenticatedUser?.id === interview.creatorId) {
@@ -169,7 +165,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     authenticatedUser?.id,
     authenticatedUser?.username,
     interview.creatorId,
-    interview.endAt,
   ]);
 
   const { isConnected, call } = usePeer({
