@@ -30,10 +30,6 @@ const usePeer = ({
   const [isConnected, setIsConnected] = useState(false);
   const [call, setCall] = useState<MediaConnection | null>(null);
 
-  if (otherId) {
-    peer.on("open", () => peer.connect(otherId));
-  }
-
   const makeCall = useCallback(() => {
     if (otherId && !call) {
       console.log("call", otherId);
@@ -44,17 +40,21 @@ const usePeer = ({
         }
 
         const call = peer.call(otherId, localStream);
+        setIsConnected(true);
         setCall(call);
 
         call.on("stream", (remoteStream) => {
           console.log("call remote", remoteStream.getVideoTracks());
           handleRemoteStream(remoteStream);
         });
+
+        call.on("close", () => setIsConnected(false));
       });
     }
   }, [peer, otherId, getLocalStream, handleRemoteStream, call]);
 
   peer.on("call", async (call) => {
+    setIsConnected(true);
     setCall(call);
 
     const localStream = await getLocalStream();
@@ -71,16 +71,13 @@ const usePeer = ({
       console.log("answer remote", remoteStream.getVideoTracks());
       handleRemoteStream(remoteStream);
     });
+
+    call.on("close", () => setIsConnected(false));
   });
 
-  peer.on("connection", () => {
-    setIsConnected(true);
-    makeCall();
-  });
-
-  peer.on("close", () => {
-    setIsConnected(false);
-  });
+  if (otherId) {
+    peer.on("open", makeCall);
+  }
 
   return {
     isConnected,
