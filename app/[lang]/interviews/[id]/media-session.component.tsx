@@ -123,8 +123,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         video: true,
       });
 
-      console.log("local", stream.getVideoTracks());
-
       syncStreamWithControls(stream, isVideo, isAudio);
       localStream.current = stream;
 
@@ -158,19 +156,15 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   useEffect(() => {
     if (localStream.current) {
-      console.log("local stream exists");
       syncStreamWithControls(localStream.current, isVideo, isAudio);
 
       if (localVideoOutput.current) {
-        console.log("local video exists");
         localVideoOutput.current.srcObject = localStream.current;
       }
     }
   }, [isVideo, isAudio]);
 
   useEffect(() => {
-    console.log("rr", remoteStream.current, remoteVideoOutput.current);
-
     if (remoteStream.current && remoteVideoOutput.current) {
       remoteVideoOutput.current.srcObject = remoteStream.current;
     }
@@ -195,10 +189,10 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   return (
     <>
-      <article className="grow absolute max-h-full">
+      <article className="grow relative">
         {otherHasVideo && (
           <video
-            className="w-full"
+            className="absolute min-h-full min-w-full left-0 top-0 overflow-hidden w-auto h-auto"
             ref={remoteVideoOutput}
             autoPlay
             playsInline

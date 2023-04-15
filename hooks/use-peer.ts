@@ -24,7 +24,6 @@ const usePeer = ({
     () =>
       id
         ? new Peer(id, {
-            debug: 3,
             config: {
               iceServers: [
                 { urls: process.env.NEXT_PUBLIC_STUN_URL },
@@ -47,8 +46,6 @@ const usePeer = ({
 
   const makeCall = useCallback(() => {
     if (peer && otherId && !answeredCall) {
-      console.log("call", otherId);
-
       getLocalStream().then((localStream) => {
         if (!localStream) {
           return;
@@ -59,7 +56,6 @@ const usePeer = ({
 
         call.on("stream", (remoteStream) => {
           setIsConnected(true);
-          console.log("call remote", remoteStream.getVideoTracks());
           handleRemoteStream(remoteStream);
         });
 
@@ -87,11 +83,8 @@ const usePeer = ({
     call.answer(localStream);
     setAnsweredCall(call);
 
-    console.log("answer");
-
     call.on("stream", (remoteStream) => {
       setIsConnected(true);
-      console.log("answer remote", remoteStream.getVideoTracks());
       handleRemoteStream(remoteStream);
     });
 
