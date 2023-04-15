@@ -156,8 +156,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
       return router.push(`/profile/${authenticatedUser.username}`);
     }
 
-    console.log("isExist", isExist);
-
     if (!isExist) {
       setIsReviewModalOpened(true);
     } else {
@@ -229,11 +227,22 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   if (!isConnected || isFinished) {
     return (
-      <div className="grow flex justify-center items-center">
-        <p>
-          {translation(isFinished ? "sessionFinished" : "waitingConnection")}
-        </p>
-      </div>
+      <>
+        <div className="grow flex justify-center items-center">
+          <p>
+            {translation(isFinished ? "sessionFinished" : "waitingConnection")}
+          </p>
+        </div>
+        <AddReviewModal
+          lang={lang}
+          targetUserId={interview.creatorId}
+          isOpen={isReviewModalOpened}
+          onClose={() => setIsReviewModalOpened(false)}
+          onError={() => {
+            setDialogError(translation("reviewError", { returnObjects: true }));
+          }}
+        />
+      </>
     );
   }
 
@@ -289,15 +298,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
           muted
         />
       )}
-      <AddReviewModal
-        lang={lang}
-        targetUserId={interview.creatorId}
-        isOpen={isReviewModalOpened}
-        onClose={() => setIsReviewModalOpened(false)}
-        onError={() => {
-          setDialogError(translation("reviewError", { returnObjects: true }));
-        }}
-      />
       <ErrorDialog
         error={dialogError}
         onClose={() => setDialogError(null)}
