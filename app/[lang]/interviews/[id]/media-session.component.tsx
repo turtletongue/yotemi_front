@@ -158,14 +158,15 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
     if (!isExist) {
       setIsReviewModalOpened(true);
+    } else {
+      router.push(`/profile/${otherUser?.username}`);
     }
-
-    router.push(`/profile/${authenticatedUser?.username}`);
   }, [
     router,
     isExist,
     authenticatedUser?.id,
     authenticatedUser?.username,
+    otherUser?.username,
     interview.creatorId,
   ]);
 
