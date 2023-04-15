@@ -127,7 +127,9 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
       syncStreamWithControls(stream, isVideo, isAudio);
       localStream.current = stream;
 
+      console.log(localVideoOutput.current);
       if (localVideoOutput.current) {
+        console.log("set");
         localVideoOutput.current.srcObject = stream;
       }
 
@@ -220,16 +222,16 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
           </SessionControl>
         </div>
       </article>
-      {isVideo && (
-        <video
-          className="w-1/2 md:w-52 absolute z-10 top-0 right-0"
-          ref={localVideoOutput}
-          autoPlay
-          playsInline
-          controls={false}
-          muted
-        />
-      )}
+
+      <video
+        className="w-1/2 md:w-52 absolute z-10 top-0 right-0"
+        ref={localVideoOutput}
+        autoPlay
+        playsInline
+        controls={false}
+        muted
+      />
+
       <ErrorDialog
         error={dialogError}
         onClose={() => setDialogError(null)}
