@@ -157,14 +157,14 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   };
 
   useEffect(() => {
-    if (localStream.current) {
+    if (call && localStream.current) {
       syncStreamWithControls(localStream.current, isVideo, isAudio);
 
       if (localVideoOutput.current) {
         localVideoOutput.current.srcObject = localStream.current;
       }
     }
-  }, [isVideo, isAudio]);
+  }, [call, isVideo, isAudio]);
 
   useEffect(() => {
     if (remoteStream.current && remoteVideoOutput.current && otherHasVideo) {

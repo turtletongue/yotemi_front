@@ -1,11 +1,5 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Peer, { MediaConnection } from "peerjs";
-
-export interface IceServer {
-  urls: string | string[];
-  username?: string;
-  credential?: string;
-}
 
 interface PeerOptions {
   id?: string;
@@ -44,6 +38,25 @@ const usePeer = ({
     null
   );
 
+  const handleCall = useCallback(
+    (call: MediaConnection) => {
+      setAnsweredCall(call);
+
+      call.on("stream", (remoteStream) => {
+        setIsConnected(true);
+        handleRemoteStream(remoteStream);
+      });
+
+      call.on("iceStateChanged", (state) => {
+        if (state === "closed" || state === "disconnected") {
+          setIsConnected(false);
+          setAnsweredCall(null);
+        }
+      });
+    },
+    [handleRemoteStream]
+  );
+
   const makeCall = useCallback(() => {
     if (peer && otherId && !answeredCall) {
       getLocalStream().then((localStream) => {
@@ -52,62 +65,58 @@ const usePeer = ({
         }
 
         const call = peer.call(otherId, localStream);
-        setAnsweredCall(call);
-
-        call.on("stream", (remoteStream) => {
-          setIsConnected(true);
-          handleRemoteStream(remoteStream);
-        });
-
-        call.on("iceStateChanged", (state) => {
-          if (state === "closed" || state === "disconnected") {
-            setIsConnected(false);
-            setAnsweredCall(null);
-          }
-        });
+        handleCall(call);
       });
     }
-  }, [peer, otherId, getLocalStream, handleRemoteStream, answeredCall]);
+  }, [peer, otherId, getLocalStream, answeredCall, handleCall]);
 
-  peer?.on("call", async (call) => {
-    if (answeredCall) {
-      return;
-    }
-
-    const localStream = await getLocalStream();
-
-    if (!localStream) {
-      return;
-    }
-
-    call.answer(localStream);
-    setAnsweredCall(call);
-
-    call.on("stream", (remoteStream) => {
-      setIsConnected(true);
-      handleRemoteStream(remoteStream);
-    });
-
-    call.on("iceStateChanged", (state) => {
-      if (state === "closed" || state === "disconnected") {
-        setIsConnected(false);
-        setAnsweredCall(null);
+  useEffect(() => {
+    const handleIncomingCall = async (call: MediaConnection) => {
+      if (answeredCall) {
+        return;
       }
-    });
-  });
 
-  if (peer && otherId) {
-    peer.on("open", makeCall);
-  }
+      const localStream = await getLocalStream();
 
-  peer?.on("close", () => {
-    setIsConnected(false);
-    setAnsweredCall(null);
-  });
-  peer?.on("disconnected", () => {
-    setIsConnected(false);
-    setAnsweredCall(null);
-  });
+      if (!localStream) {
+        return;
+      }
+
+      call.answer(localStream);
+      handleCall(call);
+    };
+
+    peer?.on("call", handleIncomingCall);
+
+    return () => {
+      peer?.off("call", handleIncomingCall);
+    };
+  }, [peer, answeredCall, getLocalStream, handleRemoteStream, handleCall]);
+
+  useEffect(() => {
+    if (peer && otherId) {
+      peer.on("open", makeCall);
+    }
+
+    return () => {
+      peer?.off("open", makeCall);
+    };
+  }, [makeCall, peer, otherId]);
+
+  useEffect(() => {
+    const handleDisconnect = () => {
+      setIsConnected(false);
+      setAnsweredCall(null);
+    };
+
+    peer?.on("close", handleDisconnect);
+    peer?.on("disconnected", handleDisconnect);
+
+    return () => {
+      peer?.off("close", handleDisconnect);
+      peer?.off("disconnected", handleDisconnect);
+    };
+  }, [peer]);
 
   return {
     isConnected,
