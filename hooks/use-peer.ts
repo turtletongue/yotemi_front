@@ -22,6 +22,7 @@ const usePeer = ({
   handleRemoteStream,
   iceServers = [],
 }: PeerOptions) => {
+  console.log(iceServers);
   const peer = useMemo(
     () => (id ? new Peer(id, { config: { iceServers } }) : new Peer()),
     [id, iceServers]
