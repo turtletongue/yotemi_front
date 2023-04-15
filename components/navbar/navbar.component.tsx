@@ -1,18 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useTonWallet } from "@tonconnect/ui-react";
+import { useState } from "react";
 
+import { Language } from "@app/i18n/client";
 import NavbarItems from "./navbar-items.component";
 import MobileMenuControl from "../mobile-menu-control";
 import MobileNavbar from "../mobile-navbar";
 import GradientLine from "../gradient-line";
 import Logo from "../logo";
-
-import baseApi from "@redux/features/base.api";
-import { loggedOut } from "@redux/features/auth";
-import { useAppDispatch } from "@redux/store-config/hooks";
-import { Language } from "@app/i18n";
 
 interface NavbarProps {
   lang: Language;
@@ -21,20 +16,6 @@ interface NavbarProps {
 const Navbar = ({ lang }: NavbarProps) => {
   const [isMobileNavbarOpened, setIsMobileNavbarOpened] = useState(false);
   const closeMobileNavbar = () => setIsMobileNavbarOpened(false);
-
-  const dispatch = useAppDispatch();
-  const wallet = useTonWallet();
-
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      if (!wallet) {
-        dispatch(baseApi.util.resetApiState());
-        dispatch(loggedOut());
-      }
-    }, 1000);
-
-    return () => clearTimeout(timerId);
-  }, [dispatch, wallet]);
 
   return (
     <header>
