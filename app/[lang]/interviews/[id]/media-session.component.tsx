@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import {
   Camera,
   CameraOff,
@@ -193,7 +193,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const isInterviewFinished = new Date(interview.endAt) < new Date();
 
   if (!authenticatedUser || !isParticipant || isInterviewFinished) {
-    return router.back();
+    return redirect("/");
   }
 
   if (!isConnected || isFinished) {
