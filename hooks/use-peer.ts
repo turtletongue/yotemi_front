@@ -24,7 +24,7 @@ const usePeer = ({
 }: PeerOptions) => {
   console.log(iceServers);
   const peer = useMemo(
-    () => (id ? new Peer(id, { config: { iceServers } }) : new Peer()),
+    () => (id ? new Peer(id, { config: { iceServers } }) : null),
     [id]
   );
 
@@ -32,7 +32,7 @@ const usePeer = ({
   const [call, setCall] = useState<MediaConnection | null>(null);
 
   const makeCall = useCallback(() => {
-    if (otherId && !call) {
+    if (peer && otherId && !call) {
       console.log("call", otherId);
 
       getLocalStream().then((localStream) => {
@@ -54,7 +54,7 @@ const usePeer = ({
     }
   }, [peer, otherId, getLocalStream, handleRemoteStream, call]);
 
-  peer.on("call", async (call) => {
+  peer?.on("call", async (call) => {
     const localStream = await getLocalStream();
 
     if (!localStream) {
@@ -75,12 +75,12 @@ const usePeer = ({
     call.on("close", () => setIsConnected(false));
   });
 
-  if (otherId) {
+  if (peer && otherId) {
     peer.on("open", makeCall);
   }
 
-  peer.on("close", () => setIsConnected(false));
-  peer.on("disconnected", () => setIsConnected(false));
+  peer?.on("close", () => setIsConnected(false));
+  peer?.on("disconnected", () => setIsConnected(false));
 
   return {
     isConnected,
