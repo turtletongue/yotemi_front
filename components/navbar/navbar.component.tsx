@@ -26,11 +26,14 @@ const Navbar = ({ lang }: NavbarProps) => {
   const wallet = useTonWallet();
 
   useEffect(() => {
-    if (!wallet) {
-      dispatch(baseApi.util.resetApiState());
-      console.log("logged out because no wallet");
-      dispatch(loggedOut());
-    }
+    const timerId = setTimeout(() => {
+      if (!wallet) {
+        dispatch(baseApi.util.resetApiState());
+        dispatch(loggedOut());
+      }
+    }, 1000);
+
+    return () => clearTimeout(timerId);
   }, [dispatch, wallet]);
 
   return (

@@ -54,7 +54,6 @@ export const baseQueryWithRefresh: BaseQueryFn<
 
           result = await baseQuery(args, api, extraOptions);
         } else {
-          console.log("logged out because refresh failed");
           api.dispatch(loggedOut());
         }
       } finally {
