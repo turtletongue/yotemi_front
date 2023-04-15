@@ -17,14 +17,12 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
   };
 
   return (
-    <article
-      className="bg-card rounded-3xl flex w-96 p-5 mt-5"
-      onClick={onClick}
-    >
+    <article className="bg-card rounded-3xl flex w-96 p-5 mt-5">
       <Avatar
         img={review.reviewer.avatarPath}
-        className="h-min mt-1 mr-4"
+        className="h-min mt-1 mr-4 cursor-pointer"
         rounded
+        onClick={onClick}
       />
       <div className="grow">
         <div className="flex w-full justify-between">
