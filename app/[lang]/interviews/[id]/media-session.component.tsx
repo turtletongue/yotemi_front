@@ -61,6 +61,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const remoteVideoOutput = useRef<HTMLVideoElement>(null);
   const localVideoOutput = useRef<HTMLVideoElement>(null);
   const localStream = useRef<MediaStream | null>(null);
+  const remoteStream = useRef<MediaStream | null>(null);
   const [isFinished, setIsFinished] = useState(false);
 
   const [mute] = useMuteMutation();
@@ -127,12 +128,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
       syncStreamWithControls(stream, isVideo, isAudio);
       localStream.current = stream;
 
-      console.log(localVideoOutput.current);
-      if (localVideoOutput.current) {
-        console.log("set");
-        localVideoOutput.current.srcObject = stream;
-      }
-
       return stream;
     } catch {
       setDialogError(translation("deviceError", { returnObjects: true }));
@@ -141,10 +136,8 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     }
   }, [translation, isVideo, isAudio]);
 
-  const handleRemoteStream = useCallback((remoteStream: MediaStream) => {
-    if (remoteVideoOutput.current) {
-      remoteVideoOutput.current.srcObject = remoteStream;
-    }
+  const handleRemoteStream = useCallback((stream: MediaStream) => {
+    remoteStream.current = stream;
   }, []);
 
   const { isConnected, call } = usePeer({
@@ -165,9 +158,23 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   useEffect(() => {
     if (localStream.current) {
+      console.log("local stream exists");
       syncStreamWithControls(localStream.current, isVideo, isAudio);
+
+      if (localVideoOutput.current) {
+        console.log("local video exists");
+        localVideoOutput.current.srcObject = localStream.current;
+      }
     }
   }, [isVideo, isAudio]);
+
+  useEffect(() => {
+    console.log("rr", remoteStream.current, remoteVideoOutput.current);
+
+    if (remoteStream.current && remoteVideoOutput.current) {
+      remoteVideoOutput.current.srcObject = remoteStream.current;
+    }
+  }, [otherHasVideo]);
 
   useEffect(() => {
     if (!isConnected) {
@@ -222,16 +229,16 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
           </SessionControl>
         </div>
       </article>
-
-      <video
-        className="w-1/2 md:w-52 absolute z-10 top-0 right-0"
-        ref={localVideoOutput}
-        autoPlay
-        playsInline
-        controls={false}
-        muted
-      />
-
+      {isVideo && (
+        <video
+          className="w-1/2 md:w-52 absolute z-10 top-0 right-0"
+          ref={localVideoOutput}
+          autoPlay
+          playsInline
+          controls={false}
+          muted
+        />
+      )}
       <ErrorDialog
         error={dialogError}
         onClose={() => setDialogError(null)}
