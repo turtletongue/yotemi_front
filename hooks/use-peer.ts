@@ -58,7 +58,6 @@ const usePeer = ({
   );
 
   const makeCall = useCallback(() => {
-    console.log("outcoming");
     if (peer && otherId && !answeredCall) {
       getLocalStream().then((localStream) => {
         if (!localStream) {
@@ -79,7 +78,6 @@ const usePeer = ({
 
   const handleIncomingCall = useCallback(
     async (call: MediaConnection) => {
-      console.log("incoming");
       if (answeredCall) {
         return;
       }

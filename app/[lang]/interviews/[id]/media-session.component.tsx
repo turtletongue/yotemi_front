@@ -187,6 +187,15 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     }
   }, [isConnected]);
 
+  const isParticipant =
+    authenticatedUser?.id === interview.creatorId ||
+    authenticatedUser?.id === interview.participant?.id;
+  const isInterviewFinished = new Date(interview.endAt) < new Date();
+
+  if (!authenticatedUser || !isParticipant || isInterviewFinished) {
+    return router.back();
+  }
+
   if (!isConnected || isFinished) {
     return (
       <div className="grow flex justify-center items-center">
