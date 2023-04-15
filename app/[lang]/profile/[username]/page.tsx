@@ -66,7 +66,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
               </div>
             )}
             <div
-              className={`max-w-[40rem] mt-3 ${classnames(
+              className={`max-w-[22rem] 2xl:max-w-[40rem] mt-3 ${classnames(
                 profile.biography && "mb-7"
               )}`}
             >
@@ -78,7 +78,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
             </div>
             <Calendar lang={lang} user={profile} contractCode={contractCode} />
           </article>
-          <article className="flex flex-col w-full 2xl:w-96 px-6 lg:px-0">
+          <article className="flex flex-col w-full md:w-[33rem] 2xl:w-96 2xl:px-6 lg:px-0">
             <div className="flex w-full justify-between items-center">
               <span>{translation("reviews")}</span>
               <div className="flex">
