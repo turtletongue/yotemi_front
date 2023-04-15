@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import {
   Camera,
   CameraOff,
@@ -148,13 +148,24 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     { skip: interview.creatorId === authenticatedUser?.id }
   );
 
+  const router = useRouter();
   const onFinish = useCallback(() => {
     setIsFinished(true);
 
-    if (isExist !== null && !isExist) {
+    if (authenticatedUser?.id === interview.creatorId) {
+      return router.push(`/profile/${authenticatedUser.username}`);
+    }
+
+    if (!isExist) {
       setIsReviewModalOpened(true);
     }
-  }, [isExist]);
+  }, [
+    router,
+    isExist,
+    authenticatedUser?.id,
+    authenticatedUser?.username,
+    interview.creatorId,
+  ]);
 
   const { isConnected, call } = usePeer({
     id: peerId,

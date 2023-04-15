@@ -53,10 +53,11 @@ const usePeer = ({
         if (state === "closed" || state === "disconnected") {
           setIsConnected(false);
           setAnsweredCall(null);
+          onFinish?.();
         }
       });
     },
-    [handleRemoteStream]
+    [handleRemoteStream, onFinish]
   );
 
   const makeCall = useCallback(() => {
