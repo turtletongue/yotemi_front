@@ -41,10 +41,10 @@ const usePeer = ({
         }
 
         const call = peer.call(otherId, localStream);
-        setIsConnected(true);
         setCall(call);
 
         call.on("stream", (remoteStream) => {
+          setIsConnected(true);
           console.log("call remote", remoteStream.getVideoTracks());
           handleRemoteStream(remoteStream);
         });
@@ -62,12 +62,12 @@ const usePeer = ({
     }
 
     call.answer(localStream);
-    setIsConnected(true);
     setCall(call);
 
     console.log("answer");
 
     call.on("stream", (remoteStream) => {
+      setIsConnected(true);
       console.log("answer remote", remoteStream.getVideoTracks());
       handleRemoteStream(remoteStream);
     });
@@ -78,6 +78,9 @@ const usePeer = ({
   if (otherId) {
     peer.on("open", makeCall);
   }
+
+  peer.on("close", () => setIsConnected(false));
+  peer.on("disconnected", () => setIsConnected(false));
 
   return {
     isConnected,
