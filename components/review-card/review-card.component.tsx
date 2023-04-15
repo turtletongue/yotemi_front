@@ -17,7 +17,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
   };
 
   return (
-    <article className="bg-card rounded-3xl flex w-full md:w-auto md:min-w-[33rem] 2xl:min-w-[27rem] p-5 mt-5">
+    <article className="bg-card rounded-3xl flex w-full md:w-auto md:min-w-[33rem] 2xl:min-w-96 p-5 mt-5">
       <Avatar
         img={review.reviewer.avatarPath}
         className="h-min mt-1 mr-4 cursor-pointer"
