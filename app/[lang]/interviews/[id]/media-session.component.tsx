@@ -159,6 +159,8 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     if (!isExist) {
       setIsReviewModalOpened(true);
     }
+
+    router.push(`/profile/${authenticatedUser?.username}`);
   }, [
     router,
     isExist,
@@ -178,8 +180,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const closeConnection = () => {
     if (call) {
       call.close();
-      setIsFinished(true);
-      router.push(`/profile/${authenticatedUser?.username}`);
+      onFinish();
     }
   };
 
