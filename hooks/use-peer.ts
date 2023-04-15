@@ -41,10 +41,12 @@ const usePeer = ({
   );
 
   const [isConnected, setIsConnected] = useState(false);
-  const [call, setCall] = useState<MediaConnection | null>(null);
+  const [answeredCall, setAnsweredCall] = useState<MediaConnection | null>(
+    null
+  );
 
   const makeCall = useCallback(() => {
-    if (peer && otherId && !call) {
+    if (peer && otherId && !answeredCall) {
       console.log("call", otherId);
 
       getLocalStream().then((localStream) => {
@@ -53,7 +55,7 @@ const usePeer = ({
         }
 
         const call = peer.call(otherId, localStream);
-        setCall(call);
+        setAnsweredCall(call);
 
         call.on("stream", (remoteStream) => {
           setIsConnected(true);
@@ -61,12 +63,19 @@ const usePeer = ({
           handleRemoteStream(remoteStream);
         });
 
-        call.on("close", () => setIsConnected(false));
+        call.on("close", () => {
+          setIsConnected(false);
+          setAnsweredCall(null);
+        });
       });
     }
-  }, [peer, otherId, getLocalStream, handleRemoteStream, call]);
+  }, [peer, otherId, getLocalStream, handleRemoteStream, answeredCall]);
 
   peer?.on("call", async (call) => {
+    if (answeredCall) {
+      return;
+    }
+
     const localStream = await getLocalStream();
 
     if (!localStream) {
@@ -74,7 +83,7 @@ const usePeer = ({
     }
 
     call.answer(localStream);
-    setCall(call);
+    setAnsweredCall(call);
 
     console.log("answer");
 
@@ -84,20 +93,29 @@ const usePeer = ({
       handleRemoteStream(remoteStream);
     });
 
-    call.on("close", () => setIsConnected(false));
+    call.on("close", () => {
+      setIsConnected(false);
+      setAnsweredCall(null);
+    });
   });
 
   if (peer && otherId) {
     peer.on("open", makeCall);
   }
 
-  peer?.on("close", () => setIsConnected(false));
-  peer?.on("disconnected", () => setIsConnected(false));
+  peer?.on("close", () => {
+    setIsConnected(false);
+    setAnsweredCall(null);
+  });
+  peer?.on("disconnected", () => {
+    setIsConnected(false);
+    setAnsweredCall(null);
+  });
 
   return {
     isConnected,
     makeCall,
-    call,
+    call: answeredCall,
   };
 };
 
