@@ -45,7 +45,9 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const { translation } = useTranslation(lang, "media-session");
   const authenticatedUser = useAppSelector(selectUser);
 
-  const { data: { otherHasVideo } = {} } = useRegisterPeerQuery(interview.id);
+  const { data: { otherHasVideo, otherHasAudio } = {} } = useRegisterPeerQuery(
+    interview.id
+  );
 
   const otherUserId =
     authenticatedUser?.id === interview.creatorId
@@ -59,6 +61,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   );
 
   const remoteVideoOutput = useRef<HTMLVideoElement>(null);
+  const remoteAudioOutput = useRef<HTMLAudioElement>(null);
   const localVideoOutput = useRef<HTMLVideoElement>(null);
   const localStream = useRef<MediaStream | null>(null);
   const remoteStream = useRef<MediaStream | null>(null);
@@ -165,10 +168,18 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   }, [isVideo, isAudio]);
 
   useEffect(() => {
-    if (remoteStream.current && remoteVideoOutput.current) {
-      remoteVideoOutput.current.srcObject = remoteStream.current;
+    if (remoteStream.current && remoteVideoOutput.current && otherHasVideo) {
+      remoteVideoOutput.current.srcObject = new MediaStream(
+        remoteStream.current.getVideoTracks()
+      );
     }
-  }, [otherHasVideo]);
+
+    if (remoteStream.current && remoteAudioOutput.current && otherHasAudio) {
+      remoteAudioOutput.current.srcObject = new MediaStream(
+        remoteStream.current.getAudioTracks()
+      );
+    }
+  }, [otherHasVideo, otherHasAudio]);
 
   useEffect(() => {
     if (!isConnected) {
@@ -189,40 +200,39 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   return (
     <>
-      <article className="grow relative">
-        {otherHasVideo && (
-          <video
-            className="absolute min-h-full min-w-full left-0 top-0 overflow-hidden w-auto h-auto"
-            ref={remoteVideoOutput}
-            autoPlay
-            playsInline
-            controls={false}
-          />
-        )}
-        {!otherHasVideo && (
-          <div className="w-full flex items-center justify-center">
-            <Avatar img={otherUser?.avatarPath} size="xl" rounded />
-          </div>
-        )}
-        <div
-          className={`block ${classnames(
-            otherHasVideo && "md:absolute"
-          )} w-full bottom-0 my-6 flex gap-4 justify-center`}
-        >
-          <SessionControl onClick={toggleAudio}>
-            {isAudio ? <MicOff size={20} /> : <Mic size={20} />}
-          </SessionControl>
-          <SessionControl onClick={toggleVideo}>
-            {isVideo ? <CameraOff size={20} /> : <Camera size={20} />}
-          </SessionControl>
-          <SessionControl onClick={toggleChat}>
-            <MessageSquare size={20} />
-          </SessionControl>
-          <SessionControl onClick={closeConnection}>
-            <PhoneOff size={20} className="text-danger" />
-          </SessionControl>
+      {otherHasVideo && (
+        <video
+          className="absolute min-h-full min-w-full left-0 top-0 overflow-hidden w-auto h-auto"
+          ref={remoteVideoOutput}
+          autoPlay
+          playsInline
+          controls={false}
+        />
+      )}
+      {otherHasAudio && <audio className="hidden" autoPlay controls={false} />}
+      {!otherHasVideo && (
+        <div className="w-full flex items-center justify-center">
+          <Avatar img={otherUser?.avatarPath} size="xl" rounded />
         </div>
-      </article>
+      )}
+      <div
+        className={`block ${classnames(
+          otherHasVideo && "md:absolute"
+        )} w-full bottom-0 my-6 flex gap-4 justify-center`}
+      >
+        <SessionControl onClick={toggleAudio}>
+          {isAudio ? <MicOff size={20} /> : <Mic size={20} />}
+        </SessionControl>
+        <SessionControl onClick={toggleVideo}>
+          {isVideo ? <CameraOff size={20} /> : <Camera size={20} />}
+        </SessionControl>
+        <SessionControl onClick={toggleChat}>
+          <MessageSquare size={20} />
+        </SessionControl>
+        <SessionControl onClick={closeConnection}>
+          <PhoneOff size={20} className="text-danger" />
+        </SessionControl>
+      </div>
       {isVideo && (
         <video
           className="w-1/2 md:w-52 absolute z-10 top-0 right-0"
