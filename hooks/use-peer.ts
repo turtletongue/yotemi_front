@@ -24,6 +24,7 @@ const usePeer = ({
     () =>
       id
         ? new Peer(id, {
+            debug: 3,
             config: {
               iceServers: [
                 { urls: process.env.NEXT_PUBLIC_STUN_URL },
