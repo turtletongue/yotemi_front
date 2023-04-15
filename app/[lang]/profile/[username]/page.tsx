@@ -78,7 +78,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
             </div>
             <Calendar lang={lang} user={profile} contractCode={contractCode} />
           </article>
-          <article className="flex flex-col w-full md:w-[33rem] 2xl:w-[25rem]">
+          <article className="flex flex-col w-full md:w-[33rem] 2xl:w-96 w-96">
             <div className="flex w-full justify-between items-center">
               <span>{translation("reviews")}</span>
               <div className="flex">
