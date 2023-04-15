@@ -156,6 +156,8 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
       return router.push(`/profile/${authenticatedUser.username}`);
     }
 
+    console.log("isExist", isExist);
+
     if (!isExist) {
       setIsReviewModalOpened(true);
     } else {
