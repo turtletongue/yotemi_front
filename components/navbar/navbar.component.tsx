@@ -28,6 +28,7 @@ const Navbar = ({ lang }: NavbarProps) => {
   useEffect(() => {
     if (!wallet) {
       dispatch(baseApi.util.resetApiState());
+      console.log("logged out because no wallet");
       dispatch(loggedOut());
     }
   }, [dispatch, wallet]);
