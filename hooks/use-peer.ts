@@ -58,6 +58,7 @@ const usePeer = ({
   );
 
   const makeCall = useCallback(() => {
+    console.log("outcoming");
     if (peer && otherId && !answeredCall) {
       getLocalStream().then((localStream) => {
         if (!localStream) {
@@ -71,7 +72,14 @@ const usePeer = ({
   }, [peer, otherId, getLocalStream, answeredCall, handleCall]);
 
   useEffect(() => {
-    const handleIncomingCall = async (call: MediaConnection) => {
+    if (peer && otherId) {
+      peer.on("open", makeCall);
+    }
+  }, [makeCall, peer, otherId]);
+
+  const handleIncomingCall = useCallback(
+    async (call: MediaConnection) => {
+      console.log("incoming");
       if (answeredCall) {
         return;
       }
@@ -84,24 +92,13 @@ const usePeer = ({
 
       call.answer(localStream);
       handleCall(call);
-    };
-
-    peer?.on("call", handleIncomingCall);
-
-    return () => {
-      peer?.off("call", handleIncomingCall);
-    };
-  }, [peer, answeredCall, getLocalStream, handleRemoteStream, handleCall]);
+    },
+    [answeredCall, getLocalStream, handleCall]
+  );
 
   useEffect(() => {
-    if (peer && otherId) {
-      peer.on("open", makeCall);
-    }
-
-    return () => {
-      peer?.off("open", makeCall);
-    };
-  }, [makeCall, peer, otherId]);
+    peer?.on("call", handleIncomingCall);
+  }, [peer, handleIncomingCall]);
 
   useEffect(() => {
     const handleDisconnect = () => {
