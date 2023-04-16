@@ -94,24 +94,24 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
     "minutes"
   ).minutes;
 
-  console.log(remainingMinutes, interview.startAt);
-
   const isActual = new Date(interview.endAt).getTime() >= Date.now();
 
   const canCancel =
     ((info.status === "paid" && isPayer) || isCreator) &&
     info.status !== "finished" &&
-    (!isStarted || remainingMinutes < 5);
+    (!isStarted || remainingMinutes > 5);
   const canPurchase = info.status === "created" && !isCreator;
   const canConfirmPayment =
     info.status === "paid" && isPayer && !interview.participant;
-  const canConnect =
+
+  const hasPaidAccess =
     info.status === "paid" && interview.participant && (isCreator || isPayer);
-  const canFinish = canConnect && !isActual;
+
+  const canConnect = hasPaidAccess && isActual;
+  const canFinish = hasPaidAccess && !isActual;
 
   const hasButtons =
     !["canceled", "finished", "notConnected"].includes(info.status) &&
-    isActual &&
     authenticatedUser;
 
   return (
