@@ -69,6 +69,8 @@ const InterviewChat = ({
       return;
     }
 
+    event.preventDefault();
+
     if (isAdding || message.trim().length === 0) {
       return;
     }
