@@ -74,7 +74,6 @@ const CropModal = ({
             ref={imgRef}
             crossOrigin="anonymous"
           />
-          F
         </ReactCrop>
       </div>
 
