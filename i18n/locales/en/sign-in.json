@@ -14,5 +14,9 @@
   "unauthorizedError": {
     "title": "Signature incorrect",
     "description": "The wallet signature of this account does not match yours. Try to connect another wallet."
+  },
+  "walletNotInitialized": {
+    "title": "Wallet not initialized",
+    "description": "Your TON wallet is not initialized. Please, create outcome transaction and try again."
   }
 }
