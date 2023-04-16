@@ -16,7 +16,7 @@ const InterviewMessage = ({
   return (
     <div className={`mt-2 flex ${isOwn ? "justify-end" : "justify-start"}`}>
       <article
-        className={`rounded-lg break-all pl-3 pr-16 py-3 relative ${
+        className={`rounded-lg pl-3 pr-16 py-3 relative ${
           isOwn ? "bg-pale-lavender" : "bg-gray-100"
         }`}
       >

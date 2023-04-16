@@ -94,6 +94,8 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
     "minutes"
   ).minutes;
 
+  console.log(remainingMinutes, interview.startAt);
+
   const isActual = new Date(interview.endAt).getTime() >= Date.now();
 
   const canCancel =
