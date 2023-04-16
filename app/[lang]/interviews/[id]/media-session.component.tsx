@@ -221,8 +221,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     authenticatedUser?.id === interview.participant?.id;
   const isInterviewFinished = new Date(interview.endAt) < new Date();
 
-  console.log(authenticatedUser, interview, isInterviewFinished);
-
   if (!authenticatedUser || !isParticipant || isInterviewFinished) {
     return redirect("/");
   }
