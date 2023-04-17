@@ -196,7 +196,9 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   }, [call, isVideo, isAudio]);
 
   useEffect(() => {
+    console.log("remote stream");
     if (remoteStream.current && remoteVideoOutput.current && otherHasVideo) {
+      console.log("remote video stream", remoteStream.current.getVideoTracks());
       remoteVideoOutput.current.srcObject = new MediaStream(
         remoteStream.current.getVideoTracks()
       );
