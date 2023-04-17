@@ -129,13 +129,9 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     }
   }, [localStream]);
 
-  const changeLocalStream = useCallback(
-    (stream: MediaStream) => {
-      onLocalStreamClose();
-      setLocalStream(stream);
-    },
-    [onLocalStreamClose]
-  );
+  useEffect(() => {
+    return onLocalStreamClose;
+  }, [onLocalStreamClose]);
 
   const getLocalStream = useCallback(async () => {
     try {
@@ -144,7 +140,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         video: true,
       });
 
-      changeLocalStream(stream);
+      setLocalStream(stream);
 
       return stream;
     } catch {
@@ -152,7 +148,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
       return null;
     }
-  }, [translation, changeLocalStream]);
+  }, [translation]);
 
   const handleRemoteStream = useCallback((stream: MediaStream) => {
     setRemoteStream(stream);
@@ -201,18 +197,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
       onFinish();
     }
   };
-
-  useEffect(() => {
-    const onPageHidden = () => {
-      if (document.visibilityState === "hidden") {
-        onLocalStreamClose();
-      }
-    };
-
-    document.addEventListener("visibilitychange", onPageHidden);
-
-    return () => document.removeEventListener("visibilitychange", onPageHidden);
-  }, [onLocalStreamClose]);
 
   useEffect(() => {
     if (peer && localStream) {
