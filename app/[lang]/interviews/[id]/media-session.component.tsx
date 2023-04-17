@@ -184,6 +184,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     getLocalStream,
     handleRemoteStream,
     onLocalStreamClose,
+    isCaller: authenticatedUser?.id === interview.creatorId,
   });
 
   const closeConnection = () => {

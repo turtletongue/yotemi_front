@@ -4,6 +4,7 @@ import Peer, { MediaConnection } from "peerjs";
 interface PeerOptions {
   id?: string;
   otherId?: string;
+  isCaller: boolean;
   getLocalStream: () => Promise<MediaStream | null>;
   handleRemoteStream: (remoteStream: MediaStream) => unknown;
   onLocalStreamClose: () => unknown;
@@ -12,12 +13,11 @@ interface PeerOptions {
 const usePeer = ({
   id,
   otherId,
+  isCaller,
   getLocalStream,
   handleRemoteStream,
   onLocalStreamClose,
 }: PeerOptions) => {
-  console.log(id, otherId);
-
   const peer = useMemo(
     () =>
       id
@@ -62,16 +62,12 @@ const usePeer = ({
       const handleConnection = () => {
         setIsConnected(true);
 
-        if (peer && otherId && !answeredCall) {
+        if (peer && otherId && isCaller) {
           getLocalStream().then((localStream) => {
             if (!localStream) {
               return;
             }
 
-            console.log(
-              `${id} calling ${otherId} on ${new Date().toISOString()}`,
-              localStream
-            );
             const call = peer.call(otherId, localStream);
 
             call.on("stream", handleRemoteStream);
@@ -104,10 +100,6 @@ const usePeer = ({
           return;
         }
 
-        console.log(
-          `${id} answering ${call.peer} on ${new Date().toISOString()}`,
-          localStream
-        );
         call.answer(localStream);
 
         call.on("stream", handleRemoteStream);
@@ -132,6 +124,7 @@ const usePeer = ({
     peer,
     id,
     otherId,
+    isCaller,
     answeredCall,
     getLocalStream,
     onLocalStreamClose,
