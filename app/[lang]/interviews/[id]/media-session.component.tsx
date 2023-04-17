@@ -66,8 +66,8 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const remoteVideoOutput = useRef<HTMLVideoElement>(null);
   const remoteAudioOutput = useRef<HTMLAudioElement>(null);
   const localVideoOutput = useRef<HTMLVideoElement>(null);
-  const localStream = useRef<MediaStream | null>(null);
-  const remoteStream = useRef<MediaStream | null>(null);
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
   const [isFinished, setIsFinished] = useState(false);
   const [isReviewModalOpened, setIsReviewModalOpened] = useState(false);
 
@@ -130,7 +130,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         video: true,
       });
 
-      localStream.current = stream;
+      setLocalStream(stream);
 
       return stream;
     } catch {
@@ -141,7 +141,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   }, [translation]);
 
   const handleRemoteStream = useCallback((stream: MediaStream) => {
-    remoteStream.current = stream;
+    setRemoteStream(stream);
   }, []);
 
   const { data: { isExist } = { isExist: null } } = useGetReviewExistenceQuery(
@@ -152,8 +152,8 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const onFinish = useCallback(() => {
     setIsFinished(true);
 
-    if (localStream.current) {
-      localStream.current.getTracks().forEach((track) => track.stop());
+    if (localStream) {
+      localStream.getTracks().forEach((track) => track.stop());
     }
 
     if (authenticatedUser?.id === interview.creatorId) {
@@ -168,6 +168,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   }, [
     router,
     isExist,
+    localStream,
     authenticatedUser?.id,
     authenticatedUser?.username,
     otherUser?.username,
@@ -190,28 +191,33 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   };
 
   useEffect(() => {
-    if (call && localStream.current) {
-      syncStreamWithControls(localStream.current, isVideo, isAudio);
+    if (call && localStream) {
+      syncStreamWithControls(localStream, isVideo, isAudio);
 
       if (localVideoOutput.current) {
-        localVideoOutput.current.srcObject = localStream.current;
+        localVideoOutput.current.srcObject = localStream;
       }
     }
-  }, [call, isVideo, isAudio]);
+  }, [localStream, call, isVideo, isAudio]);
 
   useEffect(() => {
-    if (remoteStream.current && remoteVideoOutput.current && otherHasVideo) {
+    if (remoteStream && remoteVideoOutput.current && otherHasVideo) {
+      console.log("origin", remoteStream, remoteStream.getVideoTracks());
+      console.log(
+        "video extracted",
+        new MediaStream(remoteStream.getVideoTracks())
+      );
       remoteVideoOutput.current.srcObject = new MediaStream(
-        remoteStream.current.getVideoTracks()
+        remoteStream.getVideoTracks()
       );
     }
 
-    if (remoteStream.current && remoteAudioOutput.current && otherHasAudio) {
+    if (remoteStream && remoteAudioOutput.current && otherHasAudio) {
       remoteAudioOutput.current.srcObject = new MediaStream(
-        remoteStream.current.getAudioTracks()
+        remoteStream.getAudioTracks()
       );
     }
-  }, [otherHasVideo, otherHasAudio]);
+  }, [localStream, remoteStream, otherHasVideo, otherHasAudio]);
 
   useEffect(() => {
     if (!isConnected) {
