@@ -16,6 +16,8 @@ const usePeer = ({
   handleRemoteStream,
   onFinish,
 }: PeerOptions) => {
+  console.log(id, otherId);
+
   const peer = useMemo(
     () =>
       id
@@ -74,11 +76,12 @@ const usePeer = ({
           return;
         }
 
+        console.log(`${id} calling ${otherId}`, localStream);
         const call = peer.call(otherId, localStream);
         handleCall(call);
       });
     }
-  }, [peer, otherId, getLocalStream, answeredCall, handleCall]);
+  }, [id, peer, otherId, getLocalStream, answeredCall, handleCall]);
 
   useEffect(() => {
     if (peer && otherId) {
@@ -98,10 +101,11 @@ const usePeer = ({
         return;
       }
 
+      console.log(`${id} answering ${call.peer}`, localStream);
       call.answer(localStream);
       handleCall(call);
     },
-    [answeredCall, getLocalStream, handleCall]
+    [id, answeredCall, getLocalStream, handleCall]
   );
 
   peer?.on("call", handleIncomingCall);
