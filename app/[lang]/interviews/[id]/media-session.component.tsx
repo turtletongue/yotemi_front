@@ -197,9 +197,9 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   useEffect(() => {
     if (remoteStream.current && remoteVideoOutput.current && otherHasVideo) {
-      remoteVideoOutput.current.srcObject = new MediaStream(
-        remoteStream.current.getVideoTracks()
-      );
+      // remoteVideoOutput.current.srcObject = new MediaStream(
+      //   remoteStream.current.getVideoTracks()
+      // );
     }
 
     if (remoteStream.current && remoteAudioOutput.current && otherHasAudio) {
