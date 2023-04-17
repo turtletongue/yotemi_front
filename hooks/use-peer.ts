@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Peer, { MediaConnection } from "peerjs";
 
 interface PeerOptions {
@@ -6,6 +6,7 @@ interface PeerOptions {
   otherId?: string;
   getLocalStream: () => Promise<MediaStream | null>;
   handleRemoteStream: (remoteStream: MediaStream) => unknown;
+  onLocalStreamClose: () => unknown;
 }
 
 const usePeer = ({
@@ -13,6 +14,7 @@ const usePeer = ({
   otherId,
   getLocalStream,
   handleRemoteStream,
+  onLocalStreamClose,
 }: PeerOptions) => {
   console.log(id, otherId);
 
@@ -49,84 +51,92 @@ const usePeer = ({
     null
   );
 
-  const handleCall = useCallback(
-    (call: MediaConnection) => {
-      setAnsweredCall(call);
+  useEffect(() => {
+    if (peer && otherId) {
+      const handleOpenedPeer = () => peer.connect(otherId);
 
-      call.on("stream", (remoteStream) => {
+      const handleConnection = () => {
         setIsConnected(true);
-        handleRemoteStream(remoteStream);
-      });
 
-      call.on("iceStateChanged", (state) => {
-        if (state === "closed" || state === "disconnected") {
-          setIsConnected(false);
-          setAnsweredCall(null);
+        if (peer && otherId && !answeredCall) {
+          getLocalStream().then((localStream) => {
+            if (!localStream) {
+              return;
+            }
+
+            console.log(`${id} calling ${otherId}`, localStream);
+            const call = peer.call(otherId, localStream);
+            setAnsweredCall(call);
+          });
         }
-      });
-    },
-    [handleRemoteStream]
-  );
+      };
 
-  const makeCall = useCallback(() => {
-    if (peer && otherId && !answeredCall) {
-      getLocalStream().then((localStream) => {
+      const handleDisconnect = () => {
+        setIsConnected(false);
+        setAnsweredCall(null);
+        onLocalStreamClose();
+      };
+
+      const handleIncomingCall = async (call: MediaConnection) => {
+        if (answeredCall) {
+          return;
+        }
+
+        const localStream = await getLocalStream();
+
         if (!localStream) {
           return;
         }
 
-        console.log(`${id} calling ${otherId}`, localStream);
-        const call = peer.call(otherId, localStream);
-        handleCall(call);
-      });
+        console.log(`${id} answering ${call.peer}`, localStream);
+        call.answer(localStream);
+        setAnsweredCall(call);
+      };
+
+      peer.on("open", () => handleOpenedPeer);
+      peer.on("connection", handleConnection);
+      peer.on("call", handleIncomingCall);
+      peer.on("close", handleDisconnect);
+      peer.on("disconnected", handleDisconnect);
+
+      return () => {
+        peer.off("open", handleOpenedPeer);
+        peer.off("connection", handleConnection);
+        peer.off("call", handleIncomingCall);
+        peer.off("close", handleDisconnect);
+        peer.off("disconnected", handleDisconnect);
+      };
     }
-  }, [id, peer, otherId, getLocalStream, answeredCall, handleCall]);
+  }, [peer, id, otherId, answeredCall, getLocalStream, onLocalStreamClose]);
 
   useEffect(() => {
-    if (peer && otherId) {
-      peer.on("open", makeCall);
-    }
-  }, [makeCall, peer, otherId]);
-
-  const handleIncomingCall = useCallback(
-    async (call: MediaConnection) => {
-      if (answeredCall) {
-        return;
-      }
-
-      const localStream = await getLocalStream();
-
-      if (!localStream) {
-        return;
-      }
-
-      console.log(`${id} answering ${call.peer}`, localStream);
-      call.answer(localStream);
-      handleCall(call);
-    },
-    [id, answeredCall, getLocalStream, handleCall]
-  );
-
-  peer?.on("call", handleIncomingCall);
-
-  useEffect(() => {
-    const handleDisconnect = () => {
-      setIsConnected(false);
-      setAnsweredCall(null);
+    const handleIncomingStream = (remoteStream: MediaStream) => {
+      handleRemoteStream(remoteStream);
     };
 
-    peer?.on("close", handleDisconnect);
-    peer?.on("disconnected", handleDisconnect);
+    const handleIceStateChange = (state: RTCIceConnectionState) => {
+      if (state === "closed" || state === "disconnected") {
+        setIsConnected(false);
+        setAnsweredCall(null);
+        onLocalStreamClose();
+      }
+    };
+
+    if (answeredCall) {
+      answeredCall.on("stream", handleIncomingStream);
+      answeredCall.on("iceStateChanged", handleIceStateChange);
+    }
 
     return () => {
-      peer?.off("close", handleDisconnect);
-      peer?.off("disconnected", handleDisconnect);
+      if (answeredCall) {
+        answeredCall.off("stream", handleIncomingStream);
+        answeredCall.off("iceStateChanged", handleIceStateChange);
+      }
     };
-  }, [peer]);
+  }, [answeredCall, handleRemoteStream, onLocalStreamClose]);
 
   return {
     isConnected,
-    makeCall,
     call: answeredCall,
   };
 };

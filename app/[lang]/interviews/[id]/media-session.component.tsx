@@ -149,12 +149,15 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     { skip: interview.creatorId === authenticatedUser?.id }
   );
 
-  const onFinish = useCallback(() => {
-    setIsFinished(true);
-
+  const onLocalStreamClose = useCallback(() => {
     if (localStream) {
       localStream.getTracks().forEach((track) => track.stop());
     }
+  }, [localStream]);
+
+  const onFinish = useCallback(() => {
+    setIsFinished(true);
+    onLocalStreamClose();
 
     if (authenticatedUser?.id === interview.creatorId) {
       return router.push(`/profile/${authenticatedUser.username}`);
@@ -168,7 +171,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   }, [
     router,
     isExist,
-    localStream,
+    onLocalStreamClose,
     authenticatedUser?.id,
     authenticatedUser?.username,
     otherUser?.username,
@@ -180,6 +183,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     otherId: otherPeerId,
     getLocalStream,
     handleRemoteStream,
+    onLocalStreamClose,
   });
 
   const closeConnection = () => {
