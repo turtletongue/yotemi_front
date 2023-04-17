@@ -152,6 +152,10 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const onFinish = useCallback(() => {
     setIsFinished(true);
 
+    if (localStream.current) {
+      localStream.current.getTracks().forEach((track) => track.stop());
+    }
+
     if (authenticatedUser?.id === interview.creatorId) {
       return router.push(`/profile/${authenticatedUser.username}`);
     }
