@@ -53,28 +53,32 @@ const usePeer = ({
 
   useEffect(() => {
     if (peer && otherId) {
-      const handleOpenedPeer = () => peer.connect(otherId);
-
-      const handleConnection = () => {
-        setIsConnected(true);
-
-        if (peer && otherId && !answeredCall) {
-          getLocalStream().then((localStream) => {
-            if (!localStream) {
-              return;
-            }
-
-            console.log(`${id} calling ${otherId}`, localStream);
-            const call = peer.call(otherId, localStream);
-            setAnsweredCall(call);
-          });
-        }
-      };
-
       const handleDisconnect = () => {
         setIsConnected(false);
         setAnsweredCall(null);
         onLocalStreamClose();
+      };
+
+      const handleOpenedPeer = () => {
+        const connection = peer.connect(otherId);
+
+        connection.on("open", () => {
+          setIsConnected(true);
+
+          if (peer && otherId && !answeredCall) {
+            getLocalStream().then((localStream) => {
+              if (!localStream) {
+                return;
+              }
+
+              console.log(`${id} calling ${otherId}`, localStream);
+              const call = peer.call(otherId, localStream);
+              setAnsweredCall(call);
+            });
+          }
+        });
+
+        connection.on("close", handleDisconnect);
       };
 
       const handleIncomingCall = async (call: MediaConnection) => {
@@ -94,14 +98,12 @@ const usePeer = ({
       };
 
       peer.on("open", () => handleOpenedPeer);
-      peer.on("connection", handleConnection);
       peer.on("call", handleIncomingCall);
       peer.on("close", handleDisconnect);
       peer.on("disconnected", handleDisconnect);
 
       return () => {
         peer.off("open", handleOpenedPeer);
-        peer.off("connection", handleConnection);
         peer.off("call", handleIncomingCall);
         peer.off("close", handleDisconnect);
         peer.off("disconnected", handleDisconnect);
