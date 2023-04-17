@@ -23,10 +23,16 @@ const usePeer = ({
             config: {
               iceServers: [
                 { urls: process.env.NEXT_PUBLIC_STUN_URL },
+                { urls: process.env.NEXT_PUBLIC_STUN_SECOND_URL },
                 {
                   urls: process.env.NEXT_PUBLIC_TURN_URL,
                   username: process.env.NEXT_PUBLIC_TURN_USERNAME,
                   credential: process.env.NEXT_PUBLIC_TURN_PASSWORD,
+                },
+                {
+                  urls: process.env.NEXT_PUBLIC_TURN_SECOND_URL,
+                  username: process.env.NEXT_PUBLIC_TURN_SECOND_USERNAME,
+                  credential: process.env.NEXT_PUBLIC_TURN_SECOND_PASSWORD,
                 },
               ],
             },
