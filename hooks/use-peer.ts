@@ -68,7 +68,10 @@ const usePeer = ({
               return;
             }
 
-            console.log(`${id} calling ${otherId}`, localStream);
+            console.log(
+              `${id} calling ${otherId} on ${new Date().toISOString()}`,
+              localStream
+            );
             const call = peer.call(otherId, localStream);
 
             call.on("stream", handleRemoteStream);
@@ -101,7 +104,10 @@ const usePeer = ({
           return;
         }
 
-        console.log(`${id} answering ${call.peer}`, localStream);
+        console.log(
+          `${id} answering ${call.peer} on ${new Date().toISOString()}`,
+          localStream
+        );
         call.answer(localStream);
 
         call.on("stream", handleRemoteStream);
