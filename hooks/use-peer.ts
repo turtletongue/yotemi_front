@@ -53,6 +53,14 @@ const usePeer = ({
 
   useEffect(() => {
     if (peer && otherId) {
+      const handleIceStateChange = (state: RTCIceConnectionState) => {
+        if (state === "closed" || state === "disconnected") {
+          setIsConnected(false);
+          setAnsweredCall(null);
+          onLocalStreamClose();
+        }
+      };
+
       const handleConnection = () => {
         setIsConnected(true);
 
@@ -64,7 +72,9 @@ const usePeer = ({
 
             console.log(`${id} calling ${otherId}`, localStream);
             const call = peer.call(otherId, localStream);
-            setAnsweredCall(call);
+
+            call.on("stream", handleRemoteStream);
+            call.on("iceStateChanged", handleIceStateChange);
           });
         }
       };
@@ -95,7 +105,9 @@ const usePeer = ({
 
         console.log(`${id} answering ${call.peer}`, localStream);
         call.answer(localStream);
-        setAnsweredCall(call);
+
+        call.on("stream", handleRemoteStream);
+        call.on("iceStateChanged", handleIceStateChange);
       };
 
       peer.on("open", handleOpenedPeer);
@@ -112,37 +124,19 @@ const usePeer = ({
         peer.off("disconnected", handleDisconnect);
       };
     }
-  }, [peer, id, otherId, answeredCall, getLocalStream, onLocalStreamClose]);
-
-  useEffect(() => {
-    const handleIncomingStream = (remoteStream: MediaStream) => {
-      handleRemoteStream(remoteStream);
-    };
-
-    const handleIceStateChange = (state: RTCIceConnectionState) => {
-      if (state === "closed" || state === "disconnected") {
-        setIsConnected(false);
-        setAnsweredCall(null);
-        onLocalStreamClose();
-      }
-    };
-
-    if (answeredCall) {
-      answeredCall.on("stream", handleIncomingStream);
-      answeredCall.on("iceStateChanged", handleIceStateChange);
-    }
-
-    return () => {
-      if (answeredCall) {
-        answeredCall.off("stream", handleIncomingStream);
-        answeredCall.off("iceStateChanged", handleIceStateChange);
-      }
-    };
-  }, [answeredCall, handleRemoteStream, onLocalStreamClose]);
+  }, [
+    peer,
+    id,
+    otherId,
+    answeredCall,
+    getLocalStream,
+    onLocalStreamClose,
+    handleRemoteStream,
+  ]);
 
   return {
     isConnected,
-    call: answeredCall,
+    peer,
   };
 };
 

@@ -178,7 +178,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     interview.creatorId,
   ]);
 
-  const { isConnected, call } = usePeer({
+  const { isConnected, peer } = usePeer({
     id: peerId,
     otherId: otherPeerId,
     getLocalStream,
@@ -187,29 +187,24 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   });
 
   const closeConnection = () => {
-    if (call) {
-      call.close();
+    if (peer) {
+      peer.destroy();
       onFinish();
     }
   };
 
   useEffect(() => {
-    if (call && localStream) {
+    if (peer && localStream) {
       syncStreamWithControls(localStream, isVideo, isAudio);
 
       if (localVideoOutput.current) {
         localVideoOutput.current.srcObject = localStream;
       }
     }
-  }, [localStream, call, isVideo, isAudio]);
+  }, [localStream, peer, isVideo, isAudio]);
 
   useEffect(() => {
     if (remoteStream && remoteVideoOutput.current && otherHasVideo) {
-      console.log("origin", remoteStream, remoteStream.getVideoTracks());
-      console.log(
-        "video extracted",
-        new MediaStream(remoteStream.getVideoTracks())
-      );
       remoteVideoOutput.current.srcObject = new MediaStream(
         remoteStream.getVideoTracks()
       );
@@ -220,7 +215,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         remoteStream.getAudioTracks()
       );
     }
-  }, [localStream, remoteStream, otherHasVideo, otherHasAudio]);
+  }, [remoteStream, otherHasVideo, otherHasAudio]);
 
   useEffect(() => {
     if (!isConnected) {
