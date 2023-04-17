@@ -218,11 +218,12 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   }, [remoteStream, otherHasVideo, otherHasAudio]);
 
   useEffect(() => {
-    if (!isConnected) {
-      setIsAudio(false);
-      setIsVideo(false);
-    }
-  }, [isConnected]);
+    mute({ type: "audio", interviewId: interview.id });
+    setIsAudio(false);
+
+    mute({ type: "video", interviewId: interview.id });
+    setIsVideo(false);
+  }, [isConnected, mute, interview.id]);
 
   const isParticipant =
     authenticatedUser?.id === interview.creatorId ||

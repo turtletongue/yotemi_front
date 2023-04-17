@@ -44,8 +44,6 @@ const usePeer = ({
     [id]
   );
 
-  console.log("peer", peer);
-
   const [isConnected, setIsConnected] = useState(false);
   const [answeredCall, setAnsweredCall] = useState<MediaConnection | null>(
     null
