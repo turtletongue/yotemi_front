@@ -123,6 +123,20 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     return () => window.removeEventListener("beforeunload", onUnload);
   }, []);
 
+  const onLocalStreamClose = useCallback(() => {
+    if (localStream) {
+      localStream.getTracks().forEach((track) => track.stop());
+    }
+  }, [localStream]);
+
+  const changeLocalStream = useCallback(
+    (stream: MediaStream) => {
+      onLocalStreamClose();
+      setLocalStream(stream);
+    },
+    [onLocalStreamClose]
+  );
+
   const getLocalStream = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -130,7 +144,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         video: true,
       });
 
-      setLocalStream(stream);
+      changeLocalStream(stream);
 
       return stream;
     } catch {
@@ -138,7 +152,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
       return null;
     }
-  }, [translation]);
+  }, [translation, changeLocalStream]);
 
   const handleRemoteStream = useCallback((stream: MediaStream) => {
     setRemoteStream(stream);
@@ -148,12 +162,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     interview.creatorId,
     { skip: interview.creatorId === authenticatedUser?.id }
   );
-
-  const onLocalStreamClose = useCallback(() => {
-    if (localStream) {
-      localStream.getTracks().forEach((track) => track.stop());
-    }
-  }, [localStream]);
 
   const onFinish = useCallback(() => {
     setIsFinished(true);
@@ -193,6 +201,18 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
       onFinish();
     }
   };
+
+  useEffect(() => {
+    const onPageHidden = () => {
+      if (document.visibilityState === "hidden") {
+        onLocalStreamClose();
+      }
+    };
+
+    document.addEventListener("visibilitychange", onPageHidden);
+
+    return () => document.removeEventListener("visibilitychange", onPageHidden);
+  }, [onLocalStreamClose]);
 
   useEffect(() => {
     if (peer && localStream) {
