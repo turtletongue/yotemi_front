@@ -22,6 +22,7 @@ const usePeer = ({
         ? new Peer(id, {
             config: {
               iceServers: [
+                { urls: "stun:stun.l.google.com:19302" },
                 { urls: process.env.NEXT_PUBLIC_STUN_URL },
                 { urls: process.env.NEXT_PUBLIC_STUN_SECOND_URL },
                 {
