@@ -180,7 +180,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     otherId: otherPeerId,
     getLocalStream,
     handleRemoteStream,
-    onFinish,
   });
 
   const closeConnection = () => {
