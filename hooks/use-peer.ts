@@ -45,16 +45,12 @@ const usePeer = ({
   );
 
   const [isConnected, setIsConnected] = useState(false);
-  const [answeredCall, setAnsweredCall] = useState<MediaConnection | null>(
-    null
-  );
 
   useEffect(() => {
     if (peer && otherId) {
       const handleIceStateChange = (state: RTCIceConnectionState) => {
         if (state === "closed" || state === "disconnected") {
           setIsConnected(false);
-          setAnsweredCall(null);
           onLocalStreamClose();
         }
       };
@@ -62,7 +58,7 @@ const usePeer = ({
       const handleConnection = () => {
         setIsConnected(true);
 
-        if (peer && otherId && !answeredCall) {
+        if (peer && otherId) {
           getLocalStream().then((localStream) => {
             if (!localStream) {
               return;
@@ -79,7 +75,6 @@ const usePeer = ({
 
       const handleDisconnect = () => {
         setIsConnected(false);
-        setAnsweredCall(null);
         onLocalStreamClose();
       };
 
@@ -91,10 +86,6 @@ const usePeer = ({
       };
 
       const handleIncomingCall = async (call: MediaConnection) => {
-        if (answeredCall) {
-          return;
-        }
-
         const localStream = await getLocalStream();
 
         if (!localStream) {
@@ -126,7 +117,6 @@ const usePeer = ({
     peer,
     id,
     otherId,
-    answeredCall,
     getLocalStream,
     onLocalStreamClose,
     handleRemoteStream,
