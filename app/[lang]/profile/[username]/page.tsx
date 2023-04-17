@@ -66,7 +66,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
               </div>
             )}
             <div
-              className={`max-w-[22rem] 2xl:max-w-[40rem] mt-3 ${classnames(
+              className={`max-w-[22rem] sm:w-auto 2xl:max-w-[40rem] mt-3 ${classnames(
                 profile.biography && "mb-7"
               )}`}
             >
