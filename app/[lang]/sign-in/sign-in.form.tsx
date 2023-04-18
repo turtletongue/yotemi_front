@@ -11,6 +11,7 @@ import * as yup from "yup";
 import { ErrorDialog, ErrorNotification, GradientButton } from "@components";
 import { Language, useTranslation } from "@app/i18n/client";
 import { changeTargetUsername, useLoginMutation } from "@redux/features/auth";
+import { usersApi } from "@redux/features/users";
 import { useAppDispatch } from "@redux/store-config/hooks";
 import { errorNameToError, extractErrorNotification } from "@utils";
 import signInErrors from "./sign-in.errors";
@@ -100,9 +101,12 @@ const SignInForm = ({ lang }: SignInFormProps) => {
 
   useEffect(() => {
     if (isSuccess) {
+      dispatch(
+        usersApi.util.invalidateTags([{ type: "Users", id: "PARTIAL-LIST" }])
+      );
       router.push("/");
     }
-  }, [router, translation, tonConnectUI, isSuccess]);
+  }, [dispatch, router, translation, tonConnectUI, isSuccess]);
 
   useEffect(() => {
     if (error) {
