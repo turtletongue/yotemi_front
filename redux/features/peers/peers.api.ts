@@ -88,6 +88,12 @@ const peersApi = baseApi.injectEndpoints({
         method: "POST",
       }),
     }),
+    disconnect: builder.mutation<void, { interviewId: Id }>({
+      query: ({ interviewId }) => ({
+        url: `peers/${interviewId}/disconnect`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -96,6 +102,7 @@ export const {
   useTakePeerIdsQuery,
   useMuteMutation,
   useUnmuteMutation,
+  useDisconnectMutation,
 } = peersApi;
 
 export default peersApi;

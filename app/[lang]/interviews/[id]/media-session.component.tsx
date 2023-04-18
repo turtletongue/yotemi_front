@@ -23,6 +23,7 @@ import { Interview } from "@redux/features/interviews";
 import {
   resetPeer,
   selectDisconnected,
+  useDisconnectMutation,
   useMuteMutation,
   useRegisterPeerQuery,
   useTakePeerIdsQuery,
@@ -192,12 +193,21 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     isCaller: authenticatedUser?.id === interview.creatorId,
   });
 
-  const closeConnection = useCallback(() => {
-    if (peer) {
-      peer.destroy();
-      onFinish();
-    }
-  }, [peer, onFinish]);
+  const [disconnect] = useDisconnectMutation();
+
+  const closeConnection = useCallback(
+    (options: { sendSignal: boolean } = { sendSignal: false }) => {
+      if (peer) {
+        peer.destroy();
+        onFinish();
+
+        if (options.sendSignal) {
+          disconnect({ interviewId: interview.id });
+        }
+      }
+    },
+    [disconnect, peer, onFinish, interview.id]
+  );
 
   const disconnected = useAppSelector(selectDisconnected);
 
@@ -304,7 +314,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         <SessionControl onClick={toggleChat}>
           <MessageSquare size={20} />
         </SessionControl>
-        <SessionControl onClick={closeConnection}>
+        <SessionControl onClick={() => closeConnection({ sendSignal: true })}>
           <PhoneOff size={20} className="text-danger" />
         </SessionControl>
       </div>
