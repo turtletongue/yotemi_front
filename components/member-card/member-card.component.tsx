@@ -19,7 +19,7 @@ const MemberCard = ({ lang, data }: MemberCardProps) => {
 
   return (
     <Link href={`/profile/${data.username}`}>
-      <article className="bg-card shadow-md w-[21rem] pb-4 rounded-3xl overflow-hidden">
+      <article className="bg-card shadow-md w-[21rem] sm:w-[23rem] pb-3 sm:pb-4 rounded-3xl overflow-hidden">
         {data.coverPath && (
           <img
             className="w-full h-[5rem]"
@@ -27,9 +27,9 @@ const MemberCard = ({ lang, data }: MemberCardProps) => {
             alt={translation("coverAlt") ?? ""}
           />
         )}
-        <div className="px-4 mt-3">
+        <div className="px-3 sm:px-4 mt-3">
           <div className="flex w-full justify-between items-center">
-            <div className="flex gap-4">
+            <div className="flex gap-3 sm:gap-4">
               <Avatar size="md" img={data.avatarPath} rounded />
               <div>
                 <span className="text-sm">{data.fullName}</span>
