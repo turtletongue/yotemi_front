@@ -55,7 +55,7 @@ const MembersGrid = ({ lang }: MembersGridProps) => {
 
   return (
     <>
-      <article className="w-full h-full grow grid gap-4 justify-items-center grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+      <article className="w-full h-full grow grid gap-4 justify-items-center grid-flow-row-dense md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5">
         {members.map((member) => (
           <MemberCard key={member.id} lang={lang} data={member} />
         ))}
