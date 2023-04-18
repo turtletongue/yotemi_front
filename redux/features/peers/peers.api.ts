@@ -1,6 +1,7 @@
 import baseApi from "@redux/features/base.api";
 import { Id } from "@app/declarations";
 import { getSocket } from "@utils";
+import { disconnect } from "./peers.slice";
 
 type PeerApiResponse = {
   interviewId: Id;
@@ -50,6 +51,12 @@ const peersApi = baseApi.injectEndpoints({
                 draft.otherHasVideo = true;
               }
             });
+          });
+
+          socket.on("peer.disconnected", (interviewId) => {
+            if (api.getCacheEntry()?.data?.interviewId === interviewId) {
+              api.dispatch(disconnect());
+            }
           });
 
           await api.cacheEntryRemoved;

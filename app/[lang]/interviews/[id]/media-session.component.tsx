@@ -22,11 +22,14 @@ import {
 import usePeer from "@hooks/use-peer";
 import { Interview } from "@redux/features/interviews";
 import {
+  resetPeer,
+  selectDisconnected,
   useMuteMutation,
   useRegisterPeerQuery,
   useTakePeerIdsQuery,
   useUnmuteMutation,
 } from "@redux/features/peers";
+import { useGetReviewExistenceQuery } from "@redux/features/reviews";
 import {
   selectIsChatOpened,
   setIsChatOpened,
@@ -36,7 +39,6 @@ import { selectUser } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
 import { syncStreamWithControls } from "@utils";
-import { useGetReviewExistenceQuery } from "@redux/features/reviews";
 
 interface MediaSessionProps {
   lang: Language;
@@ -45,6 +47,7 @@ interface MediaSessionProps {
 
 const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { translation } = useTranslation(lang, "media-session");
   const authenticatedUser = useAppSelector(selectUser);
 
@@ -104,7 +107,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     null
   );
 
-  const dispatch = useAppDispatch();
   const isChatOpened = useAppSelector(selectIsChatOpened);
   const toggleChat = () => {
     dispatch(setIsChatOpened(!isChatOpened));
@@ -191,12 +193,21 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     isCaller: authenticatedUser?.id === interview.creatorId,
   });
 
-  const closeConnection = () => {
+  const closeConnection = useCallback(() => {
     if (peer) {
       peer.destroy();
       onFinish();
     }
-  };
+  }, [peer, onFinish]);
+
+  const disconnected = useAppSelector(selectDisconnected);
+
+  useEffect(() => {
+    if (disconnected) {
+      closeConnection();
+      dispatch(resetPeer());
+    }
+  }, [dispatch, closeConnection, disconnected]);
 
   useEffect(() => {
     if (peer && localStream) {
