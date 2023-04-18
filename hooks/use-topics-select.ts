@@ -28,7 +28,10 @@ const useTopicsSelect = (
 
   const topicToOption = (topic: Topic) => ({
     value: topic.id,
-    label: topic.labels.find((label) => label.language === lang)?.value ?? "",
+    label:
+      topic.labels.find((label) => label.language === lang)?.value ??
+      topic.labels[0]?.value ??
+      "",
   });
   const topicIdToOption = (topicId: Id | null) => {
     if (!topicId) {

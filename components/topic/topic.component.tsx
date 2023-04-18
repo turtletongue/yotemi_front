@@ -32,7 +32,10 @@ const Topic = ({
       style={{ backgroundColor: `#${colorHex}` }}
       onClick={onDelete}
     >
-      <span>{labels.find((label) => label.language === lang)?.value}</span>
+      <span>
+        {labels.find((label) => label.language === lang)?.value ??
+          labels[0].value}
+      </span>
       <X
         size={17}
         className={`ml-2 ${
