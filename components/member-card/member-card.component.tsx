@@ -19,7 +19,7 @@ const MemberCard = ({ lang, data }: MemberCardProps) => {
 
   return (
     <Link href={`/profile/${data.username}`}>
-      <article className="bg-card shadow-md w-[21rem] sm:w-[23rem] pb-3 sm:pb-4 rounded-3xl overflow-hidden">
+      <article className="bg-card shadow-md max-w-[21rem] sm:max-w-[23rem] pb-3 sm:pb-4 rounded-3xl overflow-hidden">
         {data.coverPath && (
           <img
             className="w-full h-[5rem]"
