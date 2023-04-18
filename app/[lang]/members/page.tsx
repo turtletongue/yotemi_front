@@ -9,7 +9,7 @@ interface MembersProps {
 
 const Members = ({ params: { lang } }: MembersProps) => {
   return (
-    <div className="max-w-screen-2xl mx-auto w-full grow flex flex-col">
+    <div className="max-w-screen-[2100px] mx-auto w-full grow flex flex-col">
       <MembersGrid lang={lang} />
     </div>
   );
