@@ -8,7 +8,7 @@ import { loggedOut, selectUser } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
 import { Id } from "@app/declarations";
-import { useGetUserQuery } from "@redux/features/users";
+import { useGetUserQuery, usersApi } from "@redux/features/users";
 
 interface ProfileControlProps {
   lang: Language;
@@ -45,6 +45,9 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
 
   const onLogOut = () => {
     dispatch(loggedOut());
+    dispatch(
+      usersApi.util.invalidateTags([{ type: "Users", id: "PARTIAL-LIST" }])
+    );
     tonConnectUI.disconnect().then(() => router.push("/"));
   };
 
