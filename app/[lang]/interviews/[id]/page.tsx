@@ -21,7 +21,7 @@ const InterviewPage = async ({ params: { lang, id } }: InterviewPageProps) => {
 
   return (
     <section className="grow bg-cetacean-blue text-white flex overflow-hidden">
-      <section className="grow relative flex flex-col">
+      <section className="grow relative flex flex-col justify-center">
         <MediaSession lang={lang} interview={interview} />
       </section>
       <InterviewChat
