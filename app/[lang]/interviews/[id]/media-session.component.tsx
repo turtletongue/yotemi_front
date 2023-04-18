@@ -10,7 +10,6 @@ import {
   MicOff,
   PhoneOff,
 } from "react-feather";
-import classnames from "classnames";
 
 import {
   AddReviewModal,
@@ -275,7 +274,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     <>
       {otherHasVideo && (
         <video
-          className="absolute max-h-full min-w-full left-0 top-0 overflow-hidden w-auto h-auto"
+          className="absolute max-h-full min-w-full overflow-hidden w-auto h-auto"
           ref={remoteVideoOutput}
           autoPlay
           playsInline
@@ -295,11 +294,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
           <Avatar img={otherUser?.avatarPath} size="xl" rounded />
         </div>
       )}
-      <div
-        className={`block ${classnames(
-          otherHasVideo && "md:absolute"
-        )} w-full bottom-0 my-6 flex gap-4 justify-center`}
-      >
+      <div className="w-full absolute bottom-0 my-6 flex gap-4 justify-center">
         <SessionControl onClick={toggleAudio}>
           {isAudio ? <MicOff size={20} /> : <Mic size={20} />}
         </SessionControl>
@@ -315,7 +310,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
       </div>
       {isVideo && (
         <video
-          className="w-1/2 md:w-52 absolute z-10 top-0 right-0"
+          className="w-36 md:w-52 absolute z-10 top-0 right-0"
           ref={localVideoOutput}
           autoPlay
           playsInline
