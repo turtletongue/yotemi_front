@@ -142,7 +142,7 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
             <ExternalLink className="inline relative bottom-1" size={11} />
           </Link>
         </span>
-        {interview.participant && (
+        {interview.participant && hasPaidAccess && (
           <>
             <div className="flex justify-between items-center my-3 text-sm">
               <span>{interview.participant.fullName}</span>
