@@ -104,8 +104,8 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
   const canConfirmPayment =
     info.status === "paid" && isPayer && !interview.participant;
 
-  const hasPaidAccess =
-    info.status === "paid" && interview.participant && (isCreator || isPayer);
+  const isInterviewMember = interview.participant && (isCreator || isPayer);
+  const hasPaidAccess = info.status === "paid" && isInterviewMember;
 
   const canConnect = hasPaidAccess && isActual;
   const canFinish = hasPaidAccess && !isActual;
@@ -142,7 +142,7 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
             <ExternalLink className="inline relative bottom-1" size={11} />
           </Link>
         </span>
-        {interview.participant && hasPaidAccess && (
+        {interview.participant && isInterviewMember && (
           <>
             <div className="flex justify-between items-center my-3 text-sm">
               <span>{interview.participant.fullName}</span>
