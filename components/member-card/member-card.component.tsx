@@ -18,7 +18,7 @@ const MemberCard = ({ lang, data }: MemberCardProps) => {
   const authenticatedUser = useAppSelector(selectUser);
 
   return (
-    <Link href={`/profile/${data.username}`}>
+    <Link href={`/profile/${data.username}`} className="h-fit">
       <article className="bg-card shadow-md w-[21rem] sm:w-[23rem] pb-3 sm:pb-4 rounded-3xl overflow-hidden">
         {data.coverPath && (
           <img
