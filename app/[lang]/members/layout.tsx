@@ -12,7 +12,7 @@ interface MembersLayoutProps {
 
 const MembersLayout = ({ params: { lang }, children }: MembersLayoutProps) => {
   return (
-    <section className="grow flex flex-col bg-cetacean-blue text-white p-4">
+    <section className="grow flex flex-col bg-cetacean-blue text-white p-4 lg:p-6">
       <MemberFilters lang={lang} />
       {children}
     </section>
