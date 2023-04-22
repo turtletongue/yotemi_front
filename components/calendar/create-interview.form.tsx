@@ -253,6 +253,7 @@ const CreateInterviewForm = ({
             <Link
               href={`${process.env.NEXT_PUBLIC_TONSCAN_URL}/address/${authenticatedUser?.accountAddress}`}
               className="text-concentrated-blue"
+              target="_blank"
             >
               {translation("wallet")}
             </Link>{" "}
