@@ -61,7 +61,7 @@ const UpcomingList = ({ lang }: UpcomingListProps) => {
 
   return (
     <div className="w-full grow flex flex-col items-center">
-      {interviewGroups.length ? (
+      {interviewGroups.length > 0 ? (
         <article className="flex flex-col w-full max-w-2xl gap-6">
           {interviewGroups.map((group, index) => (
             <UpcomingInterviewsGrid
