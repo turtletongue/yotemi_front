@@ -126,7 +126,7 @@ const InterviewCard = ({
           hasButtons ? "pb-3" : "pb-5"
         }`}
       >
-        <div className="flex justify-between text-sm">
+        <div className="flex justify-between items-center text-sm">
           <span>
             {formatTime(interview.startAt)} - {formatTime(interview.endAt)}
           </span>
