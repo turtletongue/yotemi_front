@@ -1,4 +1,4 @@
-export * from "./interfaces";
+export type { InterviewMessage, CreateInterviewMessage } from "./interfaces";
 
 export * from "./interview-messages.api";
 

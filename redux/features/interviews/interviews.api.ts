@@ -1,4 +1,5 @@
 import baseApi from "@redux/features/base.api";
+import PaginationResult from "@redux/types/pagination-result";
 import { Id } from "@app/declarations";
 import {
   CheckInterviewTimeConflict,
@@ -15,6 +16,28 @@ const interviewsApi = baseApi.injectEndpoints({
     >({
       query: ({ creatorId, from, to }) =>
         `interviews?creatorId=${creatorId}&from=${from}&to=${to}`,
+      providesTags: (result) => {
+        return result
+          ? [
+              ...result.items.map(
+                ({ id }) => ({ type: "Interviews", id } as const)
+              ),
+              { type: "Interviews", id: "PARTIAL-LIST" },
+            ]
+          : [{ type: "Interviews", id: "PARTIAL-LIST" }];
+      },
+    }),
+    listPaginatedInterviews: builder.query<
+      PaginationResult<Interview>,
+      { page?: number; from?: string; participantId?: Id }
+    >({
+      query: ({ page = 1, ...params }) => ({
+        url: "interviews",
+        params: {
+          ...params,
+          page,
+        },
+      }),
       providesTags: (result) => {
         return result
           ? [
@@ -65,6 +88,7 @@ const interviewsApi = baseApi.injectEndpoints({
 export const {
   useListInterviewsQuery,
   useGetInterviewQuery,
+  useListPaginatedInterviewsQuery,
   useCheckInterviewTimeConflictMutation,
   useAddInterviewMutation,
   useConfirmInterviewPaymentMutation,

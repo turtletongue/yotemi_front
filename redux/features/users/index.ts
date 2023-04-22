@@ -1,4 +1,4 @@
-export * from "./interfaces";
+export type { User, CreateUserData } from "./interfaces";
 
 export * from "./users.api";
 export { default as usersApi } from "./users.api";

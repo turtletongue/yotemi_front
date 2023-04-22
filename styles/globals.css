@@ -55,14 +55,15 @@ input[type="search"]::-webkit-search-cancel-button {
   }
 
   .navbar-items {
-    grid-template-columns: max-content 1fr repeat(4, max-content);
-    grid-template-areas: "members-link . sign-in-link sign-up-link notifications-link current-user-link";
+    grid-template-columns: repeat(2, max-content) 1fr repeat(4, max-content);
+    grid-template-areas: "members-link upcoming-link . sign-in-link sign-up-link notifications-link current-user-link";
   }
 
   .mobile-navbar-items {
-    grid-template-rows: repeat(3, min-content) 1fr min-content;
+    grid-template-rows: repeat(4, min-content) 1fr min-content;
     grid-template-areas:
       "members-link members-link"
+      "upcoming-link upcoming-link"
       "sign-in-link sign-in-link"
       "sign-up-link sign-up-link"
       ". ."
@@ -71,6 +72,10 @@ input[type="search"]::-webkit-search-cancel-button {
 
   #members-link {
     grid-area: members-link;
+  }
+
+  #upcoming-link {
+    grid-area: upcoming-link;
   }
 
   #sign-in-link {

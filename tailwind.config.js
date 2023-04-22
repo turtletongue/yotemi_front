@@ -40,6 +40,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         cards: "repeat(auto-fill, minmax(0, 23rem))",
+        "cards-sm": "repeat(auto-fill, minmax(0, 18rem))",
       },
       backgroundSize: {
         "300%": "300% 100%",

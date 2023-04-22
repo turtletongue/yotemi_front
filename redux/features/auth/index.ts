@@ -1,4 +1,4 @@
-export * from "./interfaces";
+export type { AuthResponse } from "./interfaces";
 
 export * from "./auth.api";
 export { default as authApi } from "./auth.api";

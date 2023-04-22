@@ -35,6 +35,7 @@ import TonSymbol from "@app/public/ton_symbol.svg";
 interface InterviewCardProps {
   lang: Language;
   interview: Interview;
+  userToShow?: "participant" | "creator";
 }
 
 const errorInfo = {
@@ -43,7 +44,11 @@ const errorInfo = {
   payerAddress: null,
 } as const;
 
-const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
+const InterviewCard = ({
+  lang,
+  interview,
+  userToShow = "participant",
+}: InterviewCardProps) => {
   const router = useRouter();
   const { translation } = useTranslation(lang, "interview-card");
 
@@ -142,23 +147,31 @@ const InterviewCard = ({ lang, interview }: InterviewCardProps) => {
             <ExternalLink className="inline relative bottom-1" size={11} />
           </Link>
         </span>
-        {interview.participant && isInterviewMember && (
-          <>
-            <div className="flex justify-between items-center my-3 text-sm">
-              <span>{interview.participant.fullName}</span>
-              <Avatar
-                img={interview.participant.avatarPath}
-                size="sm"
-                rounded
-              />
-            </div>
-            {interview.payerComment &&
-              interview.payerComment.split("\n").map((commentPart, index) => (
-                <p key={index} className="text-sm">
-                  {commentPart}
-                </p>
-              ))}
-          </>
+        {userToShow === "participant" &&
+          interview.participant &&
+          isInterviewMember && (
+            <>
+              <div className="flex justify-between items-center my-3 text-sm">
+                <span>{interview.participant.fullName}</span>
+                <Avatar
+                  img={interview.participant.avatarPath}
+                  size="sm"
+                  rounded
+                />
+              </div>
+              {interview.payerComment &&
+                interview.payerComment.split("\n").map((commentPart, index) => (
+                  <p key={index} className="text-sm">
+                    {commentPart}
+                  </p>
+                ))}
+            </>
+          )}
+        {userToShow === "creator" && interview.creator && isInterviewMember && (
+          <div className="flex justify-between items-center my-3 text-sm">
+            <span>{interview.creator.fullName}</span>
+            <Avatar img={interview.creator.avatarPath} size="sm" rounded />
+          </div>
         )}
         {hasButtons && (
           <div className="flex justify-around w-full mt-6 text-sm font-bold gap-6">

@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { baseQueryWithRefresh } from "@redux/queries/base-query";
+import baseQueryWithRefresh from "@redux/queries/base-query-with-refresh";
 
 const baseApi = createApi({
   baseQuery: baseQueryWithRefresh,

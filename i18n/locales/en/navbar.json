@@ -1,6 +1,7 @@
 {
   "links": {
     "members": "Members",
+    "upcoming": "Upcoming",
     "sign-in": "Sign In",
     "sign-up": "Sign Up"
   },

@@ -35,6 +35,16 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
       >
         {translation("links.members")}
       </NavbarLink>
+      {isAuthenticated && (
+        <NavbarLink
+          key="upcoming"
+          link={`/${lang}/upcoming`}
+          id="upcoming-link"
+          onClick={onClick}
+        >
+          {translation("links.upcoming")}
+        </NavbarLink>
+      )}
       {!isAuthenticated && (
         <NavbarLink
           key="signIn"

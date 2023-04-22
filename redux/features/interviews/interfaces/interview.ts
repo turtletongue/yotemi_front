@@ -7,6 +7,7 @@ export default interface Interview {
   price: number;
   startAt: string;
   endAt: string;
+  creator: User | null;
   creatorId: Id;
   participant: User | null;
   payerComment: string | null;
