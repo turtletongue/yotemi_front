@@ -36,3 +36,5 @@ export { default as getRefreshedToken } from "./get-refreshed-token";
 export { default as getSocket } from "./get-socket";
 
 export { default as syncStreamWithControls } from "./sync-stream-with-controls";
+
+export { default as replaceStreamTracks } from "./replace-stream-tracks";

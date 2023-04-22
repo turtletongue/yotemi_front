@@ -9,6 +9,7 @@ import {
   Mic,
   MicOff,
   PhoneOff,
+  Radio,
 } from "react-feather";
 
 import {
@@ -38,7 +39,7 @@ import { useGetUserQuery } from "@redux/features/users";
 import { selectUser } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
-import { syncStreamWithControls } from "@utils";
+import { replaceStreamTracks, syncStreamWithControls } from "@utils";
 
 interface MediaSessionProps {
   lang: Language;
@@ -78,29 +79,62 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const [unmute] = useUnmuteMutation();
 
   const [isVideo, setIsVideo] = useState(false);
-  const toggleVideo = () => {
+  const changeVideo = (isVideo: boolean) => {
     const options = { type: "video", interviewId: interview.id } as const;
 
     if (isVideo) {
-      mute(options);
-    } else {
       unmute(options);
+    } else {
+      mute(options);
     }
 
-    setIsVideo(!isVideo);
+    setIsVideo(isVideo);
   };
 
   const [isAudio, setIsAudio] = useState(false);
-  const toggleAudio = () => {
+  const changeAudio = (isAudio: boolean) => {
     const options = { type: "audio", interviewId: interview.id } as const;
 
     if (isAudio) {
-      mute(options);
-    } else {
       unmute(options);
+    } else {
+      mute(options);
     }
 
-    setIsAudio(!isAudio);
+    setIsAudio(isAudio);
+  };
+
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const changeScreenSharing = async (isScreenSharing: boolean) => {
+    const options = { type: "video", interviewId: interview.id } as const;
+
+    const handleStream = (stream: MediaStream) => {
+      if (localStream) {
+        replaceStreamTracks(localStream, stream);
+      } else {
+        setLocalStream(stream);
+      }
+    };
+
+    if (isScreenSharing) {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+        audio: true,
+      });
+
+      handleStream(stream);
+      unmute(options);
+    } else {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+
+      handleStream(stream);
+      mute(options);
+    }
+
+    setIsScreenSharing(isScreenSharing);
   };
 
   const [dialogError, setDialogError] = useState<ErrorNotification | null>(
@@ -305,20 +339,23 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         </div>
       )}
       <div className="w-full absolute bottom-0 my-6 flex gap-4 justify-center">
-        <SessionControl onClick={toggleAudio}>
+        <SessionControl onClick={() => changeAudio(!isAudio)}>
           {isAudio ? <MicOff size={20} /> : <Mic size={20} />}
         </SessionControl>
-        <SessionControl onClick={toggleVideo}>
+        <SessionControl onClick={() => changeVideo(!isVideo)}>
           {isVideo ? <CameraOff size={20} /> : <Camera size={20} />}
         </SessionControl>
         <SessionControl onClick={toggleChat}>
           <MessageSquare size={20} />
         </SessionControl>
+        <SessionControl onClick={() => changeScreenSharing(!isScreenSharing)}>
+          <Radio size={20} />
+        </SessionControl>
         <SessionControl onClick={() => closeConnection({ sendSignal: true })}>
           <PhoneOff size={20} className="text-danger" />
         </SessionControl>
       </div>
-      {isVideo && (
+      {(isVideo || isScreenSharing) && (
         <video
           className="w-36 md:w-52 absolute z-10 top-0 right-0"
           ref={localVideoOutput}
