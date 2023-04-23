@@ -1,19 +1,23 @@
+import { MediaConnection } from "peerjs";
+
 const replaceStreamTracks = (
-  stream: MediaStream,
+  connection: MediaConnection,
   streamReplacement: MediaStream
 ) => {
-  stream.getVideoTracks().forEach((track) => {
-    stream.removeTrack(track);
-  });
-  streamReplacement.getVideoTracks().forEach((track) => {
-    stream.addTrack(track);
-  });
+  connection.peerConnection.getSenders().forEach((sender) => {
+    if (
+      sender.track?.kind === "video" &&
+      streamReplacement.getVideoTracks().length > 0
+    ) {
+      sender.replaceTrack(streamReplacement.getVideoTracks()[0]).then();
+    }
 
-  stream.getAudioTracks().forEach((track) => {
-    stream.removeTrack(track);
-  });
-  streamReplacement.getAudioTracks().forEach((track) => {
-    stream.addTrack(track);
+    if (
+      sender.track?.kind === "audio" &&
+      streamReplacement.getAudioTracks().length > 0
+    ) {
+      sender.replaceTrack(streamReplacement.getAudioTracks()[0]).then();
+    }
   });
 };
 

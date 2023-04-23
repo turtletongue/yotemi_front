@@ -104,39 +104,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     setIsAudio(isAudio);
   };
 
-  const [isScreenSharing, setIsScreenSharing] = useState(false);
-  const changeScreenSharing = async (isScreenSharing: boolean) => {
-    const options = { type: "video", interviewId: interview.id } as const;
-
-    const handleStream = (stream: MediaStream) => {
-      if (localStream) {
-        replaceStreamTracks(localStream, stream);
-      } else {
-        setLocalStream(stream);
-      }
-    };
-
-    if (isScreenSharing) {
-      const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
-        audio: true,
-      });
-
-      handleStream(stream);
-      unmute(options);
-    } else {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-
-      handleStream(stream);
-      mute(options);
-    }
-
-    setIsScreenSharing(isScreenSharing);
-  };
-
   const [dialogError, setDialogError] = useState<ErrorNotification | null>(
     null
   );
@@ -218,7 +185,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     interview.creatorId,
   ]);
 
-  const { isConnected, peer } = usePeer({
+  const { isConnected, peer, answeredCall } = usePeer({
     id: peerId,
     otherId: otherPeerId,
     getLocalStream,
@@ -226,6 +193,37 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     onLocalStreamClose,
     isCaller: authenticatedUser?.id === interview.creatorId,
   });
+
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const changeScreenSharing = async (isScreenSharing: boolean) => {
+    const options = { type: "video", interviewId: interview.id } as const;
+
+    const handleStream = (stream: MediaStream) => {
+      if (answeredCall) {
+        replaceStreamTracks(answeredCall, stream);
+      }
+    };
+
+    if (isScreenSharing) {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: true,
+        audio: true,
+      });
+
+      handleStream(stream);
+      unmute(options);
+    } else {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true,
+      });
+
+      handleStream(stream);
+      mute(options);
+    }
+
+    setIsScreenSharing(isScreenSharing);
+  };
 
   const [disconnect] = useDisconnectMutation();
 

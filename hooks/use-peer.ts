@@ -69,6 +69,7 @@ const usePeer = ({
             }
 
             const call = peer.call(otherId, localStream);
+            setAnsweredCall(call);
 
             call.on("stream", handleRemoteStream);
             call.on("iceStateChanged", handleIceStateChange);
@@ -101,6 +102,7 @@ const usePeer = ({
         }
 
         call.answer(localStream);
+        setAnsweredCall(call);
 
         call.on("stream", handleRemoteStream);
         call.on("iceStateChanged", handleIceStateChange);
@@ -134,6 +136,7 @@ const usePeer = ({
   return {
     isConnected,
     peer,
+    answeredCall,
   };
 };
 
