@@ -122,6 +122,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         video: true,
       });
 
+      console.log("sharing on", answeredCall);
       handleStream(stream);
       setLocalStream(stream);
       changeVideo(true);
@@ -133,6 +134,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         video: true,
       });
 
+      console.log("sharing off", answeredCall);
       handleStream(stream);
       setLocalStream(stream);
     }
