@@ -196,8 +196,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const changeScreenSharing = async (isScreenSharing: boolean) => {
-    const options = { type: "video", interviewId: interview.id } as const;
-
     const handleStream = (stream: MediaStream) => {
       if (answeredCall) {
         replaceStreamTracks(answeredCall, stream);
@@ -211,15 +209,21 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
       });
 
       handleStream(stream);
-      unmute(options);
+      setLocalStream(stream);
+      console.log("sharing on", answeredCall);
+
+      changeVideo(true);
     } else {
+      changeVideo(false);
+
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true,
       });
 
       handleStream(stream);
-      mute(options);
+      setLocalStream(stream);
+      console.log("sharing off", answeredCall);
     }
 
     setIsScreenSharing(isScreenSharing);
