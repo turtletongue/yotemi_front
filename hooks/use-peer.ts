@@ -62,7 +62,11 @@ const usePeer = ({
       const handleConnection = () => {
         setIsConnected(true);
 
-        if (peer && otherId && isCaller && !answeredCall) {
+        if (peer && otherId && isCaller) {
+          if (answeredCall) {
+            answeredCall.close();
+          }
+
           getLocalStream().then((localStream) => {
             if (!localStream) {
               return;
@@ -93,7 +97,7 @@ const usePeer = ({
 
       const handleIncomingCall = async (call: MediaConnection) => {
         if (answeredCall) {
-          return;
+          answeredCall.close();
         }
 
         console.log("incoming call", call);
