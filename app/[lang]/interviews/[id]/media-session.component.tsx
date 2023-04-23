@@ -40,6 +40,7 @@ import { selectUser } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
 import { replaceStreamTracks, syncStreamWithControls } from "@utils";
+import { MediaConnection } from "peerjs";
 
 interface MediaSessionProps {
   lang: Language;
@@ -104,6 +105,41 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     setIsAudio(isAudio);
   };
 
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const changeScreenSharing = async (
+    isScreenSharing: boolean,
+    answeredCall: MediaConnection | null
+  ) => {
+    const handleStream = (stream: MediaStream) => {
+      if (answeredCall) {
+        replaceStreamTracks(answeredCall, stream);
+      }
+    };
+
+    if (isScreenSharing) {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        audio: true,
+        video: true,
+      });
+
+      handleStream(stream);
+      setLocalStream(stream);
+      changeVideo(true);
+    } else {
+      changeVideo(false);
+
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: true,
+      });
+
+      handleStream(stream);
+      setLocalStream(stream);
+    }
+
+    setIsScreenSharing(isScreenSharing);
+  };
+
   const [dialogError, setDialogError] = useState<ErrorNotification | null>(
     null
   );
@@ -138,10 +174,15 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   const getLocalStream = useCallback(async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: true,
-      });
+      const stream = isScreenSharing
+        ? await navigator.mediaDevices.getDisplayMedia({
+            audio: true,
+            video: true,
+          })
+        : await navigator.mediaDevices.getUserMedia({
+            audio: true,
+            video: true,
+          });
 
       setLocalStream(stream);
 
@@ -151,7 +192,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
       return null;
     }
-  }, [translation]);
+  }, [isScreenSharing, translation]);
 
   const handleRemoteStream = useCallback((stream: MediaStream) => {
     setRemoteStream(stream);
@@ -193,41 +234,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     onLocalStreamClose,
     isCaller: authenticatedUser?.id === interview.creatorId,
   });
-
-  const [isScreenSharing, setIsScreenSharing] = useState(false);
-  const changeScreenSharing = async (isScreenSharing: boolean) => {
-    const handleStream = (stream: MediaStream) => {
-      if (answeredCall) {
-        replaceStreamTracks(answeredCall, stream);
-      }
-    };
-
-    if (isScreenSharing) {
-      const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
-        audio: true,
-      });
-
-      handleStream(stream);
-      setLocalStream(stream);
-      console.log("sharing on", answeredCall);
-
-      changeVideo(true);
-    } else {
-      changeVideo(false);
-
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      });
-
-      handleStream(stream);
-      setLocalStream(stream);
-      console.log("sharing off", answeredCall);
-    }
-
-    setIsScreenSharing(isScreenSharing);
-  };
 
   const [disconnect] = useDisconnectMutation();
 
@@ -350,7 +356,9 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         <SessionControl onClick={toggleChat}>
           <MessageSquare size={20} />
         </SessionControl>
-        <SessionControl onClick={() => changeScreenSharing(!isScreenSharing)}>
+        <SessionControl
+          onClick={() => changeScreenSharing(!isScreenSharing, answeredCall)}
+        >
           <Radio size={20} />
         </SessionControl>
         <SessionControl onClick={() => closeConnection({ sendSignal: true })}>
