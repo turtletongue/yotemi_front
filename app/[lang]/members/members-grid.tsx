@@ -60,7 +60,7 @@ const MembersGrid = ({ lang }: MembersGridProps) => {
           <MemberCard key={member.id} lang={lang} data={member} />
         ))}
       </article>
-      {totalPages && totalPages > 1 && (
+      {!!totalPages && totalPages > 1 && (
         <div className="flex items-center justify-center w-full text-center mt-5">
           <Pagination
             currentPage={page}
