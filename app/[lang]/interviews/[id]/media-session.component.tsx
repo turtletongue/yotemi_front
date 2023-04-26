@@ -39,7 +39,11 @@ import { useGetUserQuery } from "@redux/features/users";
 import { selectUser } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
-import { replaceStreamTracks, syncStreamWithControls } from "@utils";
+import {
+  mergeAudioStreams,
+  replaceStreamTracks,
+  syncStreamWithControls,
+} from "@utils";
 import { MediaConnection } from "peerjs";
 
 interface MediaSessionProps {
@@ -129,8 +133,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
       const mergedStream = new MediaStream([
         ...screenStream.getVideoTracks(),
-        ...cameraStream.getAudioTracks(),
-        ...screenStream.getAudioTracks(),
+        ...mergeAudioStreams(screenStream, cameraStream),
       ]);
 
       console.log("sharing on", answeredCall);
@@ -197,8 +200,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
             return new MediaStream([
               ...screenStream.getVideoTracks(),
-              ...screenStream.getAudioTracks(),
-              ...cameraStream.getAudioTracks(),
+              ...mergeAudioStreams(screenStream, cameraStream),
             ]);
           }
 

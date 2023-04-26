@@ -38,3 +38,5 @@ export { default as getSocket } from "./get-socket";
 export { default as syncStreamWithControls } from "./sync-stream-with-controls";
 
 export { default as replaceStreamTracks } from "./replace-stream-tracks";
+
+export { default as mergeAudioStreams } from "./merge-audio-streams";
