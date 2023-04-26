@@ -116,27 +116,33 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
       }
     };
 
+    const cameraStream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: true,
+    });
+
     if (isScreenSharing) {
-      const stream = await navigator.mediaDevices.getDisplayMedia({
+      const screenStream = await navigator.mediaDevices.getDisplayMedia({
         audio: true,
         video: true,
       });
 
+      const mergedStream = new MediaStream([
+        ...screenStream.getVideoTracks(),
+        ...cameraStream.getAudioTracks(),
+        ...screenStream.getAudioTracks(),
+      ]);
+
       console.log("sharing on", answeredCall);
-      handleStream(stream);
-      setLocalStream(stream);
+      handleStream(mergedStream);
+      setLocalStream(mergedStream);
       changeVideo(true);
     } else {
       changeVideo(false);
 
-      const stream = await navigator.mediaDevices.getUserMedia({
-        audio: true,
-        video: true,
-      });
-
       console.log("sharing off", answeredCall);
-      handleStream(stream);
-      setLocalStream(stream);
+      handleStream(cameraStream);
+      setLocalStream(cameraStream);
     }
 
     setIsScreenSharing(isScreenSharing);
@@ -176,17 +182,28 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   useEffect(() => {
     if (!localStream) {
-      const streamRequest = isScreenSharing
-        ? navigator.mediaDevices.getDisplayMedia({
-            audio: true,
-            video: true,
-          })
-        : navigator.mediaDevices.getUserMedia({
-            audio: true,
-            video: true,
-          });
+      const streamRequest = navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: true,
+      });
 
       streamRequest
+        .then(async (cameraStream) => {
+          if (isScreenSharing) {
+            const screenStream = await navigator.mediaDevices.getDisplayMedia({
+              audio: true,
+              video: true,
+            });
+
+            return new MediaStream([
+              ...screenStream.getVideoTracks(),
+              ...screenStream.getAudioTracks(),
+              ...cameraStream.getAudioTracks(),
+            ]);
+          }
+
+          return cameraStream;
+        })
         .then((stream) => setLocalStream(stream))
         .catch(() => {
           setDialogError(translation("deviceError", { returnObjects: true }));
