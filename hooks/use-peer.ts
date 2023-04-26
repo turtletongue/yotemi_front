@@ -45,6 +45,7 @@ const usePeer = ({
   );
 
   const [isConnected, setIsConnected] = useState(false);
+  const [isStreamReceived, setIsStreamReceived] = useState(false);
   const [answeredCall, setAnsweredCall] = useState<MediaConnection | null>(
     null
   );
@@ -73,6 +74,8 @@ const usePeer = ({
         return;
       }
 
+      setIsStreamReceived(true);
+
       const call = peer.call(otherId, localStream);
       console.log("call", call);
       setAnsweredCall(call);
@@ -91,10 +94,10 @@ const usePeer = ({
   ]);
 
   useEffect(() => {
-    if (localStream) {
+    if (!isStreamReceived && localStream) {
       handleConnection();
     }
-  }, [localStream, handleConnection]);
+  }, [localStream, isStreamReceived, handleConnection]);
 
   const handleDisconnect = useCallback(() => {
     setIsConnected(false);
@@ -122,6 +125,8 @@ const usePeer = ({
       if (!localStream) {
         return;
       }
+
+      setIsStreamReceived(true);
 
       call.answer(localStream);
       setAnsweredCall(call);
