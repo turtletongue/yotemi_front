@@ -4,6 +4,14 @@ const mergeAudioStreams = (
 ) => {
   const context = new AudioContext();
 
+  if (firstStream.getAudioTracks().length === 0) {
+    return secondStream.getAudioTracks();
+  }
+
+  if (secondStream.getAudioTracks().length === 0) {
+    return firstStream.getAudioTracks();
+  }
+
   const firstSource = context.createMediaStreamSource(firstStream);
   const secondSource = context.createMediaStreamSource(secondStream);
   const destination = context.createMediaStreamDestination();
