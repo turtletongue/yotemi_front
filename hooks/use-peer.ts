@@ -44,6 +44,7 @@ const usePeer = ({
     [id]
   );
 
+  const [isPeerOpened, setIsPeerOpened] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [isStreamReceived, setIsStreamReceived] = useState(false);
   const [answeredCall, setAnsweredCall] = useState<MediaConnection | null>(
@@ -93,26 +94,11 @@ const usePeer = ({
     handleIceStateChange,
   ]);
 
-  useEffect(() => {
-    if (!isStreamReceived && localStream) {
-      handleConnection();
-    }
-  }, [localStream, isStreamReceived, handleConnection]);
-
   const handleDisconnect = useCallback(() => {
     setIsConnected(false);
     setAnsweredCall(null);
     onLocalStreamClose();
   }, [onLocalStreamClose]);
-
-  const handleOpenedPeer = useCallback(() => {
-    if (peer && otherId) {
-      const connection = peer.connect(otherId);
-
-      connection.on("open", handleConnection);
-      connection.on("close", handleDisconnect);
-    }
-  }, [peer, otherId, handleConnection, handleDisconnect]);
 
   const handleIncomingCall = useCallback(
     async (call: MediaConnection) => {
@@ -136,6 +122,23 @@ const usePeer = ({
     },
     [localStream, answeredCall, handleRemoteStream, handleIceStateChange]
   );
+
+  const handleOpenedPeer = useCallback(() => {
+    if (peer && otherId) {
+      setIsPeerOpened(true);
+
+      const connection = peer.connect(otherId);
+
+      connection.on("open", handleConnection);
+      connection.on("close", handleDisconnect);
+    }
+  }, [peer, otherId, handleConnection, handleDisconnect]);
+
+  useEffect(() => {
+    if (isPeerOpened && !isStreamReceived && localStream) {
+      handleOpenedPeer();
+    }
+  }, [localStream, isPeerOpened, isStreamReceived, handleOpenedPeer]);
 
   useEffect(() => {
     if (peer && otherId) {
