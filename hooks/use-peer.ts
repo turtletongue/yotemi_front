@@ -5,7 +5,7 @@ interface PeerOptions {
   id?: string;
   otherId?: string;
   isCaller: boolean;
-  getLocalStream: () => Promise<MediaStream | null>;
+  localStream: MediaStream | null;
   handleRemoteStream: (remoteStream: MediaStream) => unknown;
   onLocalStreamClose: () => unknown;
 }
@@ -14,7 +14,7 @@ const usePeer = ({
   id,
   otherId,
   isCaller,
-  getLocalStream,
+  localStream,
   handleRemoteStream,
   onLocalStreamClose,
 }: PeerOptions) => {
@@ -67,18 +67,16 @@ const usePeer = ({
             answeredCall.close();
           }
 
-          getLocalStream().then((localStream) => {
-            if (!localStream) {
-              return;
-            }
+          if (!localStream) {
+            return;
+          }
 
-            const call = peer.call(otherId, localStream);
-            console.log("call", call);
-            setAnsweredCall(call);
+          const call = peer.call(otherId, localStream);
+          console.log("call", call);
+          setAnsweredCall(call);
 
-            call.on("stream", handleRemoteStream);
-            call.on("iceStateChanged", handleIceStateChange);
-          });
+          call.on("stream", handleRemoteStream);
+          call.on("iceStateChanged", handleIceStateChange);
         }
       };
 
@@ -101,7 +99,6 @@ const usePeer = ({
         }
 
         console.log("incoming call", call);
-        const localStream = await getLocalStream();
 
         if (!localStream) {
           return;
@@ -134,7 +131,7 @@ const usePeer = ({
     otherId,
     isCaller,
     answeredCall,
-    getLocalStream,
+    localStream,
     onLocalStreamClose,
     handleRemoteStream,
   ]);

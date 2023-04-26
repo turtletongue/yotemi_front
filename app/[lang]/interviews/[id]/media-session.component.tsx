@@ -174,27 +174,25 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     return onLocalStreamClose;
   }, [onLocalStreamClose]);
 
-  const getLocalStream = useCallback(async () => {
-    try {
-      const stream = isScreenSharing
-        ? await navigator.mediaDevices.getDisplayMedia({
+  useEffect(() => {
+    if (!localStream) {
+      const streamRequest = isScreenSharing
+        ? navigator.mediaDevices.getDisplayMedia({
             audio: true,
             video: true,
           })
-        : await navigator.mediaDevices.getUserMedia({
+        : navigator.mediaDevices.getUserMedia({
             audio: true,
             video: true,
           });
 
-      setLocalStream(stream);
-
-      return stream;
-    } catch {
-      setDialogError(translation("deviceError", { returnObjects: true }));
-
-      return null;
+      streamRequest
+        .then((stream) => setLocalStream(stream))
+        .catch(() => {
+          setDialogError(translation("deviceError", { returnObjects: true }));
+        });
     }
-  }, [isScreenSharing, translation]);
+  }, [localStream, isScreenSharing, translation]);
 
   const handleRemoteStream = useCallback((stream: MediaStream) => {
     setRemoteStream(stream);
@@ -231,7 +229,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const { isConnected, peer, answeredCall } = usePeer({
     id: peerId,
     otherId: otherPeerId,
-    getLocalStream,
+    localStream,
     handleRemoteStream,
     onLocalStreamClose,
     isCaller: authenticatedUser?.id === interview.creatorId,
