@@ -51,6 +51,15 @@ interface MediaSessionProps {
   interview: Interview;
 }
 
+const handleStream = (
+  stream: MediaStream,
+  answeredCall: MediaConnection | null
+) => {
+  if (answeredCall) {
+    replaceStreamTracks(answeredCall, stream);
+  }
+};
+
 const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -84,11 +93,21 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   const [unmute] = useUnmuteMutation();
 
   const [isVideo, setIsVideo] = useState(false);
-  const changeVideo = (isVideo: boolean) => {
+  const changeVideo = async (
+    isVideo: boolean,
+    answeredCall: MediaConnection | null
+  ) => {
     const options = { type: "video", interviewId: interview.id } as const;
+
+    const cameraStream = await navigator.mediaDevices.getUserMedia({
+      audio: true,
+      video: true,
+    });
 
     if (isVideo) {
       setIsScreenSharing(false);
+      handleStream(cameraStream, answeredCall);
+      setLocalStream(cameraStream);
       unmute(options);
     } else {
       mute(options);
@@ -117,12 +136,6 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   ) => {
     const options = { type: "video", interviewId: interview.id } as const;
 
-    const handleStream = (stream: MediaStream) => {
-      if (answeredCall) {
-        replaceStreamTracks(answeredCall, stream);
-      }
-    };
-
     const cameraStream = await navigator.mediaDevices.getUserMedia({
       audio: true,
       video: true,
@@ -139,14 +152,14 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         ...mergeAudioStreams(screenStream, cameraStream),
       ]);
 
-      handleStream(mergedStream);
+      handleStream(mergedStream, answeredCall);
       setLocalStream(mergedStream);
       setIsVideo(false);
       unmute(options);
     } else {
       mute(options);
 
-      handleStream(cameraStream);
+      handleStream(cameraStream, answeredCall);
       setLocalStream(cameraStream);
     }
 
@@ -372,7 +385,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         <SessionControl onClick={() => changeAudio(!isAudio)}>
           {isAudio ? <MicOff size={20} /> : <Mic size={20} />}
         </SessionControl>
-        <SessionControl onClick={() => changeVideo(!isVideo)}>
+        <SessionControl onClick={() => changeVideo(!isVideo, answeredCall)}>
           {isVideo ? <CameraOff size={20} /> : <Camera size={20} />}
         </SessionControl>
         <SessionControl onClick={toggleChat}>
