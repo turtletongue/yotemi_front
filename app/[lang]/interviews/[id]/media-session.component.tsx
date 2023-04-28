@@ -88,6 +88,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     const options = { type: "video", interviewId: interview.id } as const;
 
     if (isVideo) {
+      setIsScreenSharing(false);
       unmute(options);
     } else {
       mute(options);
@@ -114,6 +115,8 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     isScreenSharing: boolean,
     answeredCall: MediaConnection | null
   ) => {
+    const options = { type: "video", interviewId: interview.id } as const;
+
     const handleStream = (stream: MediaStream) => {
       if (answeredCall) {
         replaceStreamTracks(answeredCall, stream);
@@ -136,14 +139,13 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         ...mergeAudioStreams(screenStream, cameraStream),
       ]);
 
-      console.log("sharing on", answeredCall);
       handleStream(mergedStream);
       setLocalStream(mergedStream);
-      changeVideo(true);
+      setIsVideo(false);
+      unmute(options);
     } else {
-      changeVideo(false);
+      mute(options);
 
-      console.log("sharing off", answeredCall);
       handleStream(cameraStream);
       setLocalStream(cameraStream);
     }
