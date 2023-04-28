@@ -41,7 +41,7 @@ import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
 import {
   mergeAudioStreams,
-  replaceStreamTracks,
+  replaceConnectionTracks,
   syncStreamWithControls,
 } from "@utils";
 import { MediaConnection } from "peerjs";
@@ -56,7 +56,7 @@ const handleStream = (
   answeredCall: MediaConnection | null
 ) => {
   if (answeredCall) {
-    replaceStreamTracks(answeredCall, stream);
+    replaceConnectionTracks(answeredCall, stream);
   }
 };
 
@@ -307,18 +307,20 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   }, [localStream, peer, isVideo, isScreenSharing]);
 
   useEffect(() => {
-    if (remoteStream && remoteVideoOutput.current) {
+    if (remoteStream && remoteVideoOutput.current && otherHasVideo) {
       remoteVideoOutput.current.srcObject = new MediaStream(
         remoteStream.getVideoTracks()
       );
     }
+  }, [remoteStream, otherHasVideo]);
 
-    if (remoteStream && remoteAudioOutput.current) {
+  useEffect(() => {
+    if (remoteStream && remoteAudioOutput.current && otherHasAudio) {
       remoteAudioOutput.current.srcObject = new MediaStream(
         remoteStream.getAudioTracks()
       );
     }
-  }, [remoteStream]);
+  }, [remoteStream, otherHasAudio]);
 
   useEffect(() => {
     mute({ type: "audio", interviewId: interview.id });

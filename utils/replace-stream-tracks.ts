@@ -1,24 +1,12 @@
-import { MediaConnection } from "peerjs";
-
 const replaceStreamTracks = (
-  connection: MediaConnection,
-  streamReplacement: MediaStream
+  stream: MediaStream,
+  tracks: MediaStreamTrack[]
 ) => {
-  connection.peerConnection.getSenders().forEach((sender) => {
-    if (
-      sender.track?.kind === "video" &&
-      streamReplacement.getVideoTracks().length > 0
-    ) {
-      sender.replaceTrack(streamReplacement.getVideoTracks()[0]).then();
-    }
+  [...stream.getVideoTracks(), ...stream.getAudioTracks()].forEach((track) =>
+    stream.removeTrack(track)
+  );
 
-    if (
-      sender.track?.kind === "audio" &&
-      streamReplacement.getAudioTracks().length > 0
-    ) {
-      sender.replaceTrack(streamReplacement.getAudioTracks()[0]).then();
-    }
-  });
+  tracks.forEach((track) => stream.addTrack(track));
 };
 
 export default replaceStreamTracks;
