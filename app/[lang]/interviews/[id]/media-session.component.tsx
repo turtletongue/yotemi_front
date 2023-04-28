@@ -319,7 +319,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
     //     remoteStream.getAudioTracks()
     //   );
     // }
-  }, [remoteStream, otherHasVideo, otherHasAudio]);
+  }, [remoteStream, otherHasVideo]);
 
   useEffect(() => {
     mute({ type: "audio", interviewId: interview.id });
