@@ -296,13 +296,13 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   useEffect(() => {
     if (peer && localStream) {
-      syncStreamWithControls(localStream, isVideo || isScreenSharing, isAudio);
+      syncStreamWithControls(localStream, isVideo || isScreenSharing, false);
 
       if (localVideoOutput.current) {
         localVideoOutput.current.srcObject = localStream;
       }
     }
-  }, [localStream, peer, isVideo, isAudio, isScreenSharing]);
+  }, [localStream, peer, isVideo, isScreenSharing]);
 
   useEffect(() => {
     if (remoteStream && remoteVideoOutput.current && otherHasVideo) {
