@@ -297,62 +297,29 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   useEffect(() => {
     if (peer && localStream) {
       syncStreamWithControls(localStream, isVideo || isScreenSharing, isAudio);
-
-      if (localVideoOutput.current) {
-        localVideoOutput.current.srcObject = localStream;
-      }
     }
   }, [localStream, peer, isVideo, isAudio, isScreenSharing]);
 
   useEffect(() => {
+    if (peer && localStream && localVideoOutput.current) {
+      localVideoOutput.current.srcObject = localStream;
+    }
+  }, [localStream, peer, isVideo, isScreenSharing]);
+
+  useEffect(() => {
     if (remoteStream && remoteVideoOutput.current && otherHasVideo) {
-      remoteVideoOutput.current.srcObject = new MediaStream(
-        remoteStream.getVideoTracks()
-      );
+      remoteVideoOutput.current.srcObject = new MediaStream([
+        ...remoteStream.getVideoTracks(),
+        ...remoteStream.getAudioTracks(),
+      ]);
     }
 
-    if (remoteStream && remoteAudioOutput.current && otherHasAudio) {
-      remoteAudioOutput.current.srcObject = new MediaStream(
-        remoteStream.getAudioTracks()
-      );
-    }
+    // if (remoteStream && remoteAudioOutput.current && otherHasAudio) {
+    //   remoteAudioOutput.current.srcObject = new MediaStream(
+    //     remoteStream.getAudioTracks()
+    //   );
+    // }
   }, [remoteStream, otherHasVideo, otherHasAudio]);
-
-  useEffect(() => {
-    console.log("isVideo changed", isVideo);
-  }, [isVideo]);
-
-  useEffect(() => {
-    console.log("isAudio changed", isAudio);
-  }, [isAudio]);
-
-  useEffect(() => {
-    console.log("isScreenSharing changed", isScreenSharing);
-  }, [isScreenSharing]);
-
-  useEffect(() => {
-    console.log("otherHasVideo changed", otherHasVideo);
-  }, [otherHasVideo]);
-
-  useEffect(() => {
-    console.log("otherHasAudio changed", otherHasAudio);
-  }, [otherHasAudio]);
-
-  useEffect(() => {
-    console.log("localStream changed", localStream);
-  }, [localStream]);
-
-  useEffect(() => {
-    console.log("isConnected changed", isConnected);
-  }, [isConnected]);
-
-  useEffect(() => {
-    console.log("peer changed", peer);
-  }, [peer]);
-
-  useEffect(() => {
-    console.log("remoteStream changed", remoteStream);
-  }, [remoteStream]);
 
   useEffect(() => {
     mute({ type: "audio", interviewId: interview.id });
