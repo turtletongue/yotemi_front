@@ -307,19 +307,18 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   }, [localStream, peer, isVideo, isScreenSharing]);
 
   useEffect(() => {
-    if (remoteStream && remoteVideoOutput.current && otherHasVideo) {
-      remoteVideoOutput.current.srcObject = new MediaStream([
-        ...remoteStream.getVideoTracks(),
-        ...remoteStream.getAudioTracks(),
-      ]);
+    if (remoteStream && remoteVideoOutput.current) {
+      remoteVideoOutput.current.srcObject = new MediaStream(
+        remoteStream.getVideoTracks()
+      );
     }
 
-    // if (remoteStream && remoteAudioOutput.current && otherHasAudio) {
-    //   remoteAudioOutput.current.srcObject = new MediaStream(
-    //     remoteStream.getAudioTracks()
-    //   );
-    // }
-  }, [remoteStream, otherHasVideo]);
+    if (remoteStream && remoteAudioOutput.current) {
+      remoteAudioOutput.current.srcObject = new MediaStream(
+        remoteStream.getAudioTracks()
+      );
+    }
+  }, [remoteStream]);
 
   useEffect(() => {
     mute({ type: "audio", interviewId: interview.id });
