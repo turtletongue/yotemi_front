@@ -177,16 +177,16 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
   };
 
   useEffect(() => {
-    const onUnload = (event: BeforeUnloadEvent) => {
+    const onBeforeUnload = (event: BeforeUnloadEvent) => {
       event.preventDefault();
       event.returnValue = "";
 
       return "";
     };
 
-    window.addEventListener("beforeunload", onUnload);
+    window.addEventListener("beforeunload", onBeforeUnload);
 
-    return () => window.removeEventListener("beforeunload", onUnload);
+    return () => window.removeEventListener("beforeunload", onBeforeUnload);
   }, []);
 
   const onLocalStreamClose = useCallback(() => {
@@ -197,6 +197,14 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
 
   useEffect(() => {
     return onLocalStreamClose;
+  }, [onLocalStreamClose]);
+
+  useEffect(() => {
+    const onUnload = () => onLocalStreamClose();
+
+    window.addEventListener("unload", onUnload);
+
+    return () => window.removeEventListener("unload", onUnload);
   }, [onLocalStreamClose]);
 
   useEffect(() => {
