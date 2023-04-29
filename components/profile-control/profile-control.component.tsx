@@ -52,7 +52,7 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
   };
 
   return (
-    <div className="flex items-center gap-4 mt-2 sm:ml-12">
+    <div className="flex w-full sm:w-fit items-center justify-between sm:justify-start gap-4 mt-2 sm:ml-12">
       <Button outline onClick={onSettingsOpen}>
         {translation("settings")}
       </Button>
