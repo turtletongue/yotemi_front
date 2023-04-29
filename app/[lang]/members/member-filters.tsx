@@ -75,7 +75,7 @@ const MemberFilters = ({ lang }: MemberFiltersProps) => {
 
   return (
     <div className="my-12 w-full flex flex-col-reverse gap-4 lg:flex-row justify-center md:justify-between mx-auto max-w-screen-3xl">
-      <div className="flex flex-col gap-4 w-full sm:w-1/2 justify-center">
+      <div className="flex flex-col gap-4 w-full sm:w-1/2">
         <AsyncPaginate
           name="topicsSelect"
           value={null}
