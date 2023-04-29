@@ -9,7 +9,8 @@ import {
   Mic,
   MicOff,
   PhoneOff,
-  Radio,
+  Wifi,
+  WifiOff,
 } from "react-feather";
 
 import {
@@ -398,7 +399,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         <SessionControl
           onClick={() => changeScreenSharing(!isScreenSharing, answeredCall)}
         >
-          <Radio size={20} />
+          {isScreenSharing ? <Wifi size={20} /> : <WifiOff size={20} />}
         </SessionControl>
         <SessionControl onClick={() => closeConnection({ sendSignal: true })}>
           <PhoneOff size={20} className="text-danger" />
