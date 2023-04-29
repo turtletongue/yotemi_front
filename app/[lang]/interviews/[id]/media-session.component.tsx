@@ -427,7 +427,7 @@ const MediaSession = ({ lang, interview }: MediaSessionProps) => {
         <SessionControl
           onClick={() => changeScreenSharing(!isScreenSharing, answeredCall)}
         >
-          {isScreenSharing ? <Wifi size={20} /> : <WifiOff size={20} />}
+          {isScreenSharing ? <WifiOff size={20} /> : <Wifi size={20} />}
         </SessionControl>
         <SessionControl onClick={() => closeConnection({ sendSignal: true })}>
           <PhoneOff size={20} className="text-danger" />
