@@ -107,7 +107,7 @@ const MemberFilters = ({ lang }: MemberFiltersProps) => {
           </div>
         )}
       </div>
-      <div className="flex flex-col sm:flex-row justify-between gap-4 items-center">
+      <div className="flex flex-col sm:flex-row justify-between gap-4">
         <TextInput
           type="search"
           name="searchTopics"
