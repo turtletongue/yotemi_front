@@ -16,7 +16,7 @@ import {
   ErrorNotification,
   Topic as TopicBadge,
 } from "@components";
-import { loggedOut, selectUser } from "@redux/features/auth";
+import { selectUser, useLogoutMutation } from "@redux/features/auth";
 import {
   useDeleteUserMutation,
   useGetUserQuery,
@@ -174,12 +174,14 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
     }
   }, [router, isUpdated, data?.username]);
 
+  const [logout] = useLogoutMutation();
+
   useEffect(() => {
     if (isDeleted) {
-      dispatch(loggedOut());
+      logout();
       router.push("/");
     }
-  }, [dispatch, router, isDeleted]);
+  }, [dispatch, router, logout, isDeleted]);
 
   /* Error handler */
 

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 
 import { Button, FollowingControlButton } from "@components";
-import { loggedOut, selectUser } from "@redux/features/auth";
+import { selectUser, useLogoutMutation } from "@redux/features/auth";
 import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
 import { Id } from "@app/declarations";
@@ -23,6 +23,7 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
 
   const authenticatedUser = useAppSelector(selectUser);
   const { data: profile } = useGetUserQuery(profileId);
+  const [logout] = useLogoutMutation();
 
   if (!authenticatedUser || !profile) {
     return <></>;
@@ -44,7 +45,7 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
   };
 
   const onLogOut = () => {
-    dispatch(loggedOut());
+    logout();
     dispatch(
       usersApi.util.invalidateTags([{ type: "Users", id: "PARTIAL-LIST" }])
     );
