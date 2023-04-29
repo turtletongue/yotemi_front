@@ -64,8 +64,6 @@ const usePeer = ({
 
   const handleConnection = useCallback(() => {
     setIsConnected(true);
-    console.log("connection triggered", peer, otherId, isCaller);
-
     if (peer && otherId && isCaller) {
       if (answeredCall) {
         answeredCall.close();
@@ -78,7 +76,6 @@ const usePeer = ({
       setIsStreamReceived(true);
 
       const call = peer.call(otherId, localStream);
-      console.log("call", call);
       setAnsweredCall(call);
 
       call.on("stream", handleRemoteStream);
@@ -105,8 +102,6 @@ const usePeer = ({
       if (answeredCall) {
         answeredCall.close();
       }
-
-      console.log("incoming call", call);
 
       if (!localStream) {
         return;
