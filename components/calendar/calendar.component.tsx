@@ -130,7 +130,7 @@ const Calendar = ({ lang, user, contractCode }: CalendarProps) => {
 
   return (
     <article
-      className={`bg-light-cetacean mb-10 mt-4 w-[22rem] sm:w-auto ${
+      className={`bg-light-cetacean mx-auto mb-10 mt-4 w-[22rem] sm:w-auto ${
         isOwnCalendar ? "xl:w-[60rem]" : "lg:w-[40rem]"
       }`}
     >
