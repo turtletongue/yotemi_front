@@ -52,7 +52,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
               <ProfileControl lang={lang} profileId={profile.id} />
             </div>
             {hasTopics && (
-              <div className="flex flex-wrap gap-2 mt-3">
+              <div className="flex flex-wrap justify-center sm:justify-start gap-2 mt-3">
                 {profile.topics.map((topic) => {
                   return (
                     <Topic
