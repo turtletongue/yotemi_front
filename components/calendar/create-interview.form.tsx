@@ -161,9 +161,9 @@ const CreateInterviewForm = ({
         );
       }
 
-      setIsDeploySuccess(true);
-      markAsDeployed(interview.id);
+      await markAsDeployed(interview.id).unwrap();
 
+      setIsDeploySuccess(true);
       dispatch(
         interviewsApi.util.invalidateTags([
           { type: "Interviews", id: "PARTIAL-LIST" },
