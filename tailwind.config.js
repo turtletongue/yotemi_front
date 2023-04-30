@@ -36,7 +36,8 @@ module.exports = {
         xs: "375px",
       },
       fontFamily: {
-        mulish: ["var(--font-mulish)", "Arial", "sans-serif"],
+        mulish: ["var(--font-mulish)"],
+        "noto-sans": ["var(--font-noto-sans)"],
       },
       gridTemplateColumns: {
         cards: "repeat(auto-fill, minmax(0, 23rem))",

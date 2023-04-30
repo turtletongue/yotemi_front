@@ -1,11 +1,12 @@
 "use client";
 
+import Link from "next/link";
+
 import { Avatar, FollowingControlButton, Rating, Topic } from "@components";
 import { useAppSelector } from "@redux/store-config/hooks";
 import { User } from "@redux/features/users";
 import { selectUser } from "@redux/features/auth";
 import { Language, useTranslation } from "@app/i18n/client";
-import Link from "next/link";
 
 interface MemberCardProps {
   lang: Language;

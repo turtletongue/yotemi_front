@@ -14,7 +14,7 @@ interface NavbarLinkProps {
 const NavbarLink = ({ link = "#", id, onClick, children }: NavbarLinkProps) => {
   return (
     <li
-      className="font-bold text-lg sm:text-base sm:font-medium text-white my-3 sm:my-0 px-3 flex sm:items-center cursor-pointer"
+      className="font-bold  text-lg sm:text-base sm:font-medium text-white my-3 sm:my-0 px-3 flex sm:items-center cursor-pointer"
       onClick={onClick}
       id={id}
     >
