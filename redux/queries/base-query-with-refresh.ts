@@ -3,7 +3,7 @@ import {
   FetchArgs,
   FetchBaseQueryError,
   retry,
-} from "@reduxjs/toolkit/query";
+} from "@reduxjs/toolkit/query/react";
 import { Mutex } from "async-mutex";
 
 import { AuthResponse, loggedOut, refreshTokens } from "@redux/features/auth";
