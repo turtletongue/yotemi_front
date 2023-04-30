@@ -21,8 +21,6 @@ const baseQueryWithRefresh: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
-    retry.fail(result.error);
-
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
 
@@ -43,6 +41,7 @@ const baseQueryWithRefresh: BaseQueryFn<
           result = await baseQuery(args, api, extraOptions);
         } else {
           api.dispatch(loggedOut());
+          retry.fail(result.error);
         }
       } finally {
         release();
