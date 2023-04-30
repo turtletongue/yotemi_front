@@ -5,7 +5,7 @@ import { getHttpEndpoint } from "@orbs-network/ton-access";
 import { CHAIN } from "@tonconnect/protocol";
 
 import { getConnector, getSender } from "@contract";
-import { getSeqno, OnlyFunctions } from "@utils";
+import { getSeqno, OnlyFunctions, sleep } from "@utils";
 
 const getContractQuery = <
   T extends { address: Address; init?: { code: Cell; data: Cell } }
@@ -59,6 +59,7 @@ const getContractQuery = <
       let currentSeqno = seqno;
       while (currentSeqno === seqno) {
         currentSeqno = await getSeqno(accountAddress);
+        await sleep(500);
       }
 
       return { data };
