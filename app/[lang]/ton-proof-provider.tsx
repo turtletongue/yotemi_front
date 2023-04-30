@@ -6,6 +6,7 @@ import { useTonConnectUI } from "@tonconnect/ui-react";
 
 import { useAppSelector } from "@redux/store-config/hooks";
 import { selectTargetUsername } from "@redux/features/auth";
+import { useDebounce } from "@app/hooks";
 
 interface TonProofProviderProps {
   children: ReactNode;
@@ -14,16 +15,17 @@ interface TonProofProviderProps {
 const TonProofProvider = ({ children }: TonProofProviderProps) => {
   const [tonConnectUI] = useTonConnectUI();
   const targetUsername = useAppSelector(selectTargetUsername);
+  const debouncedUsername = useDebounce(targetUsername, 200);
 
   useEffect(() => {
-    if (targetUsername) {
+    if (debouncedUsername) {
       tonConnectUI.setConnectRequestParameters({
         state: "loading",
       });
 
       axios
         .get(
-          `${process.env.NEXT_PUBLIC_API_URL}/users/by-username/${targetUsername}`
+          `${process.env.NEXT_PUBLIC_API_URL}/users/by-username/${debouncedUsername}`
         )
         .then(({ data: user }) => {
           tonConnectUI.setConnectRequestParameters({
@@ -44,7 +46,7 @@ const TonProofProvider = ({ children }: TonProofProviderProps) => {
           tonConnectUI.setConnectRequestParameters(null);
         });
     }
-  }, [tonConnectUI, targetUsername]);
+  }, [tonConnectUI, debouncedUsername]);
 
   return <>{children}</>;
 };

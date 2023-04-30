@@ -105,6 +105,7 @@ const SignInForm = ({ lang }: SignInFormProps) => {
         usersApi.util.invalidateTags([{ type: "Users", id: "PARTIAL-LIST" }])
       );
       router.push("/");
+      dispatch(changeTargetUsername(null));
     }
   }, [dispatch, router, translation, tonConnectUI, isSuccess]);
 
