@@ -55,7 +55,7 @@ const interviewsApi = baseApi.injectEndpoints({
         return [{ type: "Interviews", id }];
       },
     }),
-    addInterview: builder.mutation<void, CreateInterview>({
+    addInterview: builder.mutation<Interview, CreateInterview>({
       query: (interview) => ({
         url: "interviews",
         method: "POST",
@@ -82,6 +82,15 @@ const interviewsApi = baseApi.injectEndpoints({
         return [{ type: "Interviews", id }];
       },
     }),
+    markInterviewAsDeployed: builder.mutation<void, Id>({
+      query: (id) => ({
+        url: `interviews/${id}/mark-deployed`,
+        method: "POST",
+      }),
+      invalidatesTags: (_result, _error, id) => {
+        return [{ type: "Interviews", id }];
+      },
+    }),
   }),
 });
 
@@ -92,6 +101,7 @@ export const {
   useCheckInterviewTimeConflictMutation,
   useAddInterviewMutation,
   useConfirmInterviewPaymentMutation,
+  useMarkInterviewAsDeployedMutation,
 } = interviewsApi;
 
 export default interviewsApi;

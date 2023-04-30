@@ -2,6 +2,7 @@ import {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
+  retry,
 } from "@reduxjs/toolkit/query";
 import { Mutex } from "async-mutex";
 
@@ -20,6 +21,8 @@ const baseQueryWithRefresh: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
+    retry.fail(result.error);
+
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
 
@@ -54,4 +57,4 @@ const baseQueryWithRefresh: BaseQueryFn<
   return result;
 };
 
-export default baseQueryWithRefresh;
+export default retry(baseQueryWithRefresh);

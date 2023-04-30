@@ -15,6 +15,7 @@ import {
   interviewsApi,
   useAddInterviewMutation,
   useCheckInterviewTimeConflictMutation,
+  useMarkInterviewAsDeployedMutation,
 } from "@redux/features/interviews";
 import { selectUser } from "@redux/features/auth";
 import { Language, useTranslation } from "@app/i18n/client";
@@ -106,6 +107,7 @@ const CreateInterviewForm = ({
     checkInterviewTimeConflict,
     { isLoading: isCheckTimeConflictsLoading },
   ] = useCheckInterviewTimeConflictMutation();
+  const [markAsDeployed] = useMarkInterviewAsDeployedMutation();
   const initializeDeploy = useInterviewDeploy(contractCode);
   const [isDeployLoading, setIsDeployLoading] = useState(false);
   const [isDeploySuccess, setIsDeploySuccess] = useState(false);
@@ -141,30 +143,39 @@ const CreateInterviewForm = ({
       endAt
     );
 
-    addInterview({
-      address,
-      price,
-      startAt,
-      endAt,
-    });
+    try {
+      const interview = await addInterview({
+        address,
+        price,
+        startAt,
+        endAt,
+      }).unwrap();
 
-    setIsDeployLoading(true);
-    const deployedAddress = await executeTransaction();
-    setIsDeployLoading(false);
+      setIsDeployLoading(true);
+      const deployedAddress = await executeTransaction();
+      setIsDeployLoading(false);
 
-    if (!deployedAddress) {
-      return setDialogError(
-        translation("deployFailedError", { returnObjects: true })
+      if (!deployedAddress) {
+        return setDialogError(
+          translation("deployFailedError", { returnObjects: true })
+        );
+      }
+
+      setIsDeploySuccess(true);
+      markAsDeployed(interview.id);
+
+      dispatch(
+        interviewsApi.util.invalidateTags([
+          { type: "Interviews", id: "PARTIAL-LIST" },
+        ])
       );
+    } catch (error: unknown) {
+      if (error) {
+        setDialogError(
+          extractErrorNotification(error, createInterviewErrors, translation)
+        );
+      }
     }
-
-    setIsDeploySuccess(true);
-
-    dispatch(
-      interviewsApi.util.invalidateTags([
-        { type: "Interviews", id: "PARTIAL-LIST" },
-      ])
-    );
   };
 
   useEffect(() => {
@@ -173,14 +184,6 @@ const CreateInterviewForm = ({
       setIsDeploySuccess(false);
     }
   }, [reset, isDeploySuccess]);
-
-  useEffect(() => {
-    if (error) {
-      setDialogError(
-        extractErrorNotification(error, createInterviewErrors, translation)
-      );
-    }
-  }, [translation, error]);
 
   return (
     <>
