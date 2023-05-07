@@ -8,11 +8,12 @@ import { useListInterviewsQuery } from "@store/features/interviews";
 import { User } from "@store/features/users";
 import { selectUser } from "@store/features/auth";
 import { useAppSelector } from "@store/store-config/hooks";
-import { InterviewCard } from "@app/components";
 import { Language, useTranslation } from "@app/i18n/client";
 import { isDateInPartOfDay } from "@utils";
 import getCalendarDates from "./get-calendar-dates";
 import CreateInterviewForm from "./create-interview.form";
+import CalendarDate from "./calendar-date.component";
+import InterviewsGroup from "./interviews-group.component";
 
 interface CalendarProps {
   lang: Language;
@@ -165,34 +166,15 @@ const Calendar = ({ lang, user, contractCode }: CalendarProps) => {
               {datesGroups.map((group, groupIndex) => (
                 <tr key={groupIndex}>
                   {group.map((date) => (
-                    <td
+                    <CalendarDate
                       key={date.getDate()}
-                      className={`select-none ${
-                        date.getMonth() === monthIndex
-                          ? "text-white"
-                          : "text-gray-500"
-                      } ${calendarDateClasses}`}
-                    >
-                      <button
-                        onClick={() =>
-                          changeCurrentDate(date.getDate(), date.getMonth())
-                        }
-                      >
-                        <span
-                          className={`w-9 h-9 block flex items-center ${
-                            currentDate === date.getDate() &&
-                            monthIndex === date.getMonth()
-                              ? "bg-calendar-date text-white"
-                              : classnames(
-                                  daysWithInterviews[date.toDateString()] &&
-                                    "text-calendar-date"
-                                )
-                          } justify-center cursor-pointer rounded-full relative`}
-                        >
-                          {date.getDate()}
-                        </span>
-                      </button>
-                    </td>
+                      date={date}
+                      currentDate={currentDate}
+                      monthIndex={monthIndex}
+                      changeCurrentDate={changeCurrentDate}
+                      className={calendarDateClasses}
+                      daysWithInterviews={daysWithInterviews}
+                    />
                   ))}
                 </tr>
               ))}
@@ -226,89 +208,39 @@ const Calendar = ({ lang, user, contractCode }: CalendarProps) => {
             {interviews.length ? (
               <>
                 {!!morningInterviews.length && (
-                  <>
-                    <span className="block my-4">{translation("morning")}</span>
-                    <div
-                      className={`columns-1 ${
-                        isOwnCalendar
-                          ? "xl:columns-3 md:columns-2"
-                          : "md:columns-2"
-                      } gap-6 mx-auto`}
-                    >
-                      {morningInterviews.map((interview) => (
-                        <InterviewCard
-                          key={interview.id}
-                          interview={interview}
-                          lang={lang}
-                        />
-                      ))}
-                    </div>
-                  </>
+                  <InterviewsGroup
+                    title={translation("morning")!}
+                    isOwnCalendar={isOwnCalendar}
+                    lang={lang}
+                    interviews={morningInterviews}
+                  />
                 )}
 
                 {!!afternoonInterviews.length && (
-                  <>
-                    <span className="block my-4">
-                      {translation("afternoon")}
-                    </span>
-                    <div
-                      className={`columns-1 ${
-                        isOwnCalendar
-                          ? "xl:columns-3 md:columns-2"
-                          : "md:columns-2"
-                      } gap-6 mx-auto`}
-                    >
-                      {afternoonInterviews.map((interview) => (
-                        <InterviewCard
-                          key={interview.id}
-                          interview={interview}
-                          lang={lang}
-                        />
-                      ))}
-                    </div>
-                  </>
+                  <InterviewsGroup
+                    title={translation("afternoon")!}
+                    isOwnCalendar={isOwnCalendar}
+                    lang={lang}
+                    interviews={afternoonInterviews}
+                  />
                 )}
 
                 {!!eveningInterviews.length && (
-                  <>
-                    <span className="block my-4">{translation("evening")}</span>
-                    <div
-                      className={`columns-1 ${
-                        isOwnCalendar
-                          ? "xl:columns-3 md:columns-2"
-                          : "md:columns-2"
-                      } gap-6 mx-auto`}
-                    >
-                      {eveningInterviews.map((interview) => (
-                        <InterviewCard
-                          key={interview.id}
-                          interview={interview}
-                          lang={lang}
-                        />
-                      ))}
-                    </div>
-                  </>
+                  <InterviewsGroup
+                    title={translation("evening")!}
+                    isOwnCalendar={isOwnCalendar}
+                    lang={lang}
+                    interviews={eveningInterviews}
+                  />
                 )}
 
                 {!!nightInterviews.length && (
-                  <>
-                    <span className="block my-4">{translation("night")}</span>
-                    <div
-                      className={`columns-1 ${
-                        isOwnCalendar
-                          ? "xl:columns-3 md:columns-2"
-                          : "md:columns-2"
-                      } gap-6 mx-auto`}
-                    >
-                      {nightInterviews.map((interview) => (
-                        <InterviewCard
-                          key={interview.id}
-                          interview={interview}
-                          lang={lang}
-                        />
-                      ))}
-                    </div>
-                  </>
+                  <InterviewsGroup
+                    title={translation("night")!}
+                    isOwnCalendar={isOwnCalendar}
+                    lang={lang}
+                    interviews={nightInterviews}
+                  />
                 )}
               </>
             ) : (
