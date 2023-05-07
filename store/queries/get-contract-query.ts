@@ -3,6 +3,7 @@ import { Address, Cell, Sender } from "ton-core";
 import { BaseQueryFn, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { getHttpEndpoint } from "@orbs-network/ton-access";
 import { CHAIN } from "@tonconnect/protocol";
+import * as Sentry from "@sentry/nextjs";
 
 import { getConnector, getSender } from "@contract";
 import { getSeqno, OnlyFunctions, sleep } from "@utils";
@@ -64,6 +65,8 @@ const getContractQuery = <
 
       return { data };
     } catch (error: unknown) {
+      Sentry.captureException(error);
+
       return {
         error: {
           status: 500,

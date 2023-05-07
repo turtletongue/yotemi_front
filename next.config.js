@@ -1,9 +1,14 @@
+const { withSentryConfig } = require("@sentry/nextjs");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: false,
   images: {
     domains: [],
+  },
+  sentry: {
+    hideSourceMaps: true,
   },
   webpack: (config) => {
     config.watchOptions = {
@@ -23,4 +28,10 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+const sentryWebpackPluginOptions = {
+  org: "yotemi",
+  project: "javascript-nextjs",
+  silent: true,
+};
+
+module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);

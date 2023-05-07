@@ -3,6 +3,7 @@
 import { ReactNode, useEffect } from "react";
 import axios, { AxiosError, HttpStatusCode } from "axios";
 import { useTonConnectUI } from "@tonconnect/ui-react";
+import * as Sentry from "@sentry/nextjs";
 
 import { useAppSelector } from "@store/store-config/hooks";
 import { selectTargetUsername } from "@store/features/auth";
@@ -38,7 +39,7 @@ const TonProofProvider = ({ children }: TonProofProviderProps) => {
             !(error instanceof AxiosError) ||
             error.response?.status !== HttpStatusCode.NotFound
           ) {
-            console.error(error);
+            Sentry.captureException(error);
 
             return;
           }

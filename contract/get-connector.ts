@@ -1,4 +1,5 @@
 import { TonConnect } from "@tonconnect/sdk";
+import * as Sentry from "@sentry/nextjs";
 
 import { createNoopStorage } from "@utils";
 import manifestUrl from "./manifest-url";
@@ -19,7 +20,9 @@ const buildGetConnector = () => {
     if (!localStorageConnector) {
       localStorageConnector = new TonConnect();
     } else {
-      localStorageConnector.restoreConnection().catch(console.error);
+      localStorageConnector
+        .restoreConnection()
+        .catch((error) => Sentry.captureException(error));
     }
 
     return localStorageConnector;
