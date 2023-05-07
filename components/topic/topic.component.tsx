@@ -1,7 +1,7 @@
 import { X } from "react-feather";
 import classnames from "classnames";
 
-import { TopicLabel } from "@redux/features/topics";
+import { TopicLabel } from "@store/features/topics";
 import { Language } from "@app/i18n";
 
 interface TopicProps {

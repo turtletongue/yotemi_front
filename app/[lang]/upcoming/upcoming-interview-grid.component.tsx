@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 
 import { InterviewCard } from "@components";
-import { Interview } from "@redux/features/interviews";
+import { Interview } from "@app/store/features/interviews";
 import { Language } from "@app/i18n/client";
 
 interface UpcomingInterviewsGridProps {

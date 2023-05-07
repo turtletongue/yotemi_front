@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 
 import { Avatar, Rating } from "@components";
-import { Review } from "@redux/features/reviews";
+import { Review } from "@store/features/reviews";
 
 interface ReviewCardProps {
   review: Review;

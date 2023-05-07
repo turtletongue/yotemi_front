@@ -4,8 +4,8 @@ import { ChangeEvent, ReactNode, useEffect, useRef, useState } from "react";
 import { Progress } from "flowbite-react";
 
 import { ErrorDialog, ErrorNotification } from "@components";
-import { selectAccessToken } from "@redux/features/auth";
-import { useAppSelector } from "@redux/store-config/hooks";
+import { selectAccessToken } from "@store/features/auth";
+import { useAppSelector } from "@store/store-config/hooks";
 import useFileUploader from "@hooks/use-file-uploader";
 import { Language, useTranslation } from "@app/i18n/client";
 import CropModal from "./crop-modal.component";

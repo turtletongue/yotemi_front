@@ -21,7 +21,7 @@ import {
   MAX_USERNAME_LENGTH,
   MIN_USERNAME_LENGTH,
 } from "@app/constants";
-import { useAddUserMutation } from "@redux/features/users";
+import { useAddUserMutation } from "@store/features/users";
 import { errorNameToError, extractErrorNotification } from "@utils";
 import signUpErrors from "./sign-up.errors";
 

@@ -4,8 +4,8 @@ import { ReactNode, useEffect } from "react";
 import axios, { AxiosError, HttpStatusCode } from "axios";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 
-import { useAppSelector } from "@redux/store-config/hooks";
-import { selectTargetUsername } from "@redux/features/auth";
+import { useAppSelector } from "@store/store-config/hooks";
+import { selectTargetUsername } from "@store/features/auth";
 import { useDebounce } from "@app/hooks";
 
 interface TonProofProviderProps {

@@ -1,4 +1,4 @@
-import { User } from "@redux/features/users";
+import { User } from "@store/features/users";
 
 type ProfileResponse = { isFound: boolean; profile: User | null };
 

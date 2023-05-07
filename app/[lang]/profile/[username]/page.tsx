@@ -9,7 +9,7 @@ import {
   ReviewCard,
   Topic,
 } from "@components";
-import { User } from "@redux/features/users";
+import { User } from "@store/features/users";
 import { Language, useTranslation } from "@app/i18n";
 import contractCode from "@app/contract/contract-code";
 import fetchProfile from "./fetch-profile";

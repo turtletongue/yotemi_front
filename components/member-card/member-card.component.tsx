@@ -10,9 +10,9 @@ import {
   Rating,
   Topic,
 } from "@components";
-import { useAppSelector } from "@redux/store-config/hooks";
-import { User } from "@redux/features/users";
-import { selectUser } from "@redux/features/auth";
+import { useAppSelector } from "@store/store-config/hooks";
+import { User } from "@store/features/users";
+import { selectUser } from "@store/features/auth";
 import { Language, useTranslation } from "@app/i18n/client";
 
 interface MemberCardProps {

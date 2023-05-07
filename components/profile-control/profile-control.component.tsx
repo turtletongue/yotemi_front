@@ -4,11 +4,11 @@ import { useRouter } from "next/navigation";
 import { useTonConnectUI } from "@tonconnect/ui-react";
 
 import { Button, FollowingControlButton } from "@components";
-import { selectUser, useLogoutMutation } from "@redux/features/auth";
-import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
+import { selectUser, useLogoutMutation } from "@store/features/auth";
+import { useAppDispatch, useAppSelector } from "@store/store-config/hooks";
+import { useGetUserQuery, usersApi } from "@store/features/users";
 import { Language, useTranslation } from "@app/i18n/client";
 import { Id } from "@app/declarations";
-import { useGetUserQuery, usersApi } from "@redux/features/users";
 
 interface ProfileControlProps {
   lang: Language;

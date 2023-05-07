@@ -1,4 +1,4 @@
-import { Interview } from "@redux/features/interviews";
+import { Interview } from "@store/features/interviews";
 import { Id } from "@app/declarations";
 
 type InterviewResponse = { isFound: boolean; interview: Interview | null };

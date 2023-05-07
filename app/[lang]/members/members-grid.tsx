@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { Pagination } from "flowbite-react";
 
 import { MemberCard } from "@components";
-import { useAppSelector } from "@redux/store-config/hooks";
+import { useAppSelector } from "@store/store-config/hooks";
 import {
   selectOrderBy,
   selectSearchFilter,
   selectTopicsFilter,
   useListUsersQuery,
-} from "@redux/features/users";
+} from "@store/features/users";
 import { useDebounce } from "@app/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
 import MembersGridSkeleton from "./members-grid-skeleton";

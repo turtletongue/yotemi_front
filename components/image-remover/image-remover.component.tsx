@@ -4,8 +4,8 @@ import { ReactNode } from "react";
 import { Trash } from "react-feather";
 import classnames from "classnames";
 
-import { selectAccessToken } from "@redux/features/auth";
-import { useAppSelector } from "@redux/store-config/hooks";
+import { selectAccessToken } from "@store/features/auth";
+import { useAppSelector } from "@store/store-config/hooks";
 import useFileRemover from "@hooks/use-file-remover";
 
 interface ImageRemoverProps {

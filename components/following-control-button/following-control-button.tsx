@@ -8,7 +8,7 @@ import {
   useFollowUserMutation,
   User,
   useUnfollowUserMutation,
-} from "@redux/features/users";
+} from "@store/features/users";
 import { Language, useTranslation } from "@app/i18n/client";
 
 interface FollowingControlButtonProps {

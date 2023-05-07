@@ -16,14 +16,14 @@ import {
   ErrorNotification,
   Topic as TopicBadge,
 } from "@components";
-import { selectUser, useLogoutMutation } from "@redux/features/auth";
+import { selectUser, useLogoutMutation } from "@store/features/auth";
 import {
   useDeleteUserMutation,
   useGetUserQuery,
   useUpdateUserMutation,
-} from "@redux/features/users";
-import { Topic, useAddTopicMutation } from "@redux/features/topics";
-import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
+} from "@app/store/features/users";
+import { Topic, useAddTopicMutation } from "@store/features/topics";
+import { useAppDispatch, useAppSelector } from "@store/store-config/hooks";
 import useTopicsSelect from "@hooks/use-topics-select";
 import {
   MAX_BIOGRAPHY_LENGTH,

@@ -10,9 +10,9 @@ import * as yup from "yup";
 
 import { ErrorDialog, ErrorNotification, GradientButton } from "@components";
 import { Language, useTranslation } from "@app/i18n/client";
-import { changeTargetUsername, useLoginMutation } from "@redux/features/auth";
-import { usersApi } from "@redux/features/users";
-import { useAppDispatch } from "@redux/store-config/hooks";
+import { changeTargetUsername, useLoginMutation } from "@store/features/auth";
+import { usersApi } from "@store/features/users";
+import { useAppDispatch } from "@store/store-config/hooks";
 import { errorNameToError, extractErrorNotification } from "@utils";
 import signInErrors from "./sign-in.errors";
 

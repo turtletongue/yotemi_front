@@ -8,7 +8,7 @@ import { NotificationSkeleton } from "@components";
 import {
   useListNotificationsQuery,
   useMarkAllAsSeenMutation,
-} from "@redux/features/notifications";
+} from "@store/features/notifications";
 import { Language, useTranslation } from "@app/i18n/client";
 import NewFollowerNotification from "./new-follower-notification";
 import InterviewScheduledNotification from "./interview-scheduled-notification";

@@ -7,7 +7,7 @@ import { Search } from "react-feather";
 import Select from "react-select";
 
 import { Topic } from "@components";
-import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
+import { useAppDispatch, useAppSelector } from "@store/store-config/hooks";
 import {
   addTopic,
   removeTopic,
@@ -16,7 +16,7 @@ import {
   selectTopicsFilter,
   setOrderBy,
   setSearch,
-} from "@redux/features/users";
+} from "@store/features/users";
 import useTopicsSelect from "@hooks/use-topics-select";
 import { Language, useTranslation } from "@app/i18n/client";
 import { Id } from "@app/declarations";

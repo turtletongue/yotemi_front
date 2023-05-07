@@ -5,9 +5,9 @@ import { Camera } from "react-feather";
 import classnames from "classnames";
 
 import { Avatar, ImageRemover, ImageUploader } from "@components";
-import { useGetUserQuery, usersApi } from "@redux/features/users";
-import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
-import { selectUser } from "@redux/features/auth";
+import { useGetUserQuery, usersApi } from "@store/features/users";
+import { useAppDispatch, useAppSelector } from "@store/store-config/hooks";
+import { selectUser } from "@store/features/auth";
 import { Language, useTranslation } from "@app/i18n/client";
 import { useState } from "react";
 

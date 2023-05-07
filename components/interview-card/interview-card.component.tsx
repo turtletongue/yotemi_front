@@ -16,15 +16,15 @@ import {
 import {
   Interview,
   useConfirmInterviewPaymentMutation,
-} from "@redux/features/interviews";
+} from "@store/features/interviews";
 import {
   useCancelContractMutation,
   useFinishContractMutation,
   useGetContractInfoQuery,
   usePurchaseContractMutation,
-} from "@redux/features/contract";
-import { useAppSelector } from "@redux/store-config/hooks";
-import { selectUser } from "@redux/features/auth";
+} from "@store/features/contract";
+import { useAppSelector } from "@store/store-config/hooks";
+import { selectUser } from "@store/features/auth";
 import { extractErrorNotification, formatTime } from "@utils";
 import { Language, useTranslation } from "@app/i18n/client";
 import InterviewStatus from "./interview-status.component";

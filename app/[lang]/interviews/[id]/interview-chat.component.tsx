@@ -18,10 +18,10 @@ import {
   setIsChatOpened,
   useAddInterviewMessageMutation,
   useListInterviewMessagesQuery,
-} from "@redux/features/interview-messages";
-import { useGetUserQuery, User } from "@redux/features/users";
-import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
-import { selectUser } from "@redux/features/auth";
+} from "@store/features/interview-messages";
+import { useGetUserQuery, User } from "@store/features/users";
+import { useAppDispatch, useAppSelector } from "@store/store-config/hooks";
+import { selectUser } from "@store/features/auth";
 import { Language, useTranslation } from "@app/i18n/client";
 import { Id } from "@app/declarations";
 

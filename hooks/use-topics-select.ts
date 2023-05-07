@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { Topic, useGetTopicQuery } from "@redux/features/topics";
+import { Topic, useGetTopicQuery } from "@store/features/topics";
 import { Language } from "@app/i18n/client";
 import { axiosInstance } from "@utils";
 import { Id } from "@app/declarations";

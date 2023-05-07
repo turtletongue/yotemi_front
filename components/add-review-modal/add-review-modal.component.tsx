@@ -6,9 +6,9 @@ import { Dialog } from "@headlessui/react";
 import { Button, Textarea } from "flowbite-react";
 
 import { Modal, Rating } from "@components";
-import { useAppSelector } from "@redux/store-config/hooks";
-import { useAddReviewMutation } from "@redux/features/reviews";
-import { selectUser } from "@redux/features/auth";
+import { useAppSelector } from "@store/store-config/hooks";
+import { useAddReviewMutation } from "@store/features/reviews";
+import { selectUser } from "@store/features/auth";
 import { Language, useTranslation } from "@app/i18n/client";
 import { Id } from "@app/declarations";
 

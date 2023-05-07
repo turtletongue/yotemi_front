@@ -21,7 +21,7 @@ import {
   SessionControl,
 } from "@components";
 import usePeer from "@hooks/use-peer";
-import { Interview } from "@redux/features/interviews";
+import { Interview } from "@store/features/interviews";
 import {
   resetPeer,
   selectDisconnected,
@@ -30,15 +30,15 @@ import {
   useRegisterPeerQuery,
   useTakePeerIdsQuery,
   useUnmuteMutation,
-} from "@redux/features/peers";
-import { useGetReviewExistenceQuery } from "@redux/features/reviews";
+} from "@store/features/peers";
+import { useGetReviewExistenceQuery } from "@store/features/reviews";
 import {
   selectIsChatOpened,
   setIsChatOpened,
-} from "@redux/features/interview-messages";
-import { useGetUserQuery } from "@redux/features/users";
-import { selectUser } from "@redux/features/auth";
-import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
+} from "@store/features/interview-messages";
+import { useGetUserQuery } from "@store/features/users";
+import { selectUser } from "@store/features/auth";
+import { useAppDispatch, useAppSelector } from "@store/store-config/hooks";
 import { Language, useTranslation } from "@app/i18n/client";
 import {
   mergeAudioStreams,

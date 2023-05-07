@@ -6,14 +6,14 @@ import Link from "next/link";
 import { Pagination, Spinner } from "flowbite-react";
 
 import { Button } from "@components";
-import { useAppSelector } from "@redux/store-config/hooks";
+import { useAppSelector } from "@store/store-config/hooks";
 import {
   Interview,
   useListPaginatedInterviewsQuery,
-} from "@redux/features/interviews";
-import { selectUser } from "@redux/features/auth";
+} from "@store/features/interviews";
+import { selectUser } from "@store/features/auth";
 import { Language, useTranslation } from "@app/i18n/client";
-import UpcomingInterviewsGrid from "@app/app/[lang]/upcoming/upcoming-interview-grid.component";
+import UpcomingInterviewsGrid from "./upcoming-interview-grid.component";
 
 interface UpcomingListProps {
   lang: Language;

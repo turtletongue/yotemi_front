@@ -9,8 +9,8 @@
       "@components": [
         "components"
       ],
-      "@redux/*": [
-        "redux/*"
+      "@store/*": [
+        "store/*"
       ],
       "@hooks/*": [
         "hooks/*"

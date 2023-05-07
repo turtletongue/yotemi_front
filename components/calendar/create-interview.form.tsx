@@ -10,14 +10,14 @@ import * as yup from "yup";
 import classnames from "classnames";
 
 import { ErrorDialog, ErrorNotification, GradientButton } from "@components";
-import { useAppDispatch, useAppSelector } from "@redux/store-config/hooks";
+import { useAppDispatch, useAppSelector } from "@store/store-config/hooks";
 import {
   interviewsApi,
   useAddInterviewMutation,
   useCheckInterviewTimeConflictMutation,
   useMarkInterviewAsDeployedMutation,
-} from "@redux/features/interviews";
-import { selectUser } from "@redux/features/auth";
+} from "@store/features/interviews";
+import { selectUser } from "@store/features/auth";
 import { Language, useTranslation } from "@app/i18n/client";
 import { useInterviewDeploy } from "@app/hooks";
 import { extractErrorNotification, getDateFromTime, MINUTE } from "@utils";

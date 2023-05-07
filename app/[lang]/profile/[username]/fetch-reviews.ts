@@ -1,4 +1,4 @@
-import { Review } from "@redux/features/reviews";
+import { Review } from "@store/features/reviews";
 import { Id } from "@app/declarations";
 
 const fetchReviews = async (userId: Id): Promise<Review[]> => {

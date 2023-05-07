@@ -4,9 +4,9 @@ import { MouseEventHandler, Suspense } from "react";
 import { Bell } from "react-feather";
 
 import { NotificationsPopover } from "@components";
-import { useAppSelector } from "@redux/store-config/hooks";
-import { selectIsAuthenticated, selectUser } from "@redux/features/auth";
-import { useGetUserQuery } from "@redux/features/users";
+import { useAppSelector } from "@store/store-config/hooks";
+import { selectIsAuthenticated, selectUser } from "@store/features/auth";
+import { useGetUserQuery } from "@store/features/users";
 import { Language, useTranslation } from "@app/i18n/client";
 import NavbarLink from "../navbar-link";
 import CurrentUser from "../current-user";

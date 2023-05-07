@@ -4,7 +4,7 @@ import Link from "next/link";
 import classnames from "classnames";
 
 import { Avatar } from "@components";
-import { useGetUserQuery } from "@redux/features/users";
+import { useGetUserQuery } from "@store/features/users";
 import { Language, useTranslation } from "@app/i18n/client";
 import { Id } from "@app/declarations";
 

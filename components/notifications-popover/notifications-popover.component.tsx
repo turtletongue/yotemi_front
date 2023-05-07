@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
 
 import { NotificationBell, Notifications } from "@components";
-import { useListNotificationsQuery } from "@redux/features/notifications";
+import { useListNotificationsQuery } from "@store/features/notifications";
 import { Language, useTranslation } from "@app/i18n/client";
 
 interface NotificationsPopoverProps {
