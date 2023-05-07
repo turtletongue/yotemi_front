@@ -18,6 +18,8 @@ const buildGetConnector = () => {
 
     if (!localStorageConnector) {
       localStorageConnector = new TonConnect();
+    } else {
+      localStorageConnector.restoreConnection().catch(console.error);
     }
 
     return localStorageConnector;

@@ -18,9 +18,12 @@ export function middleware(req: NextRequest) {
       FALLBACK_LANGUAGE;
 
   if (
-    ["/tonconnect-manifest.json", "/favicon.ico", "/logo.svg"].includes(
-      req.nextUrl.pathname
-    )
+    [
+      "/tonconnect-manifest.json",
+      "/favicon.ico",
+      "/logo.svg",
+      "/app-icon.png",
+    ].includes(req.nextUrl.pathname)
   ) {
     return NextResponse.next();
   }
