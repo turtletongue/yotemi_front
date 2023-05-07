@@ -1,8 +1,10 @@
 "use client";
 
+import { Suspense } from "react";
 import { Spinner } from "flowbite-react";
 import classnames from "classnames";
 
+import { NotificationSkeleton } from "@components";
 import {
   useListNotificationsQuery,
   useMarkAllAsSeenMutation,
@@ -35,16 +37,18 @@ const Notifications = ({ lang, reactOnHover }: NotificationsProps) => {
             {translation("title")} ({notSeenCount})
           </span>
           <button
-            className={`text-sm ${
+            className={classnames(
+              "text-sm",
               isMarkAsSeenButtonActive ? "cursor-pointer" : "opacity-70"
-            }`}
+            )}
             onClick={() => markAllAsSeen()}
             disabled={!isMarkAsSeenButtonActive}
           >
             <span
-              className={`font-black text-vivid-light ${classnames(
+              className={classnames(
+                "font-black text-vivid-light",
                 isMarkAsSeenButtonActive && "hover:text-vivid-medium"
-              )}`}
+              )}
             >
               {translation("button")}
             </span>
@@ -57,25 +61,33 @@ const Notifications = ({ lang, reactOnHover }: NotificationsProps) => {
           notifications.map((notification) => {
             if (notification.type === "newFollower") {
               return (
-                <NewFollowerNotification
+                <Suspense
                   key={notification.id}
-                  lang={lang}
-                  follower={notification.content!.follower}
-                  isSeen={notification.isSeen}
-                  reactOnHover={reactOnHover}
-                />
+                  fallback={<NotificationSkeleton />}
+                >
+                  <NewFollowerNotification
+                    lang={lang}
+                    follower={notification.content!.follower}
+                    isSeen={notification.isSeen}
+                    reactOnHover={reactOnHover}
+                  />
+                </Suspense>
               );
             }
 
             return (
-              <InterviewScheduledNotification
+              <Suspense
                 key={notification.id}
-                lang={lang}
-                interview={notification.content!.interview}
-                creator={notification.content!.creator}
-                isSeen={notification.isSeen}
-                reactOnHover={reactOnHover}
-              />
+                fallback={<NotificationSkeleton />}
+              >
+                <InterviewScheduledNotification
+                  lang={lang}
+                  interview={notification.content!.interview}
+                  creator={notification.content!.creator}
+                  isSeen={notification.isSeen}
+                  reactOnHover={reactOnHover}
+                />
+              </Suspense>
             );
           })}
         {isLoading && (

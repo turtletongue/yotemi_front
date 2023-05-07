@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { dir } from "i18next";
+import classnames from "classnames";
 
 import { Navbar } from "@components";
 import { Language, languages } from "@app/i18n";
@@ -32,7 +33,11 @@ const RootLayout = async ({ children, params: { lang } }: LayoutProps) => {
   return (
     <html lang={lang} dir={dir(lang)}>
       <body
-        className={`flex flex-col w-full min-h-screen dark-scrollbar ${fonts.mulish.variable} ${fonts.notoSans.variable} font-noto-sans`}
+        className={classnames(
+          "flex flex-col w-full min-h-screen dark-scrollbar font-noto-sans",
+          fonts.mulish.variable,
+          fonts.notoSans.variable
+        )}
       >
         <ReduxProvider>
           <TonProvider lang={lang}>

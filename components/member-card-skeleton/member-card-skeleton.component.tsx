@@ -1,6 +1,6 @@
 const MemberCardSkeleton = () => {
   return (
-    <article className="bg-card shadow-md w-[21rem] pb-4 rounded-3xl overflow-hidden animate-pulse">
+    <article className="bg-card shadow-md w-[21rem] sm:w-[23rem] pb-3 sm:pb-4 rounded-3xl overflow-hidden animate-pulse">
       <div className="h-[5rem] mx-auto bg-gray-400"></div>
       <div className="px-4 mt-3">
         <div className="flex w-full justify-between items-center">

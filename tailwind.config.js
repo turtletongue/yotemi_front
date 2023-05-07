@@ -43,6 +43,9 @@ module.exports = {
         cards: "repeat(auto-fill, minmax(0, 23rem))",
         "cards-sm": "repeat(auto-fill, minmax(0, 18rem))",
       },
+      gridAutoRows: {
+        cards: "minmax(min-content, max-content)",
+      },
       backgroundSize: {
         "300%": "300% 100%",
       },

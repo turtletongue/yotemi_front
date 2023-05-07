@@ -66,9 +66,10 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
               </div>
             )}
             <div
-              className={`max-w-[40rem] mt-3 ${classnames(
+              className={classnames(
+                "max-w-[40rem] mt-3",
                 profile.biography && "mb-7"
-              )}`}
+              )}
             >
               {profile.biography.split("\n").map((text, index) => (
                 <p key={index} className="mt-2">

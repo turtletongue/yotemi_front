@@ -1,8 +1,15 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 
-import { Avatar, FollowingControlButton, Rating, Topic } from "@components";
+import {
+  Avatar,
+  ButtonSkeleton,
+  FollowingControlButton,
+  Rating,
+  Topic,
+} from "@components";
 import { useAppSelector } from "@redux/store-config/hooks";
 import { User } from "@redux/features/users";
 import { selectUser } from "@redux/features/auth";
@@ -38,11 +45,13 @@ const MemberCard = ({ lang, data }: MemberCardProps) => {
               </div>
             </div>
             {authenticatedUser && authenticatedUser.id !== data.id && (
-              <FollowingControlButton
-                lang={lang}
-                profile={data}
-                className="!text-sm"
-              />
+              <Suspense fallback={<ButtonSkeleton />}>
+                <FollowingControlButton
+                  lang={lang}
+                  profile={data}
+                  className="!text-sm"
+                />
+              </Suspense>
             )}
           </div>
           {data.biography && <p className="mt-4 text-sm">{data.biography}</p>}

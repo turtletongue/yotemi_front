@@ -1,6 +1,7 @@
 "use client";
 
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, Suspense } from "react";
+import { Bell } from "react-feather";
 
 import { NotificationsPopover } from "@components";
 import { useAppSelector } from "@redux/store-config/hooks";
@@ -9,6 +10,7 @@ import { useGetUserQuery } from "@redux/features/users";
 import { Language, useTranslation } from "@app/i18n/client";
 import NavbarLink from "../navbar-link";
 import CurrentUser from "../current-user";
+import CurrentUserSkeleton from "../current-user-skeleton";
 
 interface NavbarItemsProps {
   lang: Language;
@@ -66,25 +68,31 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
         </NavbarLink>
       )}
       {isAuthenticated && user && (
-        <li className="self-end sm:self-center" id="notifications-link">
-          <NotificationsPopover
-            key="notifications"
-            lang={lang}
-            onClick={onClick}
-          />
-        </li>
+        <Suspense
+          fallback={<Bell className="sm:text-gray-400 animate-pulse" />}
+        >
+          <li className="self-end sm:self-center" id="notifications-link">
+            <NotificationsPopover
+              key="notifications"
+              lang={lang}
+              onClick={onClick}
+            />
+          </li>
+        </Suspense>
       )}
       {isAuthenticated && user && (
-        <li className="self-end justify-self-end" id="current-user-link">
-          <CurrentUser
-            key="currentUser"
-            lang={lang}
-            firstName={user?.firstName ?? ""}
-            username={user?.username}
-            avatarUrl={user?.avatarPath ?? null}
-            onClick={onClick}
-          />
-        </li>
+        <Suspense fallback={<CurrentUserSkeleton />}>
+          <li className="self-end justify-self-end" id="current-user-link">
+            <CurrentUser
+              key="currentUser"
+              lang={lang}
+              firstName={user?.firstName ?? ""}
+              username={user?.username}
+              avatarUrl={user?.avatarPath ?? null}
+              onClick={onClick}
+            />
+          </li>
+        </Suspense>
       )}
     </>
   );

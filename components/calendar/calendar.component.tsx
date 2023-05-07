@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "react-feather";
 import { Spinner } from "flowbite-react";
 import classnames from "classnames";
@@ -203,11 +203,13 @@ const Calendar = ({ lang, user, contractCode }: CalendarProps) => {
           <>
             <div className="border border-b-1 border-l-1 border-line w-full xl:w-auto" />
             <section className="w-full py-12 flex items-center">
-              <CreateInterviewForm
-                lang={lang}
-                contractCode={contractCode}
-                date={new Date(year, monthIndex, currentDate)}
-              />
+              <Suspense>
+                <CreateInterviewForm
+                  lang={lang}
+                  contractCode={contractCode}
+                  date={new Date(year, monthIndex, currentDate)}
+                />
+              </Suspense>
             </section>
           </>
         )}

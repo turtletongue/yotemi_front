@@ -1,10 +1,11 @@
+import { Suspense } from "react";
+
 import { Language, useTranslation } from "@app/i18n";
 import SignInForm from "./sign-in.form";
-
-import FirstFigure from "@app/public/signin-figure-first.svg";
-import SecondFigure from "@app/public/signin-figure-second.svg";
-import ThirdFigure from "@app/public/signin-figure-third.svg";
-import FourthFigure from "@app/public/signin-figure-fourth.svg";
+import SignInFigureFirst from "./sign-in-figure-first.component";
+import SignInFigureSecond from "./sign-in-figure-second.component";
+import SignInFigureThird from "./sign-in-figure-third.component";
+import SignInFigureFourth from "./sign-in-figure-fourth.component";
 
 interface SignInProps {
   params: {
@@ -19,10 +20,18 @@ const SignIn = ({ params: { lang } }: SignInProps) => {
         <SignInForm lang={lang} />
       </article>
       <aside className="grow bg-cetacean-blue hidden lg:block relative">
-        <FirstFigure className="absolute top-20 right-28 motion-safe:animate-spin-slow" />
-        <SecondFigure className="absolute top-44 left-28 hidden xl:block motion-safe:animate-spin-slow" />
-        <FourthFigure className="absolute top-[40%] right-[45%] hidden 2xl:block motion-safe:animate-spin-slow" />
-        <ThirdFigure className="absolute bottom-24 right-72 motion-safe:animate-spin-slow" />
+        <Suspense>
+          <SignInFigureFirst />
+        </Suspense>
+        <Suspense>
+          <SignInFigureSecond />
+        </Suspense>
+        <Suspense>
+          <SignInFigureFourth />
+        </Suspense>
+        <Suspense>
+          <SignInFigureThird />
+        </Suspense>
       </aside>
     </section>
   );
