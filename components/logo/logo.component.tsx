@@ -3,9 +3,9 @@
 import { MouseEventHandler } from "react";
 import Link from "next/link";
 
-import LogoIcon from "../../public/logo.svg";
+import { Language, useTranslation } from "@app/i18n/client";
 
-import { Language } from "@app/i18n";
+import LogoIcon from "@app/public/logo.svg";
 
 interface LogoProps {
   lang: Language;
@@ -13,8 +13,15 @@ interface LogoProps {
 }
 
 const Logo = ({ lang, onClick }: LogoProps) => {
+  const { translation } = useTranslation(lang, "logo");
+
   return (
-    <Link className="pb-1" href={`/${lang}`} onClick={onClick}>
+    <Link
+      className="pb-1"
+      href={`/${lang}`}
+      onClick={onClick}
+      aria-label={translation("toHomepage")!}
+    >
       <LogoIcon />
     </Link>
   );
