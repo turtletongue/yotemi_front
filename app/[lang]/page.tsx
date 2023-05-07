@@ -79,6 +79,7 @@ export const generateMetadata = async ({
 
   return {
     title: translation("title"),
+    description: translation("metaDescription"),
   };
 };
 

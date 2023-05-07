@@ -1,5 +1,6 @@
 {
   "title": "Главная | Yotemi",
+  "metaDescription": "Yotemi — это платформа для обмена опытом использующая криптовалюту TON. С Yotemi вы можете монетизировать свой опыт и получить доступ к большой сети экспертов.",
   "heading": {
     "normal": "Вы – в центре",
     "colored": "внимания"
@@ -8,8 +9,8 @@
     "companyName": "Yotemi",
     "platform": "это платформа для",
     "experience": "обмена опытом",
-    "instruments": "работающая с",
-    "cryptocurrency": "криптовалютой TON"
+    "instruments": "использующая",
+    "cryptocurrency": "криптовалюту TON"
   },
   "button": "Начать",
   "mock": "Yotemi на экране iMac"

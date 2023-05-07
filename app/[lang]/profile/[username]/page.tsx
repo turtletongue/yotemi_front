@@ -118,6 +118,7 @@ export const generateMetadata = async ({
 
   return {
     title: translation("title").replace("_", profile.username),
+    description: profile.biography,
   };
 };
 
