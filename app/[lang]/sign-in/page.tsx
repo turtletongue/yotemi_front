@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { Language, useTranslation } from "@app/i18n";
+import { TonProofProvider, TonProvider } from "@utils";
 import SignInForm from "./sign-in.form";
 import SignInFigureFirst from "./sign-in-figure-first.component";
 import SignInFigureSecond from "./sign-in-figure-second.component";
@@ -17,7 +18,11 @@ const SignIn = ({ params: { lang } }: SignInProps) => {
   return (
     <section className="flex grow justify-center">
       <article className="bg-white min-w-min flex items-center justify-center">
-        <SignInForm lang={lang} />
+        <TonProvider lang={lang}>
+          <TonProofProvider>
+            <SignInForm lang={lang} />
+          </TonProofProvider>
+        </TonProvider>
       </article>
       <aside className="grow bg-cetacean-blue hidden lg:block relative">
         <Suspense>

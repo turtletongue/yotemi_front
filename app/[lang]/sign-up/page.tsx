@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { Language, useTranslation } from "@app/i18n";
+import { TonProvider } from "@utils";
 import SignUpForm from "./sign-up.form";
 import SignUpFigureFirst from "./sign-up-figure-first.component";
 import SignUpFigureSecond from "./sign-up-figure-second.component";
@@ -31,7 +32,9 @@ const SignUp = async ({ params: { lang } }: SignUpProps) => {
         </Suspense>
       </aside>
       <article className="bg-white min-w-min flex items-center justify-center">
-        <SignUpForm lang={lang} />
+        <TonProvider lang={lang}>
+          <SignUpForm lang={lang} />
+        </TonProvider>
       </article>
     </section>
   );

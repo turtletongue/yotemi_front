@@ -6,9 +6,7 @@ import classnames from "classnames";
 import { Navbar } from "@components";
 import { Language, languages } from "@app/i18n";
 import { fonts } from "@utils";
-import TonProvider from "./ton-provider";
 import ReduxProvider from "./redux-provider";
-import TonProofProvider from "./ton-proof-provider";
 
 import "flowbite";
 import "buffer";
@@ -40,14 +38,10 @@ const RootLayout = async ({ children, params: { lang } }: LayoutProps) => {
         )}
       >
         <ReduxProvider>
-          <TonProvider lang={lang}>
-            <TonProofProvider>
-              <>
-                <Navbar lang={lang} />
-                <main className="flex flex-col grow">{children}</main>
-              </>
-            </TonProofProvider>
-          </TonProvider>
+          <>
+            <Navbar lang={lang} />
+            <main className="flex flex-col grow">{children}</main>
+          </>
         </ReduxProvider>
       </body>
     </html>

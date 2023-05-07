@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 import { TonConnectUIProvider } from "@tonconnect/ui-react";
 
 import { getConnector, manifestUrl } from "@contract";
@@ -8,7 +8,7 @@ import { Language } from "@app/i18n";
 
 interface TonProps {
   lang: Language;
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export const TonProvider = ({ lang, children }: TonProps) => {

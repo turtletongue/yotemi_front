@@ -42,3 +42,6 @@ export { default as replaceConnectionTracks } from "./replace-connection-tracks"
 export { default as replaceStreamTracks } from "./replace-stream-tracks";
 
 export { default as mergeAudioStreams } from "./merge-audio-streams";
+
+export { default as TonProvider } from "./ton-provider";
+export { default as TonProofProvider } from "./ton-proof-provider";
