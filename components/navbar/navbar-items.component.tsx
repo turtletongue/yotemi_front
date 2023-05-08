@@ -71,7 +71,7 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
         <Suspense
           fallback={
             <Bell
-              className="sm:text-gray-400 animate-pulse"
+              className="sm:text-gray-400 animate-pulse self-end sm:self-center"
               id="notifications-link"
             />
           }
@@ -86,7 +86,14 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
         </Suspense>
       )}
       {isAuthenticated && user && (
-        <Suspense fallback={<CurrentUserSkeleton />}>
+        <Suspense
+          fallback={
+            <CurrentUserSkeleton
+              className="self-end justify-self-end"
+              id="current-user-link"
+            />
+          }
+        >
           <li className="self-end justify-self-end" id="current-user-link">
             <CurrentUser
               key="currentUser"
