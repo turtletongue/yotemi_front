@@ -69,7 +69,12 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
       )}
       {isAuthenticated && user && (
         <Suspense
-          fallback={<Bell className="sm:text-gray-400 animate-pulse" />}
+          fallback={
+            <Bell
+              className="sm:text-gray-400 animate-pulse"
+              id="notifications-link"
+            />
+          }
         >
           <li className="self-end sm:self-center" id="notifications-link">
             <NotificationsPopover
