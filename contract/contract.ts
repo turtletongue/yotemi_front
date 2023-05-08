@@ -97,7 +97,7 @@ export default class InterviewContract implements Contract {
       .endCell();
 
     await provider.internal(via, {
-      value: (value + 0.01).toString(),
+      value: (value + 0.01).toFixed(9),
       body: messageBody,
     });
   }
