@@ -12,6 +12,7 @@ import {
 import { User } from "@store/features/users";
 import { Language, useTranslation } from "@app/i18n";
 import contractCode from "@app/contract/contract-code";
+import { TonProvider } from "@utils";
 import fetchProfile from "./fetch-profile";
 import fetchReviews from "./fetch-reviews";
 
@@ -49,7 +50,9 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
           <article className="2xl:mr-24">
             <div className="flex items-center justify-between flex-col sm:flex-row">
               <h1 className="text-xl mb-2 sm:mb-0">{profile.fullName}</h1>
-              <ProfileControl lang={lang} profileId={profile.id} />
+              <TonProvider lang={lang}>
+                <ProfileControl lang={lang} profileId={profile.id} />
+              </TonProvider>
             </div>
             {hasTopics && (
               <div className="flex flex-wrap gap-2 mt-3">
