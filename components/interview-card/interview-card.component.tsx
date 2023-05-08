@@ -55,7 +55,7 @@ const InterviewCard = ({
   const authenticatedUser = useAppSelector(selectUser);
   const { data, isFetching } = useGetContractInfoQuery(interview.address);
 
-  const info = data ? data : errorInfo;
+  const info = data ?? errorInfo;
 
   const [purchase, { error: purchaseError, isLoading: isPurchaseLoading }] =
     usePurchaseContractMutation();

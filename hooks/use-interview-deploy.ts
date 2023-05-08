@@ -22,7 +22,7 @@ const useInterviewDeploy = (contractCode: string) => {
   ): DeployResult => {
     const contract = InterviewContract.createForDeploy(
       Cell.fromBase64(contractCode),
-      BigInt(toNano(price.toString())),
+      BigInt(toNano(price.toFixed(9))),
       Address.parse(creatorAddress),
       startAt,
       endAt
