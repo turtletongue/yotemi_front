@@ -71,7 +71,7 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
         <Suspense
           fallback={
             <Bell
-              className="sm:text-gray-400 animate-pulse self-end sm:self-center"
+              className="sm:text-gray-400 animate-pulse self-end sm:self-center mr-5"
               id="notifications-link"
             />
           }
