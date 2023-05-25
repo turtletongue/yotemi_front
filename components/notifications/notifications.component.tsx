@@ -58,47 +58,48 @@ const Notifications = ({ lang, reactOnHover }: NotificationsProps) => {
       <hr className="border-gray-400" />
       <div className="overflow-y-auto scrollbar w-full max-h-64">
         {!isLoading &&
-          notifications.map((notification) => {
-            if (notification.type === "newFollower") {
+          (notifications.length !== 0 ? (
+            notifications.map((notification) => {
+              if (notification.type === "newFollower") {
+                return (
+                  <Suspense
+                    key={notification.id}
+                    fallback={<NotificationSkeleton />}
+                  >
+                    <NewFollowerNotification
+                      lang={lang}
+                      follower={notification.content!.follower}
+                      isSeen={notification.isSeen}
+                      reactOnHover={reactOnHover}
+                    />
+                  </Suspense>
+                );
+              }
+
               return (
                 <Suspense
                   key={notification.id}
                   fallback={<NotificationSkeleton />}
                 >
-                  <NewFollowerNotification
+                  <InterviewScheduledNotification
                     lang={lang}
-                    follower={notification.content!.follower}
+                    interview={notification.content!.interview}
+                    creator={notification.content!.creator}
                     isSeen={notification.isSeen}
                     reactOnHover={reactOnHover}
                   />
                 </Suspense>
               );
-            }
-
-            return (
-              <Suspense
-                key={notification.id}
-                fallback={<NotificationSkeleton />}
-              >
-                <InterviewScheduledNotification
-                  lang={lang}
-                  interview={notification.content!.interview}
-                  creator={notification.content!.creator}
-                  isSeen={notification.isSeen}
-                  reactOnHover={reactOnHover}
-                />
-              </Suspense>
-            );
-          })}
+            })
+          ) : (
+            <p className="h-20 flex items-center justify-center text-gray-500 text-sm">
+              {translation("noNotificationsFound")}
+            </p>
+          ))}
         {isLoading && (
           <div className="w-full h-full flex items-center justify-center">
             <Spinner size="md" />
           </div>
-        )}
-        {notifications.length === 0 && (
-          <p className="h-20 flex items-center justify-center text-gray-500 text-sm">
-            {translation("noNotificationsFound")}
-          </p>
         )}
       </div>
     </div>
