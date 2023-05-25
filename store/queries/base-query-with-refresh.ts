@@ -10,6 +10,7 @@ import { AuthResponse, loggedOut, refreshTokens } from "@store/features/auth";
 import baseQuery from "./base-query";
 
 const mutex = new Mutex();
+const errorsWithoutRetry = [400, 422] as (string | number)[];
 
 const baseQueryWithRefresh: BaseQueryFn<
   string | FetchArgs,
@@ -19,6 +20,10 @@ const baseQueryWithRefresh: BaseQueryFn<
   await mutex.waitForUnlock();
 
   let result = await baseQuery(args, api, extraOptions);
+
+  if (result.error && errorsWithoutRetry.includes(result.error.status)) {
+    retry.fail(result.error);
+  }
 
   if (result.error && result.error.status === 401) {
     if (!mutex.isLocked()) {
