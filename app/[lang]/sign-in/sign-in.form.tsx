@@ -111,9 +111,16 @@ const SignInForm = ({ lang }: SignInFormProps) => {
 
   useEffect(() => {
     if (error) {
-      setDialogError(
-        extractErrorNotification(error, signInErrors, translation)
+      const errorNotification = extractErrorNotification(
+        error,
+        signInErrors,
+        translation,
+        ["USER_REJECTED_CALL"]
       );
+
+      if (errorNotification) {
+        setDialogError(errorNotification);
+      }
 
       tonConnectUI.disconnect();
     }

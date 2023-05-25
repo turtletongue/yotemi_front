@@ -127,13 +127,13 @@ const CreateInterviewForm = ({
     try {
       await checkInterviewTimeConflict({ startAt, endAt }).unwrap();
     } catch (error: unknown) {
-      return setDialogError(
-        extractErrorNotification(
-          error as FetchBaseQueryError,
-          createInterviewErrors,
-          translation
-        )
+      const errorNotification = extractErrorNotification(
+        error as FetchBaseQueryError,
+        createInterviewErrors,
+        translation
       );
+
+      return setDialogError(errorNotification);
     }
 
     const { address, executeTransaction } = initializeDeploy(
@@ -171,9 +171,16 @@ const CreateInterviewForm = ({
       );
     } catch (error: unknown) {
       if (error) {
-        setDialogError(
-          extractErrorNotification(error, createInterviewErrors, translation)
+        const errorNotification = extractErrorNotification(
+          error,
+          createInterviewErrors,
+          translation,
+          ["USER_REJECTED_CALL"]
         );
+
+        if (errorNotification) {
+          setDialogError(errorNotification);
+        }
       }
     }
   };

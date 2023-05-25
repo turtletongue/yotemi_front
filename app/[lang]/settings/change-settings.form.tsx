@@ -189,9 +189,13 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
     const error = updatingError || deletingError;
 
     if (error) {
-      setDialogError(
-        extractErrorNotification(error, changeSettingsFormErrors, translation)
+      const errorNotification = extractErrorNotification(
+        error,
+        changeSettingsFormErrors,
+        translation
       );
+
+      setDialogError(errorNotification);
     }
   }, [translation, updatingError, deletingError]);
 
@@ -228,13 +232,13 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
 
       setSelectedTopicId(id);
     } catch (error: unknown) {
-      setDialogError(
-        extractErrorNotification(
-          error as FetchBaseQueryError,
-          changeSettingsFormErrors,
-          translation
-        )
+      const errorNotification = extractErrorNotification(
+        error as FetchBaseQueryError,
+        changeSettingsFormErrors,
+        translation
       );
+
+      setDialogError(errorNotification);
     }
   };
 

@@ -75,9 +75,16 @@ const InterviewCard = ({
     const error = purchaseError || cancelError || finishError || confirmError;
 
     if (error) {
-      setDialogError(
-        extractErrorNotification(error, interviewCardErrors, translation)
+      const errorNotification = extractErrorNotification(
+        error,
+        interviewCardErrors,
+        translation,
+        ["USER_REJECTED_CALL"]
       );
+
+      if (errorNotification) {
+        setDialogError(errorNotification);
+      }
     }
   }, [translation, purchaseError, cancelError, finishError, confirmError]);
 

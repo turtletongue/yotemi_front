@@ -10,12 +10,18 @@ const defaultErrorKey = "somethingWrongError" as const;
 const extractErrorNotification = (
   error: FetchBaseQueryError | SerializedError,
   errorsMap: Record<string, string | undefined>,
-  translation: TFunction
-): ErrorNotification => {
+  translation: TFunction,
+  ignoreErrors: string[] = []
+): ErrorNotification | null => {
   if ("data" in error && error.data && "error" in error.data) {
+    const errorKey = (error.data as any).error as keyof typeof errorsMap;
+
+    if (ignoreErrors.includes(errorKey)) {
+      return null;
+    }
+
     return errorNameToError(
-      errorsMap[(error.data as any).error as keyof typeof errorsMap] ??
-        defaultErrorKey,
+      errorsMap[errorKey] ?? defaultErrorKey,
       translation
     );
   }

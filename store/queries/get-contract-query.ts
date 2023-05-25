@@ -2,6 +2,7 @@ import { TonClient } from "ton";
 import { Address, Cell, Sender } from "ton-core";
 import { BaseQueryFn, FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { getHttpEndpoint } from "@orbs-network/ton-access";
+import { UserRejectsError } from "@tonconnect/sdk";
 import { CHAIN } from "@tonconnect/protocol";
 import * as Sentry from "@sentry/nextjs";
 
@@ -65,6 +66,18 @@ const getContractQuery = <
 
       return { data };
     } catch (error: unknown) {
+      if (error instanceof UserRejectsError) {
+        return {
+          error: {
+            status: 400,
+            data: {
+              description: "USER_REJECTED_CALL",
+              message: error.message,
+            },
+          },
+        };
+      }
+
       Sentry.captureException(error);
 
       return {

@@ -107,9 +107,16 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
 
   useEffect(() => {
     if (error) {
-      setDialogError(
-        extractErrorNotification(error, signUpErrors, translation)
+      const errorNotification = extractErrorNotification(
+        error,
+        signUpErrors,
+        translation,
+        ["USER_REJECTED_CALL"]
       );
+
+      if (errorNotification) {
+        setDialogError(errorNotification);
+      }
 
       tonConnectUI.disconnect();
     }
