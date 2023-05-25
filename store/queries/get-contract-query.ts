@@ -66,7 +66,10 @@ const getContractQuery = <
 
       return { data };
     } catch (error: unknown) {
-      if (error instanceof UserRejectsError) {
+      if (
+        error instanceof UserRejectsError ||
+        (error instanceof Error && error.message.includes("Reject request"))
+      ) {
         return {
           error: {
             status: 400,
