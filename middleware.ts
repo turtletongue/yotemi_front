@@ -10,6 +10,7 @@ export const config = {
 };
 
 const cookieName = "i18next";
+const PUBLIC_FILE = /^\/([a-z\d\-_]*)\.(.*)$/i;
 
 export function middleware(req: NextRequest) {
   const lang = req.cookies.has(cookieName)
@@ -17,14 +18,7 @@ export function middleware(req: NextRequest) {
     : acceptLanguage.get(req.headers.get("Accept-Language")) ??
       FALLBACK_LANGUAGE;
 
-  if (
-    [
-      "/tonconnect-manifest.json",
-      "/favicon.ico",
-      "/logo.svg",
-      "/app-icon.png",
-    ].includes(req.nextUrl.pathname)
-  ) {
+  if (PUBLIC_FILE.test(req.nextUrl.pathname)) {
     return NextResponse.next();
   }
 

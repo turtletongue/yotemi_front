@@ -2,8 +2,9 @@
 
 import { MouseEventHandler, Suspense } from "react";
 import { Bell } from "react-feather";
+import classnames from "classnames";
 
-import { NotificationsPopover } from "@components";
+import { LanguageSwitcher, NotificationsPopover } from "@components";
 import { useAppSelector } from "@store/store-config/hooks";
 import { selectIsAuthenticated, selectUser } from "@store/features/auth";
 import { useGetUserQuery } from "@store/features/users";
@@ -67,34 +68,40 @@ const NavbarItems = ({ lang, onClick }: NavbarItemsProps) => {
           {translation("links.sign-up")}
         </NavbarLink>
       )}
-      {isAuthenticated && user && (
-        <Suspense
-          fallback={
-            <Bell
-              className="sm:text-gray-400 animate-pulse self-end sm:self-center mr-5"
-              id="notifications-link"
-            />
-          }
-        >
-          <li className="self-end sm:self-center" id="notifications-link">
-            <NotificationsPopover
-              key="notifications"
-              lang={lang}
-              onClick={onClick}
-            />
-          </li>
-        </Suspense>
-      )}
+      <div
+        className={classnames(
+          "flex sm:flex-row gap-4 items-center w-fit",
+          isAuthenticated && user && "flex-row-reverse"
+        )}
+        id="language-and-bell-block"
+      >
+        <LanguageSwitcher lang={lang} />
+        {isAuthenticated && user && (
+          <Suspense
+            fallback={
+              <Bell className="sm:text-gray-400 animate-pulse sm:self-center mr-5" />
+            }
+          >
+            <li className="sm:self-center">
+              <NotificationsPopover
+                key="notifications"
+                lang={lang}
+                onClick={onClick}
+              />
+            </li>
+          </Suspense>
+        )}
+      </div>
       {isAuthenticated && user && (
         <Suspense
           fallback={
             <CurrentUserSkeleton
-              className="self-end justify-self-end"
+              className="self-center justify-self-end"
               id="current-user-link"
             />
           }
         >
-          <li className="self-end justify-self-end" id="current-user-link">
+          <li className="self-center justify-self-end" id="current-user-link">
             <CurrentUser
               key="currentUser"
               lang={lang}

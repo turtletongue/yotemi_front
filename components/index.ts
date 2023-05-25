@@ -51,3 +51,5 @@ export { default as AuthorBadge } from "./author-badge";
 export { default as SessionControl } from "./session-control";
 
 export { default as AddReviewModal } from "./add-review-modal";
+
+export { default as LanguageSwitcher } from "./language-switcher";

@@ -54,7 +54,7 @@ input[type="search"]::-webkit-search-cancel-button {
 
   .navbar-items {
     grid-template-columns: repeat(2, max-content) 1fr repeat(4, max-content);
-    grid-template-areas: "members-link upcoming-link . sign-in-link sign-up-link notifications-link current-user-link";
+    grid-template-areas: "members-link upcoming-link . language-and-bell-block current-user-link sign-in-link sign-up-link";
   }
 
   .mobile-navbar-items {
@@ -65,7 +65,7 @@ input[type="search"]::-webkit-search-cancel-button {
       "sign-in-link sign-in-link"
       "sign-up-link sign-up-link"
       ". ."
-      "notifications-link current-user-link";
+      "language-and-bell-block current-user-link";
   }
 
   #members-link {
@@ -84,8 +84,8 @@ input[type="search"]::-webkit-search-cancel-button {
     grid-area: sign-up-link;
   }
 
-  #notifications-link {
-    grid-area: notifications-link;
+  #language-and-bell-block {
+    grid-area: language-and-bell-block;
   }
 
   #current-user-link {

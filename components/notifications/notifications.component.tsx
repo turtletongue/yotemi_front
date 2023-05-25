@@ -97,7 +97,7 @@ const Notifications = ({ lang, reactOnHover }: NotificationsProps) => {
             </p>
           ))}
         {isLoading && (
-          <div className="w-full h-full flex items-center justify-center">
+          <div className="w-full h-24 flex items-center justify-center">
             <Spinner size="md" />
           </div>
         )}
