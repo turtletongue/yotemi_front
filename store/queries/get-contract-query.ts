@@ -29,7 +29,7 @@ const getContractQuery = <
 
     if (!connector.connected || !connector.account || network === null) {
       return {
-        error: { status: 400, data: { description: "WALLET_NOT_CONNECTED" } },
+        error: { status: 400, data: { error: "WALLET_NOT_CONNECTED" } },
       };
     }
 
@@ -74,7 +74,7 @@ const getContractQuery = <
           error: {
             status: 400,
             data: {
-              description: "USER_REJECTED_CALL",
+              error: "USER_REJECTED_CALL",
               message: error.message,
             },
           },
@@ -87,7 +87,7 @@ const getContractQuery = <
         error: {
           status: 500,
           data: {
-            description: "CONTRACT_METHOD_CALL_FAILED",
+            error: "CONTRACT_METHOD_CALL_FAILED",
             ...(error instanceof Error && { message: error.message }),
           },
         },
