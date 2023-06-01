@@ -42,7 +42,7 @@ const ChangeMediaSection = ({ lang }: ChangeMediaSectionProps) => {
   const changeCoverRoute = `/users/${data.id}/cover`;
 
   return (
-    <section className="w-full md:w-96 lg:w-1/3">
+    <section className="w-full">
       <div className="w-full flex flex-col items-center">
         <ImageRemover
           route={changeAvatarRoute}

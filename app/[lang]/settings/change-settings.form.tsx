@@ -279,11 +279,11 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
   return (
     <>
       <form
-        className="w-full md:w-96 lg:w-1/3 mt-6"
+        className="w-full md:w-96 lg:w-fit mt-6"
         onSubmit={handleSubmit(updateSettings)}
       >
-        <div className="w-full flex flex-col lg:flex-row justify-between">
-          <div className="w-full lg:w-36 xl:w-48 2xl:w-64">
+        <div className="w-full flex lg:gap-24 flex-col lg:flex-row justify-between">
+          <div className="w-full lg:w-48 2xl:w-64">
             <Label htmlFor="firstName">
               <span className="text-white">{translation("firstName")}</span>
             </Label>
@@ -293,7 +293,7 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
               {...register("firstName")}
             />
           </div>
-          <div className="w-full mt-2 lg:mt-0 lg:w-36 xl:w-48 2xl:w-64">
+          <div className="w-full mt-2 lg:mt-0 lg:w-48 2xl:w-64">
             <Label htmlFor="lastName">
               <span className="text-white">{translation("lastName")}</span>
             </Label>
@@ -304,7 +304,7 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
             />
           </div>
         </div>
-        <div className="w-full mt-4 lg:w-36 xl:w-48 2xl:w-64">
+        <div className="w-full mt-4 lg:w-48 2xl:w-64">
           <Label htmlFor="username">
             <span className="text-white">{translation("username")}</span>
           </Label>
@@ -325,7 +325,7 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
               onChange={onTopicSelect}
               loadOptions={topicsLoader}
               additional={{ page: 1 }}
-              className="text-gray-500 grow lg:grow-0 lg:w-36 xl:w-48 2xl:w-64 mr-2"
+              className="text-gray-500 grow lg:grow-0 lg:w-48 2xl:w-64 mr-2"
               placeholder={translation("addTopicPlaceholder")}
               debounceTimeout={250}
               isClearable
