@@ -28,8 +28,11 @@ const FollowingControlButton = ({
 }: FollowingControlButtonProps) => {
   const { translation } = useTranslation(lang, "profile");
 
-  const [follow] = useFollowUserMutation();
-  const [unfollow] = useUnfollowUserMutation();
+  const [follow, { isLoading: isFollowLoading }] = useFollowUserMutation();
+  const [unfollow, { isLoading: isUnfollowLoading }] =
+    useUnfollowUserMutation();
+
+  const isLoading = isFollowLoading || isUnfollowLoading;
 
   if (!profile) {
     return (
@@ -56,7 +59,7 @@ const FollowingControlButton = ({
           addition={addition ? profile.followersCount : undefined}
           onClick={onFollow}
           className={className}
-          disabled={disabled}
+          disabled={disabled || isLoading}
         >
           {translation("follow")}
         </Button>
@@ -66,6 +69,7 @@ const FollowingControlButton = ({
           addition={addition ? profile.followersCount : undefined}
           className={className}
           onClick={onUnfollow}
+          disabled={isLoading}
         >
           {translation("unfollow")}
         </Button>
