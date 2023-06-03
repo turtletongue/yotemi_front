@@ -35,13 +35,14 @@ const CropModal = ({
 }: CropModalProps) => {
   const { translation } = useTranslation(lang, "crop-modal");
 
-  const [crop, setCrop] = useState<Crop>({
+  const initialCrop = {
     unit: "px",
     width: minWidth,
     height: minHeight,
     x: 25,
     y: 25,
-  });
+  } as const;
+  const [crop, setCrop] = useState<Crop>(initialCrop);
   const imgRef = useRef<HTMLImageElement>(null);
 
   const applyCrop = async (src?: string) => {
@@ -52,14 +53,19 @@ const CropModal = ({
     return await cropToCanvas(imgRef.current, crop);
   };
 
-  const onSubmit = async () => {
-    onCrop(await applyCrop(src));
+  const handleClose = () => {
+    setCrop(initialCrop);
     onClose();
   };
 
+  const onSubmit = async () => {
+    onCrop(await applyCrop(src));
+    handleClose();
+  };
+
   return (
-    <Modal isOpen={isOpened} onClose={onClose}>
-      <div className="mb-4">
+    <Modal isOpen={isOpened} onClose={handleClose}>
+      <div className="mb-4 flex w-full justify-center">
         <ReactCrop
           crop={crop}
           onChange={setCrop}
