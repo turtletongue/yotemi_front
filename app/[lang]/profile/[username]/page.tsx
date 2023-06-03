@@ -86,7 +86,11 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
                 </span>
               </div>
             </div>
-            <ReviewsList lang={lang} initialReviews={reviews} />
+            <ReviewsList
+              lang={lang}
+              initialReviews={reviews}
+              userId={profile.id}
+            />
           </article>
         </div>
       </div>

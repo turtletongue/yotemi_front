@@ -5,13 +5,15 @@ import { useEffect, useState } from "react";
 import { Pagination, ReviewCard, ReviewCardSkeleton } from "@components";
 import { Review, useListReviewsQuery } from "@store/features/reviews";
 import { Language, useTranslation } from "@app/i18n/client";
+import { Id } from "@app/declarations";
 
 interface ReviewsListProps {
   lang: Language;
   initialReviews: Review[];
+  userId: Id;
 }
 
-const ReviewsList = ({ lang, initialReviews }: ReviewsListProps) => {
+const ReviewsList = ({ lang, initialReviews, userId }: ReviewsListProps) => {
   const { translation } = useTranslation(lang, "profile");
 
   const [page, setPage] = useState(1);
@@ -20,7 +22,7 @@ const ReviewsList = ({ lang, initialReviews }: ReviewsListProps) => {
     data: { items = [], totalPages = 0 } = {},
     isLoading,
     isSuccess,
-  } = useListReviewsQuery({ page, pageSize: 4 });
+  } = useListReviewsQuery({ page, pageSize: 4, userId });
 
   useEffect(() => {
     if (isSuccess && isInitialLoading) {
