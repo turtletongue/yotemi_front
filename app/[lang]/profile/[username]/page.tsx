@@ -1,20 +1,14 @@
 import { notFound } from "next/navigation";
 import classnames from "classnames";
 
-import {
-  Avatar,
-  Calendar,
-  ProfileControl,
-  Rating,
-  ReviewCard,
-  Topic,
-} from "@components";
+import { Avatar, Calendar, ProfileControl, Rating, Topic } from "@components";
 import { User } from "@store/features/users";
 import { Language, useTranslation } from "@app/i18n";
 import contractCode from "@app/contract/contract-code";
 import { TonProvider } from "@utils";
 import fetchProfile from "./fetch-profile";
 import fetchReviews from "./fetch-reviews";
+import ReviewsList from "./reviews-list.component";
 
 interface ProfileProps {
   params: {
@@ -92,14 +86,7 @@ const Profile = async ({ params: { lang, username } }: ProfileProps) => {
                 </span>
               </div>
             </div>
-            {reviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
-            ))}
-            {reviews.length === 0 && (
-              <span className="text-gray-500 text-center text-sm my-6">
-                {translation("noReviews")}
-              </span>
-            )}
+            <ReviewsList lang={lang} initialReviews={reviews} />
           </article>
         </div>
       </div>

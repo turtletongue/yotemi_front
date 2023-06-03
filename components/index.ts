@@ -19,6 +19,7 @@ export { default as ButtonSkeleton } from "./button-skeleton";
 export { default as Rating } from "./rating";
 
 export { default as ReviewCard } from "./review-card";
+export { default as ReviewCardSkeleton } from "./review-card-skeleton";
 
 export { default as Calendar } from "./calendar";
 
@@ -53,3 +54,5 @@ export { default as SessionControl } from "./session-control";
 export { default as AddReviewModal } from "./add-review-modal";
 
 export { default as LanguageSwitcher } from "./language-switcher";
+
+export { default as Pagination } from "./pagination";

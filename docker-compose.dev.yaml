@@ -12,7 +12,9 @@ services:
     env_file:
       - .env
     ports:
-      - 3000:3000
+      - "3000:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     volumes:
       - .:/app
       - /app/node_modules

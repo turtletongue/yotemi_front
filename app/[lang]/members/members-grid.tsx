@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Pagination } from "flowbite-react";
 
-import { MemberCard } from "@components";
+import { MemberCard, Pagination } from "@components";
 import { useAppSelector } from "@store/store-config/hooks";
 import {
   selectOrderBy,
@@ -64,7 +63,6 @@ const MembersGrid = ({ lang }: MembersGridProps) => {
         <div className="flex items-center justify-center w-full text-center mt-5">
           <Pagination
             currentPage={page}
-            layout="pagination"
             onPageChange={(page) => setPage(page)}
             showIcons={true}
             totalPages={totalPages ?? 1}

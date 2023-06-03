@@ -49,7 +49,12 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
     dispatch(
       usersApi.util.invalidateTags([{ type: "Users", id: "PARTIAL-LIST" }])
     );
-    tonConnectUI.disconnect().then(() => router.push("/"));
+
+    if (tonConnectUI.connected) {
+      tonConnectUI.disconnect().then();
+    }
+
+    router.push("/");
   };
 
   return (
