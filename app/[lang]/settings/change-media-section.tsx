@@ -42,8 +42,8 @@ const ChangeMediaSection = ({ lang }: ChangeMediaSectionProps) => {
   const changeCoverRoute = `/users/${data.id}/cover`;
 
   return (
-    <section className="w-full">
-      <div className="w-full flex flex-col items-center">
+    <section>
+      <div className="flex flex-col items-center">
         <ImageRemover
           route={changeAvatarRoute}
           onRemoved={invalidateCache}
@@ -67,13 +67,13 @@ const ChangeMediaSection = ({ lang }: ChangeMediaSectionProps) => {
           </span>
         </ImageUploader>
       </div>
-      <div className="w-full">
+      <div>
         <Label>
           <span className="text-white">{translation("headerImage")}</span>
         </Label>
         <ImageUploader
           lang={lang}
-          className="w-full flex justify-center items-center"
+          className="w-full lg:w-[30rem] 2xl:w-[38rem] flex justify-center items-center"
           progressClassName="my-10 w-56"
           route={`/users/${data.id}/cover`}
           onUploaded={invalidateCache}
@@ -82,19 +82,19 @@ const ChangeMediaSection = ({ lang }: ChangeMediaSectionProps) => {
           disabled={!!data.coverPath || isCoverLoading}
         >
           <div
-            className={`${classnames(
+            className={classnames(
+              "rounded-2xl w-full h-20 flex justify-center items-center cursor-pointer overflow-hidden",
               !data.coverPath && "bg-white"
-            )} rounded-2xl w-full h-20 flex justify-center items-center cursor-pointer overflow-hidden`}
+            )}
           >
             {data.coverPath && !isCoverLoading ? (
               <ImageRemover
                 route={changeCoverRoute}
                 onRemoved={invalidateCache}
                 active={!!data.coverPath && !isCoverLoading}
-                className="w-full h-full relative"
+                className="h-full w-full"
               >
                 <img
-                  className="relative w-full h-full"
                   src={data.coverPath}
                   alt={translation("headerImage") ?? ""}
                   onLoadStart={() => setIsCoverLoading(true)}

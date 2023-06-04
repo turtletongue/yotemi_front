@@ -11,7 +11,7 @@ interface SettingsProps {
 const Settings = ({ params: { lang } }: SettingsProps) => {
   return (
     <section className="grow bg-cetacean-blue text-white p-4 flex flex-col justify-center items-center">
-      <div className="w-full md:w-fit">
+      <div className="w-full md:w-96 lg:w-fit">
         <ChangeMediaSection lang={lang} />
         <ChangeSettingsForm lang={lang} />
       </div>

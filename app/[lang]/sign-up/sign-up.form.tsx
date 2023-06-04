@@ -75,7 +75,7 @@ const SignUpForm = ({ lang }: SignUpFormProps) => {
   const [addUser, { error, isLoading, isSuccess }] = useAddUserMutation();
 
   const signUp = async ({ username, firstName, lastName }: SignUpSchema) => {
-    if (!tonConnectUI.account) {
+    if (!tonConnectUI.connected) {
       try {
         await tonConnectUI.connectWallet();
       } catch {

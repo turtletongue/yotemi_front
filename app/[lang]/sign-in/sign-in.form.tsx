@@ -67,7 +67,7 @@ const SignInForm = ({ lang }: SignInFormProps) => {
 
   const signIn = async () => {
     try {
-      if (tonConnectUI.wallet) {
+      if (tonConnectUI.connected) {
         await tonConnectUI.disconnect();
         await tonConnectUI.connectWallet();
       } else {

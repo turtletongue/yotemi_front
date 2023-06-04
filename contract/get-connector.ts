@@ -19,11 +19,11 @@ const buildGetConnector = () => {
 
     if (!localStorageConnector) {
       localStorageConnector = new TonConnect();
-    } else {
-      localStorageConnector
-        .restoreConnection()
-        .catch((error) => Sentry.captureException(error));
     }
+
+    localStorageConnector
+      .restoreConnection()
+      .catch((error) => Sentry.captureException(error));
 
     return localStorageConnector;
   };

@@ -278,10 +278,7 @@ const ChangeSettingsForm = ({ lang }: ChangeSettingsFormProps) => {
 
   return (
     <>
-      <form
-        className="w-full md:w-96 lg:w-fit mt-6"
-        onSubmit={handleSubmit(updateSettings)}
-      >
+      <form className="mt-6" onSubmit={handleSubmit(updateSettings)}>
         <div className="w-full flex lg:gap-24 flex-col lg:flex-row justify-between">
           <div className="w-full lg:w-48 2xl:w-64">
             <Label htmlFor="firstName">
