@@ -51,10 +51,10 @@ const ProfileControl = ({ lang, profileId }: ProfileControlProps) => {
     );
 
     if (tonConnectUI.connected) {
-      tonConnectUI.disconnect().then();
+      tonConnectUI.disconnect().then(() => router.push("/"));
+    } else {
+      router.push("/");
     }
-
-    router.push("/");
   };
 
   return (
