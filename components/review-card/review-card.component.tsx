@@ -20,7 +20,7 @@ const ReviewCard = ({ review }: ReviewCardProps) => {
     <article className="bg-card rounded-3xl flex w-full md:w-[40rem] gap-4 2xl:w-96 p-5 mt-5">
       <Avatar
         img={review.reviewer.avatarPath}
-        className="h-min mt-1 cursor-pointer"
+        className="shrink-0 h-min mt-1 cursor-pointer"
         rounded
         onClick={onClick}
       />
