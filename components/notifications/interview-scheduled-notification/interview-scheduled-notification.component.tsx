@@ -39,12 +39,13 @@ const InterviewScheduledNotification = ({
   return (
     <Link
       href={data ? `/profile/${data.username}` : "#"}
-      className={`flex w-full justify-center items-center py-5 ${
+      className={`flex w-full items-center px-2 py-5 ${
         isSeen
           ? "opacity-20"
-          : `cursor-pointer ${classnames(
+          : classnames(
+              "cursor-pointer",
               reactOnHover && "hover:bg-yankees-blue"
-            )}`
+            )
       }`}
     >
       <Avatar
