@@ -1,34 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [Next.js](https://nextjs.org/) project.
 
 ## Getting Started
 
-First, run the development server:
+You can use docker-compose to start app easily.
 
-```bash
-npm run dev
-# or
-yarn dev
+First of all, install [docker-compose](https://docs.docker.com/compose/install/) if you don't have it on your machine. Make sure you follow all prerequisites.
+
+Secondly, you must create .env file in the root folder with content like this:
+
+```dotenv
+# Services Urls
+NEXT_PUBLIC_FRONT_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://meetlane-api-dev:3030
+
+# TON Configuration
+NEXT_PUBLIC_TONSCAN_URL=https://tonscan.org
+NEXT_PUBLIC_TONAPI_URL=https://tonapi.io/v1
+TONAPI_TOKEN=eyJhbGc...
+
+# First TURN server info
+NEXT_PUBLIC_TURN_URL=turn:00.000.000.000:3478
+NEXT_PUBLIC_TURN_USERNAME=your_username
+NEXT_PUBLIC_TURN_PASSWORD=your_turn_password
+
+# Second TURN server info
+NEXT_PUBLIC_TURN_SECOND_URL=turn:00.000.000.000:3478
+NEXT_PUBLIC_TURN_SECOND_USERNAME=your_username
+NEXT_PUBLIC_TURN_SECOND_PASSWORD=your_password
+
+# STUN servers info
+NEXT_PUBLIC_STUN_URL=stun:00.000.000.000:80
+NEXT_PUBLIC_STUN_SECOND_URL=stun:00.000.000.000:80
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+After that, you should place compiled [smart-contract](https://github.com/turtletongue/yotemi_contracts) of interview into ./contract/compiled folder. This file must be called `interview.cell`.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Now, you can execute this command:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```shell
+# build containers and run application
+docker-compose up
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+If you want to stop containers, just use:
 
-## Learn More
+```shell
+docker-compose stop
+```
 
-To learn more about Next.js, take a look at the following resources:
+If you want to remove containers, use:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```shell
+docker-compose down
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+`./app` folder contains all pages.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`./components` folder contains useful components - building blocks of pages.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+`./contract` folder contains TON smart-contract related logic.
+
+`./hooks` folder contains useful hooks.
+
+`./i18n` folder contains translation for pages.
+
+`./store` folder contains logic for making requests and caching their results.
+
+`./utils` folder contains many useful functions.
